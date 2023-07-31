@@ -1,0 +1,3 @@
+C++ Cheatsheet -- https://www.codewithharry.com/blogpost/cpp-cheatsheet/
+VS Common Keys -- https://visualstudio.microsoft.com/keyboard-shortcuts.pdf
+C++ Quickdebug -- https://www.onlinegdb.com/
