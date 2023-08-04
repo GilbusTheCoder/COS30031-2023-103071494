@@ -56,7 +56,7 @@ using namespace std;
 // Q.1 What is the difference between a struct and a class?
 struct Particle
 {
-    unsigned int age;
+    int age;
     int x;
     int y;
 };
@@ -94,7 +94,7 @@ Particle getParticleWith(int age, int x, int y)
     return result;
 }
 
-void setParticleWith(Particle p, int age, int x, int y)
+void setParticleWith(Particle &p, int age, int x, int y)
 {
     p.age = age;
     p.x = x;
@@ -104,7 +104,7 @@ void setParticleWith(Particle p, int age, int x, int y)
 void showParticleArray(Particle * p_array, int size)
 {
     // We can't ~actually~ pass an array, so ...
-    // we pass a pointer to the first element of the array!
+    // we pass a pointer to the first element of the array!s
     // ... and the length. Which might be wrong.
     cout << "showParticleArray call ..." << endl;
     for (int i = 0; i < size; i++) {
@@ -173,15 +173,15 @@ int main()
 
     // 2. Get a particle with the values we pass to the function
     //    (When you are up to this section, change false to true. Keeps things compact)
-    if (true) {
+    if (false) {
         cout << " << Section 2 >>" << endl;
         Particle p1 = getParticleWith(1,1,3);
         cout << "Q.8: p1 with 1,1,3 ? ... ";
-        showParticle(p1); // #TODO: Q.8 Should show age=1, x=1, y=2. Does it?
+        showParticle(p1); // Q.8 Should show age=1, x=1, y=2. Does it?
 
         p1 = getParticleWith(-1,2,3);
         cout << "Q.9: p1 with -1,2,3 ? ... ";
-        showParticle(p1); // #TODO: Q.9 Something odd here. What and why?
+        showParticle(p1); // Q.9 Something odd here. What and why?
         // hint: debug, inspect and look at data type details ...
     }
 
@@ -192,7 +192,7 @@ int main()
         Particle p1 = {1,1,1};
         setParticleWith(p1, 5,6,7);
         cout << "Q.10: b with 5,6,7 ? ... ";
-        showParticle(p1); // #TODO: Q.10 showParticle(p1) doesn't show 5,6,7 ... Why?
+        showParticle(p1); //Q.10 showParticle(p1) doesn't show 5,6,7 ... Why?
         // hint: step-into functions with debugger and inspect values (and addresses)...
     }
 
@@ -217,34 +217,35 @@ int main()
         if ((*p1_ptr).age == p1_ptr->age) cout << " - TRUE!"; else cout << " - False!";
         cout << endl;
         // Extra: Does C++ have a ternary operator? If so, replace the two if lines above.
-        // #TODO: Q.11 So what does -> mean (in words)?
-        // #TODO: Q.12 Do we need to put ( ) around *p1_ptr?
+        // Q.11 So what does -> mean (in words)?
+        // Q.12 Do we need to put ( ) around *p1_ptr?
         // Tip: State what it means, or what it would mean if we didn't write it.
 
         // pass the dereferenced pointer as argument
         cout << "Q.13: p1 via dereferenced pointer ... ";
         showParticle((*p1_ptr));
-        // #TODO: Q.13 What is the dereferenced pointer (from the example above)?
+        // Q.13 What is the dereferenced pointer (from the example above)?
 
         // update p1, ...
         p1 = getParticleWith(7,7,7);
         // Note: p1 is now a new particle struct with new values. So, ...
-        // #TODO: Q.14 Is p1 stored on the heap or stack?
-        // #TODO: Q.15 What is p1_ptr pointing to now? (Has it changed?)
+        // Q.14 Is p1 stored on the heap or stack?
+        // Q.15 What is p1_ptr pointing to now? (Has it changed?)
         // Tip: Use your IDE inspector to check the "address" of p1 and value of p1_ptr
         cout << "values of new p1 ? ... ";
         showParticle(p1);
         cout << "particle values at p1_ptr ?... ";
         showParticle((*p1_ptr));
-        // #TODO: Q.16 Is the current value of p1_ptr good or bad? Explain
+        cout << "address of p1_ptr " << p1_ptr << endl;
+        // Q.16 Is the current value of p1_ptr good or bad? Explain
 
     }
-    // #TODO: Q.17 Is p1 still available? Explain.
+    // Q.17 Is p1 still available? Explain.
 
     // 5. Array of structs
-    if (false) {
+    if (true) {
         cout << " << Section 5 >>" << endl;
-        // #TODO: Q.18 <deleted - ignore> :)
+        // Q.18 <deleted - ignore> :)
 
         // NOTE: plain old array - not a fancy std::array
         // NOTE: zero 0 indexed arrays. (No bounds checking ... probably.)
@@ -253,10 +254,10 @@ int main()
         p_array1[1] = getParticleWith(4,5,6);
         p_array1[2] = getParticleWith(7,8,9);
 
-        // #TODO: Q.19 Uncomment the next code line - will it compile?
-        //p_array1[3] = getParticleWith(0,0,0);
+        // Q.19 Uncomment the next code line - will it compile?
+        // p_array1[3] = getParticleWith(0,0,0);
         // - If it compiles, does it run without errors?
-        // #TODO: Q.20 Does your IDE tell you of any issues? If so, how?
+        // Q.20 Does your IDE tell you of any issues? If so, how?
         // NOTE: Recommend you re-comment the line - it's not needed later
 
         // show that we can access one element of the array
@@ -264,7 +265,7 @@ int main()
         showParticle(p_array1[1]);
         // Array of pointers to structs
         showParticleArray(p_array1, 3);
-        // #TODO: Q.21 MAGIC NUMBER?! What is it? Is it bad? Explain!
+        // Q.21 MAGIC NUMBER?! What is it? Is it bad? Explain!
 
         // Can we work out the length? Yes, but ...
         cout << "Q.22: Array length?" << endl;
