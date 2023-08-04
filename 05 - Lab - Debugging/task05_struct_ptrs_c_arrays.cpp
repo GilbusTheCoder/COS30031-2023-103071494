@@ -53,7 +53,7 @@ Updates
 
 using namespace std;
 
-// #TODO: Q.1 What is the difference between a struct and a class?
+// Q.1 What is the difference between a struct and a class?
 struct Particle
 {
     unsigned int age;
@@ -61,21 +61,86 @@ struct Particle
     int y;
 };
 
-// #TODO: Q.2 What are function declarations?
+// Q.2 What are function declarations?
 // Tip: Define, but explain *why* or *if* they are needed.
-void showParticle(Particle);
+//void showParticle(Particle);
 
-// #TODO: Q.3 Why are variable names not needed here?
+// Q.3 Why are variable names not needed here?
 // Extra: Could you add variable names? Would that be good?
-Particle getParticleWith(int, int, int);
+Particle getParticleWith(int age, int x, int y);
 
-void setParticleWith(Particle, int, int, int);
+//void setParticleWith(Particle, int, int, int);
 
-void showParticleArray(Particle *, int);
+//void showParticleArray(Particle *, int);
 
-// #TODO: Q.4 Does your IDE know if this method is used?
+// Q.4 Does your IDE know if this method is used?
 // If yes - how does it indicate this? (Colour? Tip? Other?)
 void showParticleArray_2(Particle arr[], int size);
+
+// Function details - each matches the function declarations at the top
+void showParticle(Particle p)
+{
+    cout << "Particle: ";
+    cout << "(age=" << p.age << "), ";
+    cout << "(x,y)=(" << p.x << "," << p.y << ")" << endl;
+}
+
+Particle getParticleWith(int age, int x, int y)
+{
+    Particle result;
+    result.age = age;
+    result.x = x;
+    result.y = y;
+    return result;
+}
+
+void setParticleWith(Particle p, int age, int x, int y)
+{
+    p.age = age;
+    p.x = x;
+    p.y = y;
+}
+
+void showParticleArray(Particle * p_array, int size)
+{
+    // We can't ~actually~ pass an array, so ...
+    // we pass a pointer to the first element of the array!
+    // ... and the length. Which might be wrong.
+    cout << "showParticleArray call ..." << endl;
+    for (int i = 0; i < size; i++) {
+        cout << " - pos=" << i << " ";
+        showParticle(p_array[i]);
+    }
+}
+
+void showParticleArray_2(Particle arr[], int size)
+{
+    // #TODO: Q.23 What is the difference between this function signature and
+    //  and the function signature for showParticleArray?
+
+    cout << "showParticleArray_2 call ..." << endl;
+
+    // #TODO: Q.24 Uncomment the following. It gives different values to those we saw before
+    //  So it won't work as a way to determine array size - but why?
+    /*
+     if (true) {
+         cout << "Array as arr[] ..." << endl;
+         cout << " - sizeof entire array? " << sizeof(arr) << endl;
+         cout << " - sizeof array element? " << sizeof(arr) << endl;
+         cout << " - array size n is: " << (sizeof(arr) / sizeof(arr[0])) << endl;
+     }
+     */
+    // NOTE: The above might get warnings (good!). Not all compilers/IDEs though.
+    // Extra: Make a note about what is giving you warnings if you know.
+
+    // This is the same behaviour as original function
+    for (int i = 0; i < size; i++) {
+        cout << " - pos=" << i << " ";
+        showParticle(arr[i]);
+    }
+
+    // #TODO: return to main for Q.25 ...
+}
 
 // Main loop. Stuff happens here ...
 int main()
@@ -83,34 +148,35 @@ int main()
     // 1. Warm up. Create a particle, set values, show to screen
     if (false) {
         cout << " << Section 1 >>" << endl;
-        Particle a;
-        // #TODO: Q.5 un-initialised values ... what this show and why?
-        // Note: your IDE might be warning or making a note - if so note that
-        // in your answer.
-        cout << "Q.5: a with uninitialised values ? ... ";
+
+        Particle a {.age = 0};
+        // Q.5 un-initialised values ... what this show and why?
+        cout << "Q.5: a with partially initialized values ? ... ";
         showParticle(a);
+
+        // Q.6 Did this work as expected?
         a.age = 0;
         a.x = 10;
         a.y = 20;
         cout << "Q.6: a with assigned values 0,10,20 ? ... ";
-        showParticle(a); // #TODO: Q.6 Did this work as expected?
+        showParticle(a); 
 
-        // #TODO: Q.7 Initialisation list - do you know what are they?
+        // Q.7 Initialisation list - do you know what are they?
         // Quicker then setting each part of the particle as above!
         // Do you know about them? If not, find out and make extra notes in your report.
         // Yes this is a simple question! :)
         // Your IDE might help suggest what the values are
-        Particle b = {0,0,0};
+        Particle b {0,0,0};
         cout << "Q.7: b with initialised values 0,0,0 ? ... ";
         showParticle(b);
     }
 
     // 2. Get a particle with the values we pass to the function
     //    (When you are up to this section, change false to true. Keeps things compact)
-    if (false) {
+    if (true) {
         cout << " << Section 2 >>" << endl;
-        Particle p1 = getParticleWith(1,2,3);
-        cout << "Q.8: p1 with 1,2,3 ? ... ";
+        Particle p1 = getParticleWith(1,1,3);
+        cout << "Q.8: p1 with 1,1,3 ? ... ";
         showParticle(p1); // #TODO: Q.8 Should show age=1, x=1, y=2. Does it?
 
         p1 = getParticleWith(-1,2,3);
@@ -332,70 +398,4 @@ int main()
     }
 
     return 0;
-}
-
-// Function details - each matches the function declarations at the top
-
-void showParticle(Particle p)
-{
-    cout << "Particle: ";
-    cout << "(age=" << p.age << "), ";
-    cout << "(x,y)=(" << p.x << "," << p.y << ")" << endl;
-}
-
-Particle getParticleWith(int age, int x, int y)
-{
-    Particle result;
-    result.age = age;
-    result.x = x;
-    result.y = y;
-    return result;
-}
-
-void setParticleWith(Particle p, int age, int x, int y)
-{
-    p.age = age;
-    p.x = x;
-    p.y = y;
-}
-
-void showParticleArray(Particle * p_array, int size)
-{
-    // We can't ~actually~ pass an array, so ...
-    // we pass a pointer to the first element of the array!
-    // ... and the length. Which might be wrong.
-    cout << "showParticleArray call ..." << endl;
-    for (int i = 0; i < size; i++) {
-        cout << " - pos=" << i << " ";
-        showParticle(p_array[i]);
-    }
-}
-
-void showParticleArray_2(Particle arr[], int size)
-{
-    // #TODO: Q.23 What is the difference between this function signature and
-    //  and the function signature for showParticleArray?
-
-    cout << "showParticleArray_2 call ..." << endl;
-
-    // #TODO: Q.24 Uncomment the following. It gives different values to those we saw before
-    //  So it won't work as a way to determine array size - but why?
-    /*
-     if (true) {
-         cout << "Array as arr[] ..." << endl;
-         cout << " - sizeof entire array? " << sizeof(arr) << endl;
-         cout << " - sizeof array element? " << sizeof(arr) << endl;
-         cout << " - array size n is: " << (sizeof(arr) / sizeof(arr[0])) << endl;
-     }
-     */
-    // NOTE: The above might get warnings (good!). Not all compilers/IDEs though.
-    // Extra: Make a note about what is giving you warnings if you know.
-
-    // This is the same behaviour as original function
-    for (int i = 0; i < size; i++) {
-        cout << " - pos=" << i << " ";
-        showParticle(arr[i]);
-    }
-
-    // #TODO: return to main for Q.25 ...
 }
