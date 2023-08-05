@@ -113,23 +113,23 @@ void showParticleArray(Particle * p_array, int size)
     }
 }
 
-void showParticleArray_2(Particle arr[], int size)
+/*void showParticleArray_2(Particle arr[], int size)
 {
-    // #TODO: Q.23 What is the difference between this function signature and
+    // Q.23 What is the difference between this function signature and
     //  and the function signature for showParticleArray?
 
     cout << "showParticleArray_2 call ..." << endl;
 
-    // #TODO: Q.24 Uncomment the following. It gives different values to those we saw before
-    //  So it won't work as a way to determine array size - but why?
-    /*
-     if (true) {
-         cout << "Array as arr[] ..." << endl;
-         cout << " - sizeof entire array? " << sizeof(arr) << endl;
-         cout << " - sizeof array element? " << sizeof(arr) << endl;
-         cout << " - array size n is: " << (sizeof(arr) / sizeof(arr[0])) << endl;
-     }
-     */
+    // Q.24 Uncomment the following. It gives different values to those we saw before
+    // So it won't work as a way to determine array size - but why?
+    
+    if (true) {
+        cout << "Array as arr[] ..." << endl;
+        cout << " - sizeof entire array? " << sizeof(arr) << endl;
+        cout << " - sizeof array element? " << sizeof(arr[1]) << endl;
+        cout << " - array size n is: " << (sizeof(arr) / sizeof(arr[0])) << endl;
+    }
+     
     // NOTE: The above might get warnings (good!). Not all compilers/IDEs though.
     // Extra: Make a note about what is giving you warnings if you know.
 
@@ -139,8 +139,8 @@ void showParticleArray_2(Particle arr[], int size)
         showParticle(arr[i]);
     }
 
-    // #TODO: return to main for Q.25 ...
-}
+    //return to main for Q.25 ...
+}*/
 
 // Main loop. Stuff happens here ...
 int main()
@@ -243,7 +243,7 @@ int main()
     // Q.17 Is p1 still available? Explain.
 
     // 5. Array of structs
-    if (true) {
+    if (false) {
         cout << " << Section 5 >>" << endl;
         // Q.18 <deleted - ignore> :)
 
@@ -272,9 +272,9 @@ int main()
         cout << " - sizeof entire array? " << sizeof(p_array1) << endl;
         cout << " - sizeof array element? " << sizeof(p_array1[0]) << endl;
         cout << " - array size n is: " << (sizeof(p_array1) / sizeof(p_array1[0])) << endl;
-        // #TODO: Q.22 Explain in your own words how the array size is calculated.
+        // Q.22 Explain in your own words how the array size is calculated.
         // Tip: find out what the sizeof operator is. (It's not a function.)
-        // #TODO: Q.23-24 Go to the showParticleArray 2 implementation and see there ...
+        // Q.23-24 Go to the showParticleArray 2 implementation and see there ...
         cout << "Q.23 and Q.24: showParticleArray_2 differences ..." << endl;
         showParticleArray_2(p_array1, 3); // alternative signature
 
@@ -284,11 +284,11 @@ int main()
         showParticleArray(p_array2, 3); // works fine
 
         // Here we are going to read array positions that we haven't set properly.
-        // #TODO: Q.25 Change the size argument to 10 (or similar). What happens?
+        // Q.25 Change the size argument to 10 (or similar). What happens?
         // Tip: Note the output values shown. Consider if they make sense.
         // Extra: You might see some values that we set earlier. Does that make sense?
         cout << "Q.25: Array position overrun ... " << endl;
-        showParticleArray(p_array2, 3); // <-- change size from 3 to 10
+        showParticleArray(p_array2, 10); // <-- change size from 3 to 10
     }
 
     // 6. Struct pointer with new and delete for memory
@@ -302,12 +302,12 @@ int main()
         cout << " - pointer address of p1:" << hex << &p1 << endl;
         p1_ptr = &p1; // copy the point to the same particle
         cout << " - pointer value of p1_ptr " << hex << p1_ptr << endl;
-        // #TODO: Q.26 What is "hex" and what does it do? (url in your notes)
+        // Q.26 What is "hex" and what does it do? (url in your notes)
 
         // Now lets create a Particle that we only access via a pointers
         cout << "Q.27 and Q.28: Using new and delete ... " << endl;
         p1_ptr = new Particle();
-        // #TODO: Q.27 What is new and what did it do?
+        // Q.27 What is new and what did it do?
         cout << " - pointer address " << hex << p1_ptr << endl;
         showParticle((*p1_ptr));
         cout << " - show via de-referenced pointer ... ";
@@ -317,11 +317,11 @@ int main()
         showParticle((*p1_ptr));
         // Clean up!
         delete p1_ptr;
-        // #TODO: Q.28 What is delete and what did it do?
+        // Q.28 What is delete and what did it do?
 
         cout << "Q.29 Can we still show value at pointer address? (It was deleted, so ...) " << endl;
         cout << " - pointer address " << hex << p1_ptr << endl;
-        // #TODO: Q.29 What happens when we try this? Explain.
+        // Q.29 What happens when we try this? Explain.
         showParticle((*p1_ptr));
 
         cout << "Q.30 nullptr vs NULL vs 0 ... for pointers." << endl;
@@ -330,9 +330,9 @@ int main()
         cout << " - pointer address " << hex << p1_ptr << endl;
         // Zero test?
         if (p1_ptr == 0) { cout << " - Yes! p1_ptr == 0" << endl; }
-        // #TODO: Q.30 So, what is the difference between NULL and nullptr and 0?
+        // Q.30 So, what is the difference between NULL and nullptr and 0?
 
-        // #TODO: Q.31 What happens if you try this? (A zero address now, so ...)
+        //  Q.31 What happens if you try this? (A zero address now, so ...)
         // NOTE: There is a difference between "run" and "debug" in most IDEs
         // NOTE: If you do a simple run (not a debug) with the IDE, you should
         // normally get a "process finished with exit code 0" message at the end.
@@ -341,13 +341,14 @@ int main()
         // from a terminal to confirm if there is an issue.
         // Debug will tell you *lot* more!
         if (false) {
+            cout << "Q31: ";
             showParticle((*p1_ptr));
         }
     }
 
 
     // 7. Array of pointers to structs
-    if (false) {
+    if (true) {
         cout << " << Section 7 >>" << endl;
         int n = 5;
         Particle *ptr_array[n]; // contains pointers to nowhere so far!
@@ -367,7 +368,7 @@ int main()
         for (int i = 0; i < n; i++) {
             cout << " - ptr_array[" << i << "] value " << hex << ptr_array[i] << endl;
         }
-        // #TODO: Q.32 Are default pointer values in an array safe? Explain.
+        // Q.32 Are default pointer values in an array safe? Explain.
 
         // Reserve memory for each particle and assign address
         // Note: These are just structs so think memory not constructor in this case.
@@ -382,7 +383,7 @@ int main()
             showParticle((*ptr_array[i]));
             // Note: we needed (*ptr_array[i]) to turn pointer into Particle parameter
         }
-        // #TODO: Q.33 We should always have "delete" to match each "new".
+        // Q.33 We should always have "delete" to match each "new".
         //  - What is the problem if we don't delete, and what is the common name for this?
         // #TODO: Extra: Your IDE may have tools to help you track memory. Does it?
         // Cleanup! Can you see what happens if you DON'T do this?
@@ -390,7 +391,7 @@ int main()
             for (int i = 0; i < n; i++) {
                 delete ptr_array[i];
                 ptr_array[i] = nullptr;
-                // #TODO: Q.34 Should we set pointers to nullptr? Why?
+                // Q.34 Should we set pointers to nullptr? Why?
             }
         }
 
