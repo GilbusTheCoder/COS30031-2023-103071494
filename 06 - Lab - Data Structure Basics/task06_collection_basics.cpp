@@ -114,20 +114,21 @@ int main() {
     // Q.4 How do we (what methods) add and remove items to a stack?
     // Q.5 A stack has no no [] or at() method - why?
 
-    queue_demo();
+    //queue_demo();
     // Q.6 What is the difference between a stack.pop() and a queue.pop() ?
 
     //list_demo();
-    // #TODO: Q.7 Can we access a list value using and int index? Explain.
-    // #TODO: Q.8 Is there a reason to use a list instead of a vector?
+    // Q.7 Can we access a list value using and int index? Explain.
+    // Q.8 Is there a reason to use a list instead of a vector?
 
-    //vector_demo();
-    // #TODO: Q.9 Was max_size and size the same? (Can they be different?)
-    // #TODO: Q.10 Which ParticleClass constructor was called?
-    // #TODO: Q.11 Were the ParticleClass instances deleted? If so, how?
-    // #TODO: Q.12 Was the vector instance deleted? If so, how do you know this?
-    // #TODO: Q.13 Your IDE might suggest to use emplace_back instead of push_back. What does this mean?
+    vector_demo();
+    // Q.9 Was max_size and size the same? (Can they be different?)
+    // Q.10 Which ParticleClass constructor was called?
+    // Q.11 Were the ParticleClass instances deleted? If so, how?
+    // Q.12 Was the vector instance deleted? If so, how do you know this?
+    // Q.13 Your IDE might suggest to use emplace_back instead of push_back. What does this mean?
 
+    cout << 'c' << endl;
     return 0;
 }
 
@@ -355,7 +356,7 @@ void queue_demo() {
 
 void list_demo() {
     // std::list
-    // A sequence container (internally, a doubly-linked list)
+    // A sequence container (internally, a double-linked list)
     // - specialised for constant time insert/erase at any position
     // - good at insert, extract, move but uses iterator (not uint index)
     // - house-keeping overhead (link details)
