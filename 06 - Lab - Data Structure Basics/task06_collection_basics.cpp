@@ -16,7 +16,7 @@ Longer Version (recommended steps):
     3. Build and run this file. Make sure this works before going on.
     4. Create a lab-notes document for your answers. (Paste the questions provided
        if you want, or discover them as you go.) Save and commit.
-    4. Work your way through each of the file #TODO Q. marks in order.
+    5. Work your way through each of the file #TODO Q. marks in order.
        - Work one section at a time. There are if (false) { ... } blocks to change to
          if (true) get the code to run.
        - Suggest committing your lab notes to your repo as you do each section (minimum).
@@ -102,20 +102,20 @@ int main() {
     // Uncomment each of the _demo function to investigate!!
 
     //array_demo_1();
-    // #TODO: Q.1 Questions are inside array_demo_1 - answer them there.
+    // Q.1 Questions are inside array_demo_1 - answer them there.
 
     //array_demo_2();
-    // #TODO: Q.2 In array_demo_2, explain what a4(a1) does
+    // Q.2 In array_demo_2, explain what a4(a1) does
 
     //array_demo_3();
-    // #TODO: Q.3 No questions for array_demo_3, it's just a demo of Struct/Class use with array.
+    // Q.3 No questions for array_demo_3, it's just a demo of Struct/Class use with array.
 
     //stack_demo();
-    // #TODO: Q.4 How do we (what methods) add and remove items to a stack?
-    // #TODO: Q.5 A stack has no no [] or at() method - why?
+    // Q.4 How do we (what methods) add and remove items to a stack?
+    // Q.5 A stack has no no [] or at() method - why?
 
-    //queue_demo();
-    // #TODO: Q.6 What is the difference between a stack.pop() and a queue.pop() ?
+    queue_demo();
+    // Q.6 What is the difference between a stack.pop() and a queue.pop() ?
 
     //list_demo();
     // #TODO: Q.7 Can we access a list value using and int index? Explain.
@@ -164,11 +164,11 @@ void array_demo_1() {
     cout << " << std:array demos!>>" << endl;
     // simple quick std::array example
     array<int, 3> a1 = {8, 77, -50}; // initializer list
-    // #TODO: Q.1.1 What do the < and > mean or indicate?
-    // #TODO: Q.1.2 Why don't we need to write std:array here? (Is this good?)
-    // #TODO: Q.1.3 Explain what the int and 3 indicate in this case?
+    // Q.1.1 What do the < and > mean or indicate?
+    // Q.1.2 Why don't we need to write std:array here? (Is this good?)
+    // Q.1.3 Explain what the int and 3 indicate in this case?
 
-    if (true) {
+    if (false) {
         cout << "a1 address: " << hex << &a1 << endl;
         cout << dec; // put back to decimal mode (after being in hex)
         cout << "a1 size: " << a1.size() << endl;
@@ -182,7 +182,7 @@ void array_demo_1() {
     }
 
     // Show contents using for, iterator and foreach
-    if (true) {
+    if (false) {
         // ... using plain-old for loop (int i position)
         cout << "a1 contents using plain-old for loop: ";
         for (int i = 0; i < a1.size(); i++) {
@@ -204,24 +204,25 @@ void array_demo_1() {
             cout << *itr2 << " ";
         }
         cout << endl;
-        // #TODO: Q.1.4 In the code above, what is the type of itr2?
+        // Q.1.4 In the code above, what is the type of itr2?
 
         //
         cout << "a1 contents using auto & for-each iterator: " << endl;
         for (auto &v : a1)
             cout << v << " ";
         cout << endl;
-        // #TODO: Q.1.5 In the code above, what is the type of v?
-        // #TODO: Q.1.6 In the code above, what does the & mean in (auto &v : a1)
+        // Q.1.5 In the code above, what is the type of v?
+        // Q.1.6 In the code above, what does the & mean in (auto &v : a1)
 
         // pass to a function (by value, using const to ensure it is not copied)
         showIntArray(a1);
     }
 
-    // access of array by [index] is not range protected (BAD)
-    cout << "What is at [3]? (out of bounds) " << a1[3] << endl;
-    // #TODO: Q.1.7 Try this. Why does a1[3] work but at(3) does not?
+    // Q.1.7 Try this. Why does a1[3] work but at(3) does not?
     if (false)
+    {
+        // access of array by [index] is not range protected (BAD)
+        cout << "What is at [3]? (out of bounds) " << a1[3] << endl;
         cout << "What is at(3)? (out of range exception) " << a1.at(3) << endl;
 
     // let's use some other container methods
@@ -233,14 +234,14 @@ void array_demo_1() {
     // a1.swap(s2) and a1.fill(value) also.
 
     // iterator for loop
-    // #TODO: Q.1.8 auto is awesome. What is the actual type of v that it works out for us?
+    // Q.1.8 auto is awesome. What is the actual type of v that it works out for us?
     cout << "Using for with iterator ... " << endl;
     for (auto v = a1.begin(); v != a1.end(); v++)
-        cout << " " << *v;
+        cout << " " << v;
     cout << endl;
 
     // iterator for-each loop
-    // #TODO: Q.1.9 auto is still awesome. What is the actual type of v here?
+    // Q.1.9 auto is still awesome. What is the actual type of v here?
     cout << "Using for-each (ranged) iterator ... " << endl;
     for (auto &v : a1)
         cout << " " << v;
@@ -250,7 +251,10 @@ void array_demo_1() {
     sort(a1.rbegin(), a1.rend());
     cout << "Reverse Sort() on a1, now ..." << endl;
     showIntArray(a1);
-    // #TODO: Q.1.10 How would you do a forward (not reverse) sort?
+    // Q.1.10 How would you do a forward (not reverse) sort?
+    reverse(a1.begin(), a1.end());
+    cout << "Forward Sort() on a1, now..." << endl;
+    showIntArray(a1);
 
     // multidimensional array (note the dimension order)
     array<array<int, 2>, 4> a_2d = {{{1, 2}, {3, 4}, {5, 6}, {7, 8}}};
@@ -258,6 +262,7 @@ void array_demo_1() {
     // Hmm ... Vote - are multi-dimensional arrays pretty to create?
 
     cout << " done." << endl;
+    }
 }
 
 void array_demo_2() {
