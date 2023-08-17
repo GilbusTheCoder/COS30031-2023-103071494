@@ -1,4 +1,3 @@
 ﻿  StateManager.cpp
-  main.cpp
-  Generating Code...
+F:\Uni\COS30031-2023-103071494\08 - Spike - Game State Management\GameStateManagement\StateManager.cpp(104): warning C4715: 'AdventureSelectMenu::update': not all control paths return a value
   GameStateManagement.vcxproj -> F:\Uni\COS30031-2023-103071494\08 - Spike - Game State Management\GameStateManagement\x64\Debug\GameStateManagement.exe

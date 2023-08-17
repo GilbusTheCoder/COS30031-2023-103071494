@@ -10,7 +10,6 @@ enum STATES {
 	NEW_HS,		//New Highscore
 	VIEW_HoF,	//View Hall of Fame
 	QUIT,
-	FINISHED,	//Final state of the game.
 };
 
 class State {
