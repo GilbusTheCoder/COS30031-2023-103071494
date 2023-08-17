@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  StateManager.cpp
+  main.cpp
+  Generating Code...
   GameStateManagement.vcxproj -> F:\Uni\COS30031-2023-103071494\08 - Spike - Game State Management\GameStateManagement\x64\Debug\GameStateManagement.exe
