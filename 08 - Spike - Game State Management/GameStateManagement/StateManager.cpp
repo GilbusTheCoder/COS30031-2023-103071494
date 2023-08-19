@@ -29,6 +29,7 @@ void StateManager::render() { _current_ptr->render(); }
 STATES MainMenu::update() {
 	int choice;
 	std::cin >> choice;
+
 	std::cout << std::endl;
 
 	switch (choice) {
