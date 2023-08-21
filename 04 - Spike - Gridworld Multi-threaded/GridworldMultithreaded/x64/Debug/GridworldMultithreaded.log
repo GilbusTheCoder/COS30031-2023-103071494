@@ -1,0 +1,11 @@
+﻿  World.cpp
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(47,6): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(48,6): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(49,6): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(50,6): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(56,6): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(60,6): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(100,38): error C2065: 'map': undeclared identifier
+C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\04 - Spike - Gridworld Multi-threaded\GridworldMultithreaded\World.cpp(101,23): error C2065: 'map': undeclared identifier
+  main.cpp
+  Generating Code...
