@@ -59,55 +59,78 @@ public:
 *	to NULL; */
 class InventorySlot{
 private:
-	InventorySlot* _next_slot;
-	Item* _slot_item;
+	Item* _item;
+	InventorySlot* _next;
 
 public:
-	InventorySlot(Item* item) { _slot_item = item; _next_slot = nullptr; }
+	InventorySlot(Item* item_ptr, InventorySlot* next = nullptr) {
+		_item = item_ptr;
+		_next = next;
+	};
 
-	InventorySlot* getNextSlot() { return _next_slot; }
-	Item* getItem() { return _slot_item; }
-	void setNextSlot(InventorySlot* next_slot) { _next_slot = next_slot; }
-	void setItem(Item* item_ptr) { _slot_item = item_ptr; }
+	Item getItem(){ return (*_item); } //Returns item not the pointer
+	InventorySlot* getNext() { 
+		if (_next != nullptr) { return _next; }
+		else { 
+			InventorySlot* hack_fix = nullptr;
+			return hack_fix; }
+	}
+	
+	void setItem(Item* item_ptr) { _item = item_ptr; }
+	void setNext(InventorySlot* next_ptr) { _next = next_ptr; }
 
-	void test(){
-		std::cout << "Item in slot: " << getItem()->getName() << std::endl;
+	void about() {
+		std::cout << "data: " << _item << std::endl;
+		std::cout << "next: " << _next << std::endl;
 	}
 };
 
+// The node daddy...
 class Inventory {
 private:
 	InventorySlot* _head;
-	int _size;
+	int _size = 0;
 	int _max_size = 64;
 
+
 public:
-	Inventory() { _head = nullptr; _size = 0;}
-	~Inventory() {}
+	//For now inventory must be constructed with at least 1 item.
+	Inventory(InventorySlot* head) {
+		_head = head;
+		_size++;
+	}
 
 	InventorySlot* getHead() { return _head; }
-	
-	void addItem(Item* item_ptr){
-		InventorySlot* new_invent_slot = new InventorySlot(item_ptr);
 
-		if (_head = nullptr) { _head = new_invent_slot; }
-		else { 
-			new_invent_slot->setNextSlot(_head);	// Add new value to list
-			_head = new_invent_slot;				// Change old head pointer to new value
-		}
-		_size++;
-	} 
-
-	void test() {
+	InventorySlot* getTail() {
 		InventorySlot* traversal_ptr = _head;
 
-		while (traversal_ptr != nullptr) {
-			traversal_ptr->test();
-			traversal_ptr = traversal_ptr->getNextSlot();
+		while(traversal_ptr->getNext() != nullptr){
+			traversal_ptr = traversal_ptr->getNext();
 		}
+		return traversal_ptr;
+	}
+
+	InventorySlot addItem(Item* item_ptr) {
+		InventorySlot new_item = InventorySlot(item_ptr);
+		
+		InventorySlot* tail = getTail();
+		tail->setNext(&new_item);
+
+		return new_item;
 	}
 };
 
+int main() {
+	Item test_stick ("Testing Stick", "testType", "Good for combat");
+	Item test_potion("Pot of Testies ;)", "testType", "Good for healing");
+	Item test_armour("Test Armour", "testType", "Bug armour is required before heavy debugging.");
+
+	InventorySlot slot1(&test_stick);
+	Inventory inventory(&slot1);
+
+	return 0;
+}
 
 //class Inventory {
 //private:
@@ -164,20 +187,3 @@ public:
 //		}
 //	}
 //};
-
-int main() {
-	Item testStick("Beeeeg Testing Stick", "testType", "Good for testing data structures.");
-	Item testStick2("Beeeeger Testing Stick", "testType", "Good for testing secondary data structures.");
-	Item testStick3("BEEEEGEST Testing Stick", "testType", "Good for testing tertiary data structures.");
-	Item testStick4("MONSTROUS Testing Stick", "testType", "Good for testing quartinary data structures.");
-	Inventory inventory;
-
-	inventory.addItem(&testStick);
-	inventory.addItem(&testStick2);
-	inventory.addItem(&testStick3);
-	inventory.addItem(&testStick4);
-	
-	inventory.test();
-
-	return 0;
-}
