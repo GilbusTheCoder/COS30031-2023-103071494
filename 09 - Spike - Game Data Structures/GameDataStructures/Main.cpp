@@ -1,5 +1,4 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 
 /*	NOTES ON VECTORS
@@ -68,7 +67,7 @@ public:
 		_next = next;
 	};
 
-	Item getItem(){ return (*_item); } //Returns item not the pointer
+	Item* getItem() { return _item; }
 	InventorySlot* getNext() { 
 		if (_next != nullptr) { return _next; }
 		else { 
@@ -113,77 +112,113 @@ public:
 
 	InventorySlot addItem(Item* item_ptr) {
 		InventorySlot new_item = InventorySlot(item_ptr);
-		
 		InventorySlot* tail = getTail();
+
 		tail->setNext(&new_item);
+		_size++;
 
 		return new_item;
+	}
+
+	void deleteItem(Item* item) {
+		InventorySlot* previous_ptr = nullptr;
+		InventorySlot* traversal_ptr = _head;
+
+		while (traversal_ptr->getItem() != item) {
+			previous_ptr = traversal_ptr;
+			traversal_ptr = traversal_ptr->getNext();
+		}
+
+		previous_ptr->setNext(traversal_ptr->getNext());
+		traversal_ptr->setNext(nullptr);
+		_size--;
+	}
+
+	void show() {
+		InventorySlot* traversal_ptr = _head;
+
+		while (traversal_ptr != nullptr) {
+			traversal_ptr->getItem()->printDescription();
+			std::cout << std::endl;
+			traversal_ptr = traversal_ptr->getNext();
+		}
 	}
 };
 
 int main() {
-	Item test_stick ("Testing Stick", "testType", "Good for combat");
-	Item test_potion("Pot of Testies ;)", "testType", "Good for healing");
-	Item test_armour("Test Armour", "testType", "Bug armour is required before heavy debugging.");
+	Item test_stick ("Testing Stick", "testType", "Great for breaking monitors :/");
+	InventorySlot init_slot(&test_stick);
+	Inventory inventory(&init_slot);
+	
+	Item test_potion("Pot of Testing", "testType", "Good for quick fixes!");
+	Item test_armour("Test Armour", "testType", "Bug armour is required for any heavy debugging.");
+	
+	inventory.addItem(&test_potion);
+	inventory.show();
 
-	InventorySlot slot1(&test_stick);
-	Inventory inventory(&slot1);
+	inventory.addItem(&test_armour);
+	inventory.show();
+
+	inventory.deleteItem(&test_potion);
+	inventory.show();
 
 	return 0;
 }
 
-//class Inventory {
-//private:
-//	/*	This vector will store item pointers as we expect to do a decent bit of
-//		copying and resizing so it's probably more effecient even though our 
-//		object exist in a contiguous memory chunk */
-//
-//	std::vector<Item*> _container;
-//	int _inventory_capactity = 100;
-//
-//public:
-//	Inventory() {
-//		_container.reserve(_inventory_capactity);
-//		test();
-//	}
-//
-//	~Inventory() {
-//		_container.clear();
-//		std::vector<Item*>().swap(_container);
-//
-//		/*	As far as I can tell shrink_to_fit() can sometimes be ignored by the compiler.
-//		*	After some research I found the above line of code which should deallocate the
-//		*	memory after clear(). 
-//		_container.shrink_to_fit(); */
-//	}
-//
-//	void addItem(Item* item_ptr) {
-//		_container.emplace_back(item_ptr);
-//	};
-//
-//	void printItems() {
-//		for (auto iterator = _container.begin(); iterator != _container.end(); iterator++) {
-//			(*iterator)->printDescription();
-//		}
-//	}
-//
-//	void removeItem(Item* item_ptr) {
-//		for (int i = 0; i == _container.size(); i++) {
-//			if (*iterator == item_ptr) { _container.erase(iterator); }
-//		}
-//	}
-//	/*void removeItem(Item* item_ptr) {
-//		_container.erase(std::remove_if(_container.begin(), _container.end(),
-//			[](const Item* element, Item* item_ptr) {return item_ptr == element; }));
-//		
-//		_container.end();
-//	}*/
-//
-//	void test() {
-//		if (true) {
-//			std::cout << "Vector size: " << _container.size() << std::endl;
-//			std::cout << "Vector capacity: " << _container.capacity() << std::endl;
-//			std::cout << "Vector max size: " << _container.max_size() << std::endl;
-//		}
-//	}
-//};
+
+/*Old Vector Code from before I quit messing around with iterators
+class Inventory {
+private:
+	/*	This vector will store item pointers as we expect to do a decent bit of
+		copying and resizing so it's probably more effecient even though our 
+		object exist in a contiguous memory chunk 
+
+	std::vector<Item*> _container;
+	int _inventory_capactity = 100;
+
+public:
+	Inventory() {
+		_container.reserve(_inventory_capactity);
+		test();
+	}
+
+	~Inventory() {
+		_container.clear();
+		std::vector<Item*>().swap(_container);
+
+		/*	As far as I can tell shrink_to_fit() can sometimes be ignored by the compiler.
+		*	After some research I found the above line of code which should deallocate the
+		*	memory after clear(). 
+		_container.shrink_to_fit(); 
+	}
+
+	void addItem(Item* item_ptr) {
+		_container.emplace_back(item_ptr);
+	};
+
+	void printItems() {
+		for (auto iterator = _container.begin(); iterator != _container.end(); iterator++) {
+			(*iterator)->printDescription();
+		}
+	}
+
+	void removeItem(Item* item_ptr) {
+		for (int i = 0; i == _container.size(); i++) {
+			if (*iterator == item_ptr) { _container.erase(iterator); }
+		}
+	}
+	/*void removeItem(Item* item_ptr) {
+		_container.erase(std::remove_if(_container.begin(), _container.end(),
+			[](const Item* element, Item* item_ptr) {return item_ptr == element; }));
+		
+		_container.end();
+	}
+
+	void test() {
+		if (true) {
+			std::cout << "Vector size: " << _container.size() << std::endl;
+			std::cout << "Vector capacity: " << _container.capacity() << std::endl;
+			std::cout << "Vector max size: " << _container.max_size() << std::endl;
+		}
+	}
+};*/
