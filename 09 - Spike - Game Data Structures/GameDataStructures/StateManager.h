@@ -51,6 +51,10 @@ private:
 	Player _player = Player(&_init_slot);
 
 public:
+	InventoryItem _bundle_of_twigs;
+	InventoryItem _petrol_and_lighter;
+	InventorySlot _add_item;
+
 	GameplayState();
 
 	STATES update() override;

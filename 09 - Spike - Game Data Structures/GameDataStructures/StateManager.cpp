@@ -1,6 +1,7 @@
 #include <iostream>
 #include "StateManager.h"
 #include "Player.h"
+#include "InventorySlot.h"
 
 //State manager definitions
 StateManager::StateManager() {
@@ -76,18 +77,6 @@ void AboutMenu::render() {
 }
 
 
-//Help menu definitions
-STATES HelpMenu::update() { return STATES::MAIN_MENU; }
-void HelpMenu::render() {
-	std::cout << "The following commands are supported: " << std::endl;
-	std::cout << "inventory - Show inventory" << std::endl <<
-		">> quit" << std::endl << 
-		">> highscore (for testing)" << std::endl;
-	system("pause");
-	std::cout << std::endl;
-}
-
-
 //Select Adventure definitions
 STATES AdventureSelectMenu::update() {
 	int choice;
@@ -97,12 +86,15 @@ STATES AdventureSelectMenu::update() {
 	switch (choice) {
 	case 1:
 		std::cout << "This is a pretty neat world" << std::endl;
+		std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
 		return STATES::GAMEPLAY;
 	case 2:
 		std::cout << "Wow this worlds pretty cewl" << std::endl;
+		std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
 		return STATES::GAMEPLAY;
 	case 3:
-		std::cout << "This is the coolest shit i've ever seen :O" << std::endl;
+		std::cout << "Now this... this is epic..." << std::endl;
+		std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
 		return STATES::GAMEPLAY;
 	}
 }
@@ -116,30 +108,114 @@ void AdventureSelectMenu::render() {
 	std::cout << ">> 3. Even COOLER World" << std::endl;
 }
 
+//Help menu definitions
+STATES HelpMenu::update() { return STATES::MAIN_MENU; }
+void HelpMenu::render() {
+	std::cout << "Zork(ish) :: Test Build Commands" << std::endl;
+	std::cout << "---------------------------------------------------------------" << std::endl;
+	std::cout << std::endl;
+	std::cout << "For the time being, commands have been split into 2 sections" << std::endl <<
+		"- Action commmands (come first and do something)" << std::endl <<
+		"	- Object commands (to do the action on)" << std::endl << 
+		"NOTE: All commands are strict and must be written in only lowercase (for now)." << std::endl;
+	std::cout << std::endl;
+	std::cout << "The following commands are supported: " << std::endl <<
+		"- show 'object'" << std::endl <<
+		"	- inventory" << std::endl <<
+		"	- highscores" << std::endl <<
+		"- take 'object first word'" << std::endl <<
+		"	- twigs" << std::endl <<
+		"	- petrol" << std::endl <<
+		"- drop 'object first word'" << std::endl <<
+		"	- twigs" << std::endl <<
+		"	- petrol" << std::endl <<
+		"- quit" << std::endl <<
+		"	- game" << std::endl;
+}
 
 //Gameplay state definitions
-GameplayState::GameplayState() {}
+GameplayState::GameplayState() {
+	_bundle_of_twigs = InventoryItem("Twigs", "fuel", "Common in the forest");
+	_petrol_and_lighter = InventoryItem("Petrol and Lighter", "pestControl", "Don't like the forest? Don't have too ;)");
+}
 
-STATES GameplayState::update() {
-	std::string command;
-	std::cin >> command;
+STATES GameplayState::update() {	
+	std::string action;
+	std::string object;
 
-	if (command == "highscore") { return STATES::NEW_HS; }
-	else if (command == "quit") { return STATES::QUIT; }
-	
-	else if (command == "inventory") { 
+	std::cout << ">> Action: ";
+	std::cin >> action;
+	std::cout << ">> Object: ";
+	std::cin >> object;
+
+	std::cout << "test time" << std::endl;
+
+	// Using this big chunk of if-else statements until command processor is build
+	if (action == "quit" && object == "game") { return STATES::QUIT; }
+	else if (action == "show" && object == "highscores") { return STATES::VIEW_HoF; }
+	else if (action == "show" && object == "inventory") {
 		_player.showInventory();
-		return STATES::GAMEPLAY; 
+		return STATES::GAMEPLAY;
 	}
-	
+
+	// Also something is fucked here. The function will return an address whose item is 
+	// deleted when it falls out of scope. I want the items to live for the runtime of 
+	// the gamestate. Will fix this when I don't wanna break a monitor. 
+	else if (action == "take" && object == "twigs") {
+		_add_item = _player.takeItem(&_bundle_of_twigs);
+		return STATES::GAMEPLAY;
+	}
+	else if (action == "take" && object == "petrol") {
+		_add_item = _player.takeItem(&_petrol_and_lighter);
+		return STATES::GAMEPLAY;
+	}
+	else if (action == "drop" && object == "twigs") {
+		_player.removeItem(&_bundle_of_twigs);
+		return STATES::GAMEPLAY;
+	}
+	else if (action == "drop" && object == "petrol") {
+		_player.takeItem(&_petrol_and_lighter);
+		return STATES::GAMEPLAY;
+	}
+
 	else { return STATES::GAMEPLAY; }
+
+	//if (action == "highscore") { return STATES::NEW_HS; }
+	//else if (action == "quit") { return STATES::QUIT; }
+	//else if (action == "inventory") {
+	//	_player.showInventory();
+	//	return STATES::GAMEPLAY; 
+	//}
+	//else if (command == "take twigs") {
+	//	_player.takeItem(&bundle_of_twigs);
+	//	return STATES::GAMEPLAY;
+	//}
+	//else if (command == "drop twigs") {
+	//	_player.removeItem(&bundle_of_twigs);
+	//	return STATES::GAMEPLAY;	
+	//}
+	//else if (command == "take petrol") {
+	//	_player.takeItem(&petrol_and_lighter);
+	//	return STATES::GAMEPLAY;
+	//}
+	//else if (command == "drop petrol") {
+	//	_player.removeItem(&petrol_and_lighter);
+	//	return STATES::GAMEPLAY;
+	//}
+	
+
 }
 void GameplayState::render() {
 	std::cout << std::endl;
-	std::cout << "Gameplay stuff goes in here!" << std::endl;
-	std::cout << "Allowed stage 1 commands can be found in the help screen" << std::endl;
-	std::cout << "Please enter test commands" << std::endl;
-	std::cout << ">> ";
+	std::cout << "You find yourself laying on a small mound of dead dirt surrounded" << std::endl
+		<< "by dense forest. Also you have no legs." << std::endl << std::endl;
+	
+	std::cout << "You see some twigs to your left and a lighter and petrol to your right." << std::endl;
+	std::cout << "A weird compulsion tempts you to take them..." << std::endl << std::endl;
+
+	std::cout << "	- Allowed stage 1 commands can be found in the help screen" << std::endl;
+	std::cout << "	- Please enter test commands" << std::endl;
+	std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
 }
 
 

@@ -13,8 +13,8 @@ Player::Player(InventorySlot* _init_slot) {
 	_inventory = Inventory(_init_slot);
 }
 
-void Player::takeItem(InventoryItem* item_ptr) {
-	_inventory.addItem(item_ptr); }
+InventorySlot Player::takeItem(InventoryItem* item_ptr) {
+	return _inventory.addItem(item_ptr); }
 
 void Player::removeItem(InventoryItem* item_ptr) {
 	_inventory.deleteItem(item_ptr); }

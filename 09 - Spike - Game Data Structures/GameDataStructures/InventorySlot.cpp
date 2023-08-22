@@ -2,6 +2,11 @@
 #include "InventorySlot.h"
 #include "InventoryItem.h"
 
+InventorySlot::InventorySlot() {
+	_item = nullptr;
+	_next = nullptr;
+}
+
 InventorySlot::InventorySlot(InventoryItem* item_ptr) {
 	_item = item_ptr;
 	_next = nullptr;

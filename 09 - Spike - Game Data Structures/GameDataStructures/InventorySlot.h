@@ -7,6 +7,7 @@ private:
 	InventorySlot* _next;
 
 public:
+	InventorySlot();
 	InventorySlot(InventoryItem* item_ptr);
 	
 	InventoryItem* getItem();
