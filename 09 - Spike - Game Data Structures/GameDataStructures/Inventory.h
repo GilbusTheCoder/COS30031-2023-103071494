@@ -5,11 +5,12 @@
 
 class Inventory {
 private:
-	InventorySlot* _head;	
+	InventorySlot* _head = nullptr;	
 	int _size = 0;
 	int _max_size = 64;
 
 public:
+	Inventory();
 	Inventory(InventorySlot* head);
 
 	InventorySlot* getHead();

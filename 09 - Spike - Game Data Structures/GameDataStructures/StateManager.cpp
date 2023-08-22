@@ -80,7 +80,9 @@ void AboutMenu::render() {
 STATES HelpMenu::update() { return STATES::MAIN_MENU; }
 void HelpMenu::render() {
 	std::cout << "The following commands are supported: " << std::endl;
-	std::cout << ">> quit" << std::endl << ">> highscore (for testing)" << std::endl;
+	std::cout << "inventory - Show inventory" << std::endl <<
+		">> quit" << std::endl << 
+		">> highscore (for testing)" << std::endl;
 	system("pause");
 	std::cout << std::endl;
 }
@@ -116,12 +118,20 @@ void AdventureSelectMenu::render() {
 
 
 //Gameplay state definitions
+GameplayState::GameplayState() {}
+
 STATES GameplayState::update() {
 	std::string command;
 	std::cin >> command;
 
 	if (command == "highscore") { return STATES::NEW_HS; }
 	else if (command == "quit") { return STATES::QUIT; }
+	
+	else if (command == "inventory") { 
+		_player.showInventory();
+		return STATES::GAMEPLAY; 
+	}
+	
 	else { return STATES::GAMEPLAY; }
 }
 void GameplayState::render() {

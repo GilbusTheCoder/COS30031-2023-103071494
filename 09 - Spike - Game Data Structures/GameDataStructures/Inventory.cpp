@@ -2,6 +2,8 @@
 #include "Inventory.h"
 #include "InventorySlot.h"
 
+Inventory::Inventory() {_head = nullptr; }
+
 Inventory::Inventory(InventorySlot* head) {
 	_head = head;
 	_size++;

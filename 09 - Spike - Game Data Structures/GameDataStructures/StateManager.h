@@ -1,4 +1,5 @@
 #pragma once
+#include "player.h"
 
 enum STATES {
 	WELCOME,
@@ -7,8 +8,8 @@ enum STATES {
 	HELP,
 	SELECT_ADVENTURE,
 	GAMEPLAY,
-	NEW_HS,		//New Highscore
-	VIEW_HoF,	//View Hall of Fame
+	NEW_HS,				//New Highscore
+	VIEW_HoF,			//View Hall of Fame
 	QUIT,
 };
 
@@ -44,7 +45,14 @@ public:
 };
 
 class GameplayState : public State {
+private:
+	InventoryItem _init_item = InventoryItem("Sword of Testing", "testType", "Better than the testing stick that's for sure.");
+	InventorySlot _init_slot = InventorySlot(&_init_item);
+	Player _player = Player(&_init_slot);
+
 public:
+	GameplayState();
+
 	STATES update() override;
 	void render() override;
 };
