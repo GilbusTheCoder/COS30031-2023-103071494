@@ -27,25 +27,35 @@ void StateManager::render() { _current_ptr->render(); }
 
 //Main menu definitions
 STATES MainMenu::update() {
-	int choice;
+	int choice = 0;
 	std::cin >> choice;
 
+	if (!std::cin.fail()){
 	std::cout << std::endl;
-
+	
 	switch (choice) {
-	case 1:
-		return STATES::SELECT_ADVENTURE;
-	case 2:
-		return STATES::VIEW_HoF;
-	case 3:
-		return STATES::HELP;
-	case 4:
-		return STATES::ABOUT;
-	case 5:
-		return STATES::QUIT;
-	default:
+		case 1:
+			return STATES::SELECT_ADVENTURE;
+		case 2:
+			return STATES::VIEW_HoF;
+		case 3:
+			return STATES::HELP;
+		case 4:
+			return STATES::ABOUT;
+		case 5:
+			return STATES::QUIT;
+		default:
+			return STATES::MAIN_MENU;
+		}
+	}
+	else {
+		std::cout << "Enter a value which correlates with a menu option." << std::endl << std::endl;
+		
+		std::cin.clear();
+		std::cin.ignore();
 		return STATES::MAIN_MENU;
 	}
+
 }
 
 void MainMenu::render() { 
@@ -89,19 +99,30 @@ void HelpMenu::render() {
 STATES AdventureSelectMenu::update() {
 	int choice;
 	std::cin >> choice;
-	std::cout << std::endl;
 
-	switch (choice) {
-	case 1:
-		std::cout << "This is a pretty neat world" << std::endl;
-		return STATES::GAMEPLAY;
-	case 2:
-		std::cout << "Wow this worlds pretty cewl" << std::endl;
-		return STATES::GAMEPLAY;
-	case 3:
-		std::cout << "This is the coolest shit i've ever seen :O" << std::endl;
-		return STATES::GAMEPLAY;
+	if (!std::cin.fail()) {
+		std::cout << std::endl;
+
+		switch (choice) {
+		case 1:
+			std::cout << "This is a pretty neat world" << std::endl;
+			return STATES::GAMEPLAY;
+		case 2:
+			std::cout << "Wow this worlds pretty cewl" << std::endl;
+			return STATES::GAMEPLAY;
+		case 3:
+			std::cout << "This is the coolest world i've ever seen :O" << std::endl;
+			return STATES::GAMEPLAY;
+		}
 	}
+
+	else {
+		std::cout << "Please enter a value correlating with the options" << std::endl << std::endl;
+		
+		std::cin.clear();
+		std::cin.ignore();
+		return STATES::SELECT_ADVENTURE; 
+	};
 }
 
 void AdventureSelectMenu::render() {
