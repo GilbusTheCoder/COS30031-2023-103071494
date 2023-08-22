@@ -1,2 +1,8 @@
-﻿  Main.cpp
+﻿  Inventory.cpp
+  InventoryItem.cpp
+F:\Uni\COS30031-2023-103071494\09 - Spike - Game Data Structures\GameDataStructures\InventoryItem.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Main.cpp
+  StateManager.cpp
+  Generating Code...
+F:\Uni\COS30031-2023-103071494\09 - Spike - Game Data Structures\GameDataStructures\StateManager.cpp(105): warning C4715: 'AdventureSelectMenu::update': not all control paths return a value
   GameDataStructures.vcxproj -> F:\Uni\COS30031-2023-103071494\09 - Spike - Game Data Structures\GameDataStructures\x64\Debug\GameDataStructures.exe
