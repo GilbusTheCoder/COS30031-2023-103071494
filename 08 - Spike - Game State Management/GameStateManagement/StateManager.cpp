@@ -17,7 +17,7 @@ void StateManager::update() {
 	else if (_current_state == STATES::HELP) { _current_ptr = &_help_menu; }
 	else if (_current_state == STATES::SELECT_ADVENTURE) { _current_ptr = &_adventure_select_menu; }
 	else if (_current_state == STATES::GAMEPLAY) { _current_ptr = &_gameplay; }
-	else if (_current_state == STATES::NEW_HS) { _current_ptr = &_new_highscore_menu; }
+	else if (_current_state == STATES::NEW_HS) { _current_ptr = &_new_hs_menu; }
 	else if (_current_state == STATES::VIEW_HoF) { _current_ptr = &_hall_of_fame_menu; }
 	else if (_current_state == STATES::QUIT) { _current_ptr = &_quit; }
 

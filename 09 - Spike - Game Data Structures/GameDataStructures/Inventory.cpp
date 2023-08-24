@@ -20,14 +20,12 @@ InventorySlot* Inventory::getTail() {
 }
 
 
-InventorySlot Inventory::addItem(InventoryItem* item_ptr) {
-	InventorySlot new_item = InventorySlot(item_ptr);
+void Inventory::addItem(InventoryItem* item_ptr) {
+	InventorySlot* new_item = new InventorySlot(item_ptr);
 	InventorySlot* tail = getTail();
 
-	tail->setNext(&new_item);
+	tail->setNext(new_item);
 	_size++;
-
-	return new_item;
 }
 
 
@@ -46,8 +44,11 @@ void Inventory::deleteItem(InventoryItem* item_ptr) {
 }
 
 void Inventory::show() {
-	InventorySlot* traversal_ptr = _head;
+	std::cout << "Zork(ish) :: Your Inventory " << std::endl;
+	std::cout << "---------------------------------------------------------------" << std::endl;
+	std::cout << std::endl;
 
+	InventorySlot* traversal_ptr = _head;
 	while (traversal_ptr != nullptr) {
 		traversal_ptr->getItem()->printDescription();
 		std::cout << std::endl;

@@ -1,7 +1,4 @@
 ﻿  Inventory.cpp
-  InventorySlot.cpp
-  Main.cpp
-  Player.cpp
   StateManager.cpp
   Generating Code...
 F:\Uni\COS30031-2023-103071494\09 - Spike - Game Data Structures\GameDataStructures\StateManager.cpp(100): warning C4715: 'AdventureSelectMenu::update': not all control paths return a value

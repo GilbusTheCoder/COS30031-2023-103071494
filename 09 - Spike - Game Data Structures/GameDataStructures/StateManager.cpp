@@ -134,11 +134,6 @@ void HelpMenu::render() {
 }
 
 //Gameplay state definitions
-GameplayState::GameplayState() {
-	_bundle_of_twigs = InventoryItem("Twigs", "fuel", "Common in the forest");
-	_petrol_and_lighter = InventoryItem("Petrol and Lighter", "pestControl", "Don't like the forest? Don't have too ;)");
-}
-
 STATES GameplayState::update() {	
 	std::string action;
 	std::string object;
@@ -148,7 +143,7 @@ STATES GameplayState::update() {
 	std::cout << ">> Object: ";
 	std::cin >> object;
 
-	std::cout << "test time" << std::endl;
+	std::cout << std::endl;
 
 	// Using this big chunk of if-else statements until command processor is build
 	if (action == "quit" && object == "game") { return STATES::QUIT; }
@@ -162,49 +157,25 @@ STATES GameplayState::update() {
 	// deleted when it falls out of scope. I want the items to live for the runtime of 
 	// the gamestate. Will fix this when I don't wanna break a monitor. 
 	else if (action == "take" && object == "twigs") {
-		_add_item = _player.takeItem(&_bundle_of_twigs);
+		 _player.takeItem(_bundle_of_twigs_ptr);
 		return STATES::GAMEPLAY;
 	}
 	else if (action == "take" && object == "petrol") {
-		_add_item = _player.takeItem(&_petrol_and_lighter);
+		_player.takeItem(_petrol_and_lighter_ptr);
 		return STATES::GAMEPLAY;
 	}
 	else if (action == "drop" && object == "twigs") {
-		_player.removeItem(&_bundle_of_twigs);
+		_player.removeItem(_bundle_of_twigs_ptr);
 		return STATES::GAMEPLAY;
 	}
 	else if (action == "drop" && object == "petrol") {
-		_player.takeItem(&_petrol_and_lighter);
+		_player.removeItem(_petrol_and_lighter_ptr);
 		return STATES::GAMEPLAY;
 	}
 
 	else { return STATES::GAMEPLAY; }
-
-	//if (action == "highscore") { return STATES::NEW_HS; }
-	//else if (action == "quit") { return STATES::QUIT; }
-	//else if (action == "inventory") {
-	//	_player.showInventory();
-	//	return STATES::GAMEPLAY; 
-	//}
-	//else if (command == "take twigs") {
-	//	_player.takeItem(&bundle_of_twigs);
-	//	return STATES::GAMEPLAY;
-	//}
-	//else if (command == "drop twigs") {
-	//	_player.removeItem(&bundle_of_twigs);
-	//	return STATES::GAMEPLAY;	
-	//}
-	//else if (command == "take petrol") {
-	//	_player.takeItem(&petrol_and_lighter);
-	//	return STATES::GAMEPLAY;
-	//}
-	//else if (command == "drop petrol") {
-	//	_player.removeItem(&petrol_and_lighter);
-	//	return STATES::GAMEPLAY;
-	//}
-	
-
 }
+
 void GameplayState::render() {
 	std::cout << std::endl;
 	std::cout << "You find yourself laying on a small mound of dead dirt surrounded" << std::endl

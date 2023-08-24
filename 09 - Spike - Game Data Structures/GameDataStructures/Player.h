@@ -10,7 +10,7 @@ public:
 	Player();
 
 	//Wrappers for the inventory
-	InventorySlot takeItem(InventoryItem* item_ptr);
+	void takeItem(InventoryItem* item_ptr);
 	void removeItem(InventoryItem* item_ptr);
 	void showInventory();
 };

@@ -1,5 +1,4 @@
 #pragma once
-#include "Inventory.h"
 #include "InventorySlot.h"
 #include "InventoryItem.h"
 
@@ -16,7 +15,7 @@ public:
 	InventorySlot* getHead();
 	InventorySlot* getTail();
 
-	InventorySlot addItem(InventoryItem* item_ptr);
+	void addItem(InventoryItem* item_ptr);
 	void deleteItem(InventoryItem* item_ptr);
 	void show();
 };
