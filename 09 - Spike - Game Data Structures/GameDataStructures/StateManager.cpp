@@ -152,10 +152,6 @@ STATES GameplayState::update() {
 		_player.showInventory();
 		return STATES::GAMEPLAY;
 	}
-
-	// Also something is fucked here. The function will return an address whose item is 
-	// deleted when it falls out of scope. I want the items to live for the runtime of 
-	// the gamestate. Will fix this when I don't wanna break a monitor. 
 	else if (action == "take" && object == "twigs") {
 		 _player.takeItem(_bundle_of_twigs_ptr);
 		return STATES::GAMEPLAY;

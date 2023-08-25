@@ -13,12 +13,10 @@ InventorySlot::InventorySlot(InventoryItem* item_ptr) {
 };
 
 InventoryItem* InventorySlot::getItem() { return _item; }
+
 InventorySlot* InventorySlot::getNext() {
 	if (_next != nullptr) { return _next; }
-	else {
-		InventorySlot* hack_fix = nullptr;
-		return hack_fix;
-	}
+	else { return nullptr; }
 }
 
 void InventorySlot::setItem(InventoryItem* item_ptr) { _item = item_ptr; }
