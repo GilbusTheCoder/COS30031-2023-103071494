@@ -1,2 +1,3 @@
 ﻿  Main.cpp
-  PerformanceMeasurement.vcxproj -> C:\Users\thomh\OneDrive\Documents\Uni\COS30031-2023-103071494\07 - Spike - Performance Measurement\PerformanceMeasurement\x64\Debug\PerformanceMeasurement.exe
+F:\Uni\COS30031-2023-103071494\07 - Spike - Performance Measurement\PerformanceMeasurement\Main.cpp(48,21): warning C4804: '<': unsafe use of type 'bool' in operation
+  PerformanceMeasurement.vcxproj -> F:\Uni\COS30031-2023-103071494\07 - Spike - Performance Measurement\PerformanceMeasurement\x64\Debug\PerformanceMeasurement.exe

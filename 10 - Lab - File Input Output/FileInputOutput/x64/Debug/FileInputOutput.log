@@ -1,0 +1,3 @@
+﻿  Main.cpp
+F:\Uni\COS30031-2023-103071494\10 - Lab - File Input Output\FileInputOutput\Main.cpp(40,30): warning C4305: 'argument': truncation from 'double' to 'float'
+  FileInputOutput.vcxproj -> F:\Uni\COS30031-2023-103071494\10 - Lab - File Input Output\FileInputOutput\x64\Debug\FileInputOutput.exe

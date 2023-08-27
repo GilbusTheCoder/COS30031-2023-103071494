@@ -2,34 +2,6 @@
 #include <vector>
 #include <chrono>
 
-//class ArraySpeedTest{
-//private:
-//	int _size;
-//	int _array[];
-//
-//public:
-//	ArraySpeedTest(int size) {
-//		_size = size;
-//		_array[size] = new int(size);
-//
-//		fillArray();
-//		printArray();
-//	}
-//
-//	void printArray() {
-//		for (int i = 0; i < _size; i++) {
-//			std::cout << i << ": " << _array[i] << std::endl;
-//		}
-//	}
-//
-//	void fillArray() {
-//		for (int i = 0; i < _size; i++) {
-//			int test = i;
-//			_array[i] = test;
-//		}
-//	}
-//};
-
 class Node {
 private:
 	int _value;
@@ -41,11 +13,12 @@ public:
 		_next = next;
 	}
 
-	//Bitch throws a read access violation cuz of nullptr gotta fix
 	Node* getNext() { return _next; }
 	int getValue() { return _value; }
 	void setNext(Node* next) { _next = next; }
 	void setValue(int value) { _value = value; }
+
+	void show() { std::cout << "Value: " << _value << std::endl; }
 };
 
 class LinkedList {
@@ -56,12 +29,8 @@ private:
 public:
 	LinkedList(Node* head = nullptr) {
 		_head = head;
-
-		if (head != nullptr) {
-			_size++;
-		}
+		if (head != nullptr) { _size++; }
 	}
-
 
 	Node* getTail() {
 		Node* traversal_ptr = _head;
@@ -73,30 +42,45 @@ public:
 		return traversal_ptr;
 	}
 
-	void addNode(int value) {
-		if (_head == nullptr) {
-			Node* head = new Node(_size);
-			_size++;
+	Node* findNodeAtPos(int position) {
+		Node* traversal_ptr = _head;
+		
+		for (int i = 0; i < position < _size; i++) {
+			traversal_ptr = traversal_ptr->getNext();
 		}
-		else {
-			Node* tail = getTail();
-			Node* next = new Node(_size);
-			
-			tail->setNext(next);
-			_size++;
-		}
+
+		return traversal_ptr;
 	}
 
-	void printList() {
+	Node* findNodeContaining(int value) {
 		Node* traversal_ptr = _head;
 
-		while (&traversal_ptr != nullptr) {
+		while (traversal_ptr->getValue() != value 
+			&& traversal_ptr->getNext() != nullptr) 
+		{ 
+			traversal_ptr = traversal_ptr->getNext(); 
+		}
+
+		return traversal_ptr;
+	}
+
+	void addNodeToTail(int value) {
+		Node* tail = getTail();
+		Node* next = new Node(value);
+			
+		tail->setNext(next);
+		_size++;
+	}
+
+	void addNode(int value, int position) {}
+	void deleteNodeContaining(int value) {}
+
+	void show() {
+		Node* traversal_ptr = _head;
+
+		while (traversal_ptr != nullptr) {
 			std::cout << "Node address: " << &traversal_ptr << std::endl;
 			std::cout << "Node value: " << traversal_ptr->getValue() << std::endl;
-
-			if (traversal_ptr->getNext() == nullptr) { std::cout << "Node next: nullptr" << std::endl; }
-			else { std::cout << "Node next" << traversal_ptr->getNext() << std::endl; }
-			std::cout << std::endl;
 
 			traversal_ptr = traversal_ptr->getNext();
 		}
@@ -104,10 +88,14 @@ public:
 };
 
 int main(){
-	Node* init_node = new Node();
+	Node* init_node = new Node(4);
 	LinkedList list(init_node);
 
-	list.printList();
+	list.addNodeToTail(8);
+	list.addNodeToTail(16);
+	
+	list.show();
 
+	Node* test = list.findNodeAtPos(1);
 	return 0;
 }
