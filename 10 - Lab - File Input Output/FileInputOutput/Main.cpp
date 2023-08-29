@@ -3,26 +3,48 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <json.hpp>
 
-/*  - 1. Add new section heading “Part B” to your Lab Notes?
+using json = nlohmann::json;
+
+/*  TODO: 1. Add new section heading “Part B” to your Lab Notes?
     - 2. With a text editor, create and save a simple text file (such as “test2.txt”) that contains three lines similar to the
-        following, with the last line being the actual line of useful data and using a full-colon separator character:
+         following, with the last line being the actual line of useful data and using a full-colon separator character:
 
-    3. Create a new program that is able to
-        a. Open the file (text mode, read only),
-        b. Print each line to screen, one at a time
-    4. Compile and run. Confirm that it works
-    5. Modify your code so that it can (required!)
-        a. Ignore any blank line (“strip” whitespace first?),
-        b. Ignore a line that starts with the hash “#” character (treats it as a single line comment),
-        c. Splits all other lines, checking that is has the appropriate number of “bits”, and
-        d. Prints each split line to screen, on bit at a time. (The “bits” are just strings in this case.)
-    6. Compile and run. Confirm that it works as expected. Commit to repo!
+    - 3. Create a new program that is able to
+       -  a. Open the file (text mode, read only),
+       -  b. Print each line to screen, one at a time
+    - 4. Compile and run. Confirm that it works
+    - 5. Modify your code so that it can (required!)
+        - a. Ignore any blank line (“strip” whitespace first?),
+        - b. Ignore a line that starts with the hash “#” character (treats it as a single line comment),
+        - c. Splits all other lines, checking that is has the appropriate number of “bits”, and
+        - d. Prints each split line to screen, on bit at a time. (The “bits” are just strings in this case.)
+    - 6. Compile and run. Confirm that it works as expected. Commit to repo!
 
-    Notes:
+    Part B Notes:
         - Use ifstream objects with stream extraction operators
         - Open the file, verify, process data and close
         - Use loops to read entire file
+
+    
+    TODO: 1. Add new “Part C” section to Lab Notes
+    - 2. With a text editor create a basic JSON text file (such as “test3.json”) with the following content (or similar) for player
+       character details:
+        { "exp": 12345, "health": 100, "jsonType": "player", "level": 42, "name": "Fred",
+        "uuid": "123456" }
+    - 3. Go to https://github.com/nlohmann/json, read and download the JSON library. We suggest the “Trivial integration”
+       version (search the README.md) which is a single hpp file in plain C++11, but it’s up to you. You could use another
+       JSON library if you want, but this one is popular and well designed.
+    - 4. Create a simple JSON test program in C++ that, using the JSON library, opens your JSON file and then print the contents
+       to screen. (Simple to write – but might take you a bit of effort. Use similar steps to the ones earlier in this lab.)
+
+    Part C Notes:
+        - Should probably make the FileReader and JSONReader subclasses of a Reader parent or implement an interface containing 
+          the declarations for Splitting lines, checking comments and delimiting strings based off of values. Would be nice for
+          JSON formatting which is currently non-existent... but hey... it prints and that's enough documentation crawling for 
+          tonight.
+        
 */
 
 
@@ -132,21 +154,72 @@ public:
     }
 };
 
+// Needs to be able to read in each line of the JSON script and print those
+// to the terminal preferably using a for loop and iterators.
+class JSONReader {
+private:
+    std::string _file_name;
+    std::ifstream _reader;
+    json _json_data;
+
+public:
+    JSONReader(std::string file_name) {
+        _file_name = file_name;
+        _reader.open(file_name);
+        _json_data = json::parse(_reader);
+        
+        /* For testing.            
+        _json_data = {{"exp" , 12345},
+                      {"health", 100},
+                      {"jsonType", "player"} ,
+                      {"level", 42},
+                      {"name" , "Fred"},
+                      {"uuid", "123456" } };*/
+    }
+
+    ~JSONReader() {
+        if (_reader.is_open()) { _reader.close(); }
+    }
+
+    void printJSON() {
+        // Cool function, not sure how efficient it is but it's pretty cool.
+        auto json_string = to_string(_json_data);
+        std::cout << json_string;
+    }
+
+    void printJSONButPretty() {
+        auto json_string = to_string(_json_data);
+
+
+    }
+
+};
+
 //We're assuming that the data will be formatted correctly in format int:string:float
 //  - Go through each line of the file saving the line to a string
 //      * If the line begins with '#' then ignore
 //  - Remove whitespace from the string
 //  - Split the string into it's components using ':' as a delimeter and return a vector
 //    containing the strings
-//  - Cast these strings to their respective types and assign
-//  - Print results
+//  - Print results 
 int main() {
     CompoundType tester;
-    FileReader reader("input.txt");
-    std::vector<std::string> formatted_strings = reader.readLines();
+    FileReader text_reader("input.txt");
+    JSONReader json_reader("test.json");
 
-    for (auto it : formatted_strings) {
-        std::cout << it << std::endl;
+    // Part B
+    if (false) {
+        std::vector<std::string> formatted_strings = text_reader.readLines();
+
+        for (auto it : formatted_strings) {
+            std::cout << it << std::endl;
+        }
+
+    }
+    
+    // Part C
+    if (true) {
+        json_reader.printJSON();
     }
     
     return 0;
