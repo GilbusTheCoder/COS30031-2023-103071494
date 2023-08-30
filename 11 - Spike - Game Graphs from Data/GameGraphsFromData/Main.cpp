@@ -5,36 +5,23 @@ class Location {
 private:
 	std::string _name;
 	std::string _description;
-
-	//Replace this with our item class once it's implemented in zorkish
-	std::vector<std::string> _items;
 	std::vector<Location*> _exits;
 
-
 public:
-	Location(std::string name = " ", std::string description = " ",
-		std::vector<std::string> items = {}, std::vector<Location*> exits = {}) {
+	Location(std::string name = " ", 
+		std::string description = " ", 
+		std::vector<Location*> exits = {}) 
+	{
 		_name = name;
 		_description = description;
-		_items = items;
 		_exits = exits;
 	}
 
 	std::string GetName() { return _name; }
-	void SetAll(std::string name, std::string description,
-		std::vector<std::string> items, std::vector<Location*> exits) {
+	void SetAll(std::string name, std::string description, std::vector<Location*> exits) {
 		_name = name;
 		_description = description;
-		_items = items;
 		_exits = exits;
-	}
-
-	void ShowItems() {
-		std::cout << "Items: " << std::endl;
-
-		for (auto it : _items) {
-			std::cout << ">> " << it << std::endl;
-		}
 	}
 
 	void ShowExits() {
@@ -50,9 +37,8 @@ public:
 	void ShowDetails() {
 		std::cout << "Room: " << _name << std::endl
 			<< "Description: " << _description << std::endl;
-		
-		ShowItems();
 		ShowExits();
+		std::cout << std::endl;
 	}
 };
 
@@ -60,28 +46,34 @@ class World {
 private:
 	// Wont be needed once reading from a file as we can tell when to stop
 	// when there's nothing else to read.
-	int _world_size;
-	Location* _current_location;
-	
+	Location* _current_location = nullptr;
 	std::vector<Location*> _locations;
 
-	void ConstructLocations() {
-		// Push our initial location to the list
-		// Construct however many worlds are required, fill with rand data for now
-		_locations.push_back(_current_location);
+public:
+	World(Location* initial_location = nullptr) {
+		_current_location = initial_location;
+		
+		if (_current_location != nullptr) {
+			_locations.push_back(_current_location);
+		}
+		else { std::cout << "Error: No initial location given to World constructor" << std::endl; }
 	}
 
-public:
-	/*
-	World(Location* init_location, int world_size) {
-		_current_location = init_location;
-		_world_size = world_size;
-	}*/
+	void AddLocation(Location* new_location) {
+		_locations.push_back(new_location);
+	}
 
-	World(std::vector<Location*> locations) { _locations = locations; }
+	void ChangeCurrentLocation(std::string location_name) {		
+		for (auto it : _locations) {
+			if (it->GetName() == location_name) {
+				_current_location = it;
+			}
+		}
+	}
 
-	void ChangeCurrentLocation(Location* new_location) {
-		_current_location = new_location;
+	// Wrapper for the current locations methods
+	void ShowCurrentLocation() {
+		_current_location->ShowDetails();
 	}
 
 	void ShowLocations() {
@@ -99,19 +91,24 @@ int main() {
 	* 
 	* Testing: once the character goes into L3 they can only go to S */ 
 
-	std::vector<Location*> locations;
+	//Forward declate the locations so they can reference each other
 	Location init_location, loc1, loc2, loc3;
+	//Initial setup
+	init_location.SetAll("Start room", "Cold, dank and rank", { &loc1, &loc3 });
+	World world(&init_location);
 
-	init_location.SetAll("Start room", "Cold and dank", { "Sword", "Chest" }, { &loc1, &loc3 });
-	loc1.SetAll("Location 1", "A bit sunnier", { "Beach Towel", "Fork", "Paper hat" }, { &init_location,&loc2 });
-	loc2.SetAll("Location 2", "Looks like Sullies room", { "bed" }, { &loc1, &loc3 });
-	loc3.SetAll("Location 3", "Hey, i can get back to the start from here!", { " " }, { &init_location });
+	//Define & add rooms
+	loc1.SetAll("Location 1", "A bit sunnier", { &init_location,&loc2 });
+	loc2.SetAll("Location 2", "Looks like Sullies room", { &loc1, &loc3 });
+	loc3.SetAll("Location 3", "Hey, i can get back to the start from here!", { &init_location });
+	
 
-	locations.push_back(&init_location);
-	locations.push_back(&loc1);
-	locations.push_back(&loc2);
-	locations.push_back(&loc3);
+	world.AddLocation(&loc1);
+	world.AddLocation(&loc2);
+	world.AddLocation(&loc3);
 
-	World world(locations);
-	world.ShowLocations();
+	world.ShowCurrentLocation();
+
+	world.ChangeCurrentLocation("Location 1");
+	world.ShowCurrentLocation();
 }

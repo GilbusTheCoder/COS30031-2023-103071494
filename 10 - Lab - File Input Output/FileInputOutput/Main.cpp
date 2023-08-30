@@ -208,7 +208,7 @@ int main() {
     JSONReader json_reader("test.json");
 
     // Part B
-    if (false) {
+    if (true) {
         std::vector<std::string> formatted_strings = text_reader.readLines();
 
         for (auto it : formatted_strings) {
@@ -218,7 +218,7 @@ int main() {
     }
     
     // Part C
-    if (true) {
+    if (false) {
         json_reader.printJSON();
     }
     
