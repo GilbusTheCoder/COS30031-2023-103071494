@@ -1,2 +1,4 @@
 ﻿  Main.cpp
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(33,3): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(47,3): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
   GameGraphsFromData.vcxproj -> F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\x64\Debug\GameGraphsFromData.exe
