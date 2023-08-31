@@ -7,7 +7,7 @@
 *	Title: Game Data From Graphs
 *	Author: Thomas Horsley - 103071494
 * 
-*	Currently:  Working on using a file reader to instantiate the location game object
+*	Completed:  Working on using a file reader to instantiate the location game object
 *			    and there-in the world object from a text file, could use JSON later.	
 * 
 *				Will probably end up making the world object more of a world "manager" 
@@ -17,12 +17,25 @@
 * 
 *		Formatting:
 *			To make life easier with the functions that I've already written we're going
-*			to split the txt file using a double delimiter method.
-*				* Delimit once to split the file by room
+*			to split the txt file using a double delimiter tech.
+*				* Delimit once to split the file by location
 *					This will return a vector of strings
 *				* Iterate through each vector and split their strings into another set 
 *				  of vectors.
-*				* Use this data to instantiate location objects */ 
+*				* Use this data to instantiate location objects 
+* 
+*	Summary:
+*		So I don't really like this code to be honest. It works yes but instantiation of
+*		locations is a really fickle fucker. Additionally the order of the location data
+*		must be the same as the order of the locations in the vector. This is an issue for
+*		now as the program doesn't write its own save files. Cuz i wrote it and it's stoop.
+* 
+*		World has a set of location pointers. It can read from a file and assign the input
+*		data to the locations.
+* 
+*		Next step is to chop this up into class files for organisation and shove it into 
+*		zorkish.......... this is going to be fun and easy :)
+*/ 
 
 class FileReader {
 private:
@@ -43,12 +56,9 @@ private:
 		std::string line = string_data;
 		std::vector<std::string> delimited_data;
 
-		// Remove Whitespace
-		remove(line.begin(), line.end(), ' ');
+		remove(line.begin(), line.end(), ' ');	// Remove Whitespace
 		line.pop_back(); // Get rid of junk value which is added by remove??? look into that
 
-		// If the comment isn't a line, split the string and add each element to our
-		// delimited_data vector.
 		if (!isComment(line)) {
 			delimited_data = splitLine(line, delimiter);
 		}
@@ -134,6 +144,10 @@ public:
 	}
 
 	std::string GetName() { return _name; }
+	
+	void setName(std::string name) { _name = name; }
+	void setDescription(std::string description) { _description = description; }
+	void addExit(Location* exit) { _exits.push_back(exit); }
 	void SetAll(std::string name, std::string description, std::vector<Location*> exits) {
 		_name = name;
 		_description = description;
@@ -153,26 +167,28 @@ public:
 	void ShowDetails() {
 		std::cout << "Room: " << _name << std::endl
 			<< "Description: " << _description << std::endl;
-		ShowExits();
-		std::cout << std::endl;
+		ShowExits(); std::cout << std::endl;
 	}
 };
 
 /*	The world object will also have to act as a pseudo-interface between the save data
 *	and all of the world objects. It wont have the ability to read directly from files
 *	but will have the ability to take a vector of semi-formatted data from the FileReader,
-*	process this more and assign it to the neccessary locations 
+*	process this more and assign its' elements to the neccessary location objects 
 * 
 *	The rules for the text file are as follows:
 *		Use ';' to seperate locations
 *		Use ':' to seperate location data
+*		Everything after the description is an exit name
 *		E.g. Name1:Description1:ExitAName:ExitBName:ExitCName;
-*			 Name2:Description2:ExitAName:ExitDName:ExitZName; */
+*			 Name2:Description2:ExitAName:ExitDName:ExitZName;
+*
+*		Use _ as replacement for spaces. I will eventually write a function which converts
+*		between the two but for right now all white space is being removed so descriptions
+*		will look funny but meh.	*/
 
 class World {
 private:
-	// Wont be needed once reading from a file as we can tell when to stop
-	// when there's nothing else to read.
 	std::string _save_name = "test.txt";
 	FileReader* _reader = new FileReader(_save_name);
 	
@@ -198,16 +214,22 @@ private:
 		return locations;
 	}
 
+	Location* getLocationByName(std::string location_name) {
+		for (auto location : _locations) {
+			if (location->GetName() == location_name) { return location; }
+		}
+	}
+
 public:
 	/*	1.	Initialize memory for each location and push the pointers to these
 	*		locations to the locations vector
 	*	2.	Let the file reader run through the save file data and return a vector
-	*		of strings which of each contains the data for a location
+	*		of strings each of which contains the data for a location
 	*			* Name
 	*			* Description
 	*			* Name of Exit locations seperated with : 
 	*				To make sure this is consistent, the room must be named the same
-	*				in the text file as it is in the code. */
+	*				in the text file as it is in the code yes this is case sensitive.	*/
 
 	World() {
 		_locations = ConstructLocations();
@@ -226,45 +248,47 @@ public:
 		}
 	}
 
-	// Wrapper for the current locations methods
+	// Wrappers for the current locations methods
 	void ShowCurrentLocation() { _current_location->ShowDetails(); }
 	void ShowLocations() { for (auto it : _locations) { it->ShowDetails(); }}
 
-	// For the assumptions made see
+
+	/*	Here is a funny function. This will load everything except exit data into a location.
+	*	The exit data will be done on a second pass as the structure requires the location to 
+	*	own a name in to search it in the vector.	*/
 	void LoadLocationData() {
 		//Delimiters
-		char semicolon = ';';
-		char colon = ':';
+		char first_pass_delim = ';';
+		char second_pass_delimiter = ':';
 
-		std::vector<std::string> unformatted_room_data = _reader->GetLinesByDelimiter(semicolon);
+		std::vector<std::string> unformatted_room_data = _reader->GetLinesByDelimiter(first_pass_delim);
 		std::vector<std::vector<std::string>> formatted_room_data;
 
-		for (auto it : unformatted_room_data) { 
-			it += colon; // Add the delimiter to the end of the line
-			std::vector<std::string> formatted_line = _reader->splitLine(it, colon);
+		for (auto room_data_set : unformatted_room_data) { 
+			room_data_set += second_pass_delimiter; // Add the delimiter to the end of the line
+			std::vector<std::string> formatted_line = _reader->splitLine(room_data_set, second_pass_delimiter);
 			formatted_room_data.push_back(formatted_line);
 		}
 
-		for (int i = 0; i < formatted_room_data.size(); i++) {
-			for (int j = 0; j < formatted_room_data[i].size(); j++) {
-				std::cout << formatted_room_data[i][j] << std::endl;
+		for (int room_idx = 0; room_idx < formatted_room_data.size(); room_idx++) {
+			_locations[room_idx]->setName(formatted_room_data[room_idx][0]);
+			_locations[room_idx]->setDescription(formatted_room_data[room_idx][1]);
 			}
-		}
 
-		std::cout << "testline" << std::endl;
+		// It's assumed that the locations in the load file are in the same order as in the 
+		// _locations vector.
+		for (int room_idx = 0; room_idx < formatted_room_data.size(); room_idx++) {
+			for (int exit_idx = 2; exit_idx < formatted_room_data[room_idx].size(); exit_idx++) {
+				_locations[room_idx]->addExit(getLocationByName(formatted_room_data[room_idx][exit_idx]));
+			} 
+		}
 	}
 };
 
 int main() {
-	/* Picture a 2x2 room, character will start in the bottom left
-	* 
-	* L1 L2
-	* S  L3 
-	* 
-	* Testing: once the character goes into L3 they can only go to S */ 
-
-	//Initial setup
+	//Ahhhhhhh what a nice clean main :)
 	World world;
 
 	world.LoadLocationData();
+	world.ShowLocations();
 }
