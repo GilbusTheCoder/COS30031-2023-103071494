@@ -1,4 +1,4 @@
 LoungeRoom : Has_a_cool_comfy_sofa_in_the_middle_and_a_nice_TV. : Backyard:  Bedroom;
 Courtyard: Nice_open_view_with_a_pond_in_the_middle. : Bedroom : Backyard;
 Bedroom : Got_a_cool_racing_car_bed. : LoungeRoom: Courtyard ;
-Backyard : YOOOOOOOO_we_got_swings?!?!?! : Courtyard : LoungeRoom ;
+Backyard : YOOOOOOOO_we_got_swings?!?!?! : Courtyard : LoungeRoom;

@@ -1,5 +1,16 @@
-﻿  Main.cpp
-F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(46,3): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
-F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(60,3): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
-F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(224): warning C4715: 'World::getLocationByName': not all control paths return a value
-  GameGraphsFromData.vcxproj -> F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\x64\Debug\GameGraphsFromData.exe
+﻿  Location.cpp
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Location.cpp(3,39): error C2572: 'Location::Location': redefinition of default argument: parameter 1
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Location.h(13,2): message : see declaration of 'Location::Location'
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Location.cpp(4,28): error C2572: 'Location::Location': redefinition of default argument: parameter 2
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Location.h(13,2): message : see declaration of 'Location::Location'
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Location.cpp(5,33): error C2572: 'Location::Location': redefinition of default argument: parameter 3
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Location.h(13,2): message : see declaration of 'Location::Location'
+  Main.cpp
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(81,1): error C2059: syntax error: '}'
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\Main.cpp(81,1): error C2143: syntax error: missing ';' before '}'
+  WorldLoader.cpp
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\WorldLoader.cpp(5,2): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\WorldLoader.cpp(18,2): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\WorldLoader.cpp(28,50): error C2572: 'WorldLoader::WorldLoader': redefinition of default argument: parameter 1
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\WorldLoader.h(16,2): message : see declaration of 'WorldLoader::WorldLoader'
+  Generating Code...
