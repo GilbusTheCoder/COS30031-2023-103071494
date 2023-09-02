@@ -36,6 +36,8 @@ private:
 
 public:
 	World();
+	void update();
+	void render();
 
 	void addLocation(Location* new_location);
 	void changeCurrentLocation(std::string location_name);

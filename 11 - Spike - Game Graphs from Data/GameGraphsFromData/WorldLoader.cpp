@@ -25,7 +25,7 @@ std::vector<std::string> WorldLoader::processString(std::string string_data, cha
 	return delimited_data;
 }
 
-WorldLoader::WorldLoader(std::string file_name = "") {
+WorldLoader::WorldLoader(std::string file_name) {
 	_file_name = file_name;
 
 	if (_file_name == "") { std::cout << "Error: No file name supplied. "; }

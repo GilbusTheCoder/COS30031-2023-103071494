@@ -1,9 +1,7 @@
 #pragma once
 class Player
 {
-private:
-
 public:
-
+	void proveExistence();
 };
 
