@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <unordered_map>
 
 class Location {
@@ -16,6 +15,10 @@ public:
 		std::unordered_map<std::string, Location*> exits = {});
 
 	std::string getName();
+	std::string getDescription();
+	Location* getExit(std::string direction);
+	std::unordered_map<std::string, Location*> getExits();
+
 	void setName(std::string name);
 	void setDescription(std::string description);
 	void addExit(std::string direction, Location* exit);

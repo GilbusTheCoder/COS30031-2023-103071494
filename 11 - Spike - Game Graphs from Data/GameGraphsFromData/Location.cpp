@@ -1,4 +1,5 @@
 #include "Location.h"
+#include <algorithm>
 
 Location::Location(std::string name,
 	std::string description,
@@ -9,8 +10,19 @@ Location::Location(std::string name,
 }
 
 std::string Location::getName() { return _name; }
+std::string Location::getDescription() { return _description; }
+Location* Location::getExit(std::string direction) {
+	return _exits[direction];
+}
+
+std::unordered_map<std::string, Location*> Location::getExits() { return _exits; }
+
 void Location::setName(std::string name) { _name = name; }
-void Location::setDescription(std::string description) { _description = description; }
+void Location::setDescription(std::string description) {
+	std::replace(description.begin(), description.end(), '_', ' ');
+	_description = description; 
+}
+
 void Location::addExit(std::string direction, Location* exit) {
 	_exits.insert({ direction, exit });
 }

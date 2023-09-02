@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 #include "World.h"
 
@@ -34,16 +35,17 @@ World::World() {
 	if (_current_location != nullptr) {
 		_locations.push_back(_current_location);
 	}
+	else { _current_location = _locations[0]; }
 }
+
+World::~World() {
+	delete _reader;
+}
+
+bool World::checkIsRunning() { return _is_running; }
 
 void World::addLocation(Location* new_location)
 	{ _locations.push_back(new_location); }
-
-void World::changeCurrentLocation(std::string location_name) {
-	for (auto location : _locations) {
-		if (location->getName() == location_name) { _current_location = location; }
-	}
-}
 
 void World::showCurrentLocation() { _current_location->showDetails(); }
 
@@ -92,11 +94,71 @@ void World::loadLocationData() {
 * 
 *	
 */
-void World::update() {
+std::string World::processDirectionInput(std::string dir) {
+	std::string direction = dir;
+	std::transform(direction.begin(), direction.end(), direction.begin(),
+		[](unsigned char c) { return std::tolower(c); });	// To lower
+
+	if (direction == "north" || direction == "n" ||
+		direction == "forward" || direction == "up")
+	{
+		return "north";
+	}
+
+	else if (direction == "east" || direction == "e" || direction == "right")
+	{
+		return "east";
+	}
 	
+	else if (direction == "south" || direction == "s" ||
+		direction == "back" || direction == "backwards" || direction == "down")
+	{
+		return "south";
+	}
+	
+	else if (direction == "west" || direction == "w" || direction == "left") {
+		return "west";
+	}
+
+	else { return "error"; }
+}
+
+bool World::checkDirectionsValid(std::string dir) {
+	if (std::find(_valid_directions.begin(), _valid_directions.end(), dir) != _valid_directions.end())
+	{
+		std::string direction = processDirectionInput(dir);
+		std::unordered_map<std::string, Location*> current_exits = _current_location->getExits();
+		std::unordered_map<std::string, Location*>::const_iterator exit = current_exits.find(direction);
+
+		return exit != current_exits.end();
+	}
+	
+	return false;
+}
+
+void World::update() {
+	std::string action;
+	std::string direction;
+
+	std::cin >> action;
+	std::cin >> direction;
+	std::cout << std::endl;
+
+	if (action == "quit") {	_is_running = false;	}
+	else if (action == "go") { 
+		if (checkDirectionsValid(direction)) {
+			_current_location = _current_location->getExits()[processDirectionInput(direction)];
+		}
+	}
 }
 
 void World::render() {
-
+	std::cout << std::endl;
+	std::cout << "--------------------------------------------------------------" << std::endl;
+	std::cout << "Room: " << _current_location->getName() << std::endl;
+	std::cout << _current_location->getDescription() << std::endl;
+	std::cout << std::endl;
+	std::cout << "Where do you want to go?" << std::endl;
+	std::cout << ">> ";
 }
 

@@ -1,2 +1,8 @@
-﻿  Location.cpp
+﻿  Main.cpp
+  World.cpp
+  WorldLoader.cpp
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\WorldLoader.cpp(5,2): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\WorldLoader.cpp(18,2): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+  Generating Code...
+F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\World.cpp(30): warning C4715: 'World::getLocationByName': not all control paths return a value
   GameGraphsFromData.vcxproj -> F:\Uni\COS30031-2023-103071494\11 - Spike - Game Graphs from Data\GameGraphsFromData\x64\Debug\GameGraphsFromData.exe

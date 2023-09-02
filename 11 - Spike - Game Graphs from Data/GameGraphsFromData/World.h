@@ -25,24 +25,38 @@
 
 class World {
 private:
+	bool _is_running = true;
 	std::string _save_name = "test.txt";
 	WorldLoader* _reader = new WorldLoader(_save_name);
-	Location* _current_location = nullptr;
+
 	std::vector<Location*> _locations;
+	std::vector<std::string> _valid_directions = {
+		"north", "n", "up", "forward",
+		"east", "e", "right",
+		"south", "s", "down", "back", "backwards",
+		"west", "w", "left"
+	};
+
+	Location* _current_location = nullptr;
 
 	// Any new locations are instantiated here
 	std::vector<Location*> constructLocations();
 	Location* getLocationByName(std::string location_name);
 
+	std::string processDirectionInput(std::string dir);
+	bool checkDirectionsValid(std::string dir);
+
 public:
 	World();
+	~World();
 	void update();
 	void render();
 
+	bool checkIsRunning();
 	void addLocation(Location* new_location);
-	void changeCurrentLocation(std::string location_name);
 	void showCurrentLocation();
 	void showLocations();
 	void loadLocationData();
+
 };
 

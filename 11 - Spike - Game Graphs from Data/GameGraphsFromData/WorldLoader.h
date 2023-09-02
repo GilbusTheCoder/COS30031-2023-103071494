@@ -10,7 +10,7 @@ private:
 	std::ifstream _reader;
 
 	bool isComment(std::string string_data);
-	std::vector<std::string> processString(std::string string_data, char delimiter);
+	std::vector<std::string> processLineInput(std::string string_data, char delimiter);
 
 public:
 	WorldLoader(std::string file_name = "");

@@ -1,4 +1,4 @@
-LoungeRoom : Has_a_cool_comfy_sofa_in_the_middle_and_a_nice_TV. : North , Backyard: East, Bedroom;
-Courtyard: Nice_open_view_with_a_pond_in_the_middle. : South, Bedroom : West, Backyard;
-Bedroom : Got_a_cool_racing_car_bed. : West, LoungeRoom: North, Courtyard ;
-Backyard : YOOOOOOOO_we_got_swings?!?!?! : East, Courtyard : South, LoungeRoom;
+LoungeRoom : Has_a_cool_comfy_sofa_in_the_middle_and_a_nice_TV._To_the_north_is_the_backyard_and_to_your_east_lies_the_door_to_your_bedroom : north , Backyard: east, Bedroom;
+Courtyard: Nice_open_view_with_a_pond_in_the_middle._If_you_go_west_you'll_find_your_backyard_behind_you_lies_your_bedroom : south, Bedroom : west, Backyard;
+Bedroom : Got_a_cool_racing_car_bed._If_you_walk_out_the_north_door_you'll_be_in_a_quiet_courtyard_or_the_TV_is_in_the_room_to_your_left : west, LoungeRoom: north, Courtyard ;
+Backyard : YOOOOOOOO_we_got_swings?!?!?!_The_loungeroom_is_behind_you_and_to_your_east_lies_the_path_to_the_courtyard: east, Courtyard : south, LoungeRoom;

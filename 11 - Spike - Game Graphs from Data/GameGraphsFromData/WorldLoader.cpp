@@ -11,7 +11,7 @@ bool WorldLoader::isComment(std::string string_data) {
 	return false;
 }
 
-std::vector<std::string> WorldLoader::processString(std::string string_data, char delimiter) {
+std::vector<std::string> WorldLoader::processLineInput(std::string string_data, char delimiter) {
 	std::string line = string_data;
 	std::vector<std::string> delimited_data;
 
@@ -60,7 +60,7 @@ std::vector<std::string> WorldLoader::getLinesByDelimiter(char splitter) {
 	if (!_reader.is_open()) { _reader.open(_file_name); }
 
 	while (std::getline(_reader, line)) {
-		for (auto it : processString(line, delimiter)) {
+		for (auto it : processLineInput(line, delimiter)) {
 			formatted_strings.push_back(it);
 		}
 	}
@@ -76,7 +76,7 @@ std::vector<std::string> WorldLoader::getLinesByDelimiter(char splitter, std::st
 	if (!_reader.is_open()) { _reader.open(_file_name); }
 
 	while (std::getline(_reader, line)) {
-		for (auto it : processString(line, delimiter)) {
+		for (auto it : processLineInput(line, delimiter)) {
 			formatted_strings.push_back(it);
 		}
 	}

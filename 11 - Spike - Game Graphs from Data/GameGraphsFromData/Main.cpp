@@ -45,7 +45,10 @@
 int main() {
 	//Ahhhhhhh what a nice clean main :)
 	World world;
-
 	world.loadLocationData();
-	world.showLocations();
+
+	while (world.checkIsRunning()) {
+		world.render();
+		world.update();
+	}
 }
