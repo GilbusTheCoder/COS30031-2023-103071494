@@ -117,7 +117,7 @@ private:
 
         // If the comment isn't a line, split the string and add each element to our
         // delimited_data vector.
-        if (!isComment(line)) {
+        if (!isComment(line) && line != "") {
             delimited_data = splitLine(line, ':');
         }
 

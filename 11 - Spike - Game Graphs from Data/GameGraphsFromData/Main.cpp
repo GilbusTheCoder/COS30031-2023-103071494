@@ -4,8 +4,7 @@
 *	Title: Game Data From Graphs
 *	Author: Thomas Horsley - 103071494
 * 
-*	Currently:	Add a player object which will have a reference to the current location.
-*				A player does not exist within the location it exists within the world
+*	Currently:	None It's done. I'm done. GAWWWWWWD file reading is yuck.
 *				
 * 
 *	Completed:  Working on using a file reader to instantiate the location game object
@@ -18,6 +17,7 @@
 *				Chopped up the big main.cpp into a bunch of more managable header and 
 *				implementation files. Also fixed my inconsistent af naming.
 * 
+*				Finished it all and transitioned from using dumb vector to smart maps
 * 
 *		Formatting:
 *			To make life easier with the functions that I've already written we're going
@@ -27,6 +27,7 @@
 *				* Iterate through each vector and split their strings into another set 
 *				  of vectors.
 *				* Use this data to instantiate location objects 
+* 
 * 
 *	Summary:
 *		So I don't really like this code to be honest. It works yes but instantiation of
