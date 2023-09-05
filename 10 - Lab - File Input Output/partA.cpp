@@ -66,7 +66,7 @@ int main() {
 	while (reader.read(reinterpret_cast<char*>(&read_tester), sizeof(CompoundType))) {
 		read_tester.show();
 	};
-	reader.close();
 
+	reader.close();
 	return 0; 
 }

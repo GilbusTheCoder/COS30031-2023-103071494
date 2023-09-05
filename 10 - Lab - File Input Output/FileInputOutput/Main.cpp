@@ -7,7 +7,7 @@
 
 using json = nlohmann::json;
 
-/*  TODO: 1. Add new section heading “Part B” to your Lab Notes?
+/*  - 1. Add new section heading “Part B” to your Lab Notes?
     - 2. With a text editor, create and save a simple text file (such as “test2.txt”) that contains three lines similar to the
          following, with the last line being the actual line of useful data and using a full-colon separator character:
 
@@ -28,7 +28,7 @@ using json = nlohmann::json;
         - Use loops to read entire file
 
     
-    TODO: 1. Add new “Part C” section to Lab Notes
+    - 1. Add new “Part C” section to Lab Notes
     - 2. With a text editor create a basic JSON text file (such as “test3.json”) with the following content (or similar) for player
        character details:
         { "exp": 12345, "health": 100, "jsonType": "player", "level": 42, "name": "Fred",
