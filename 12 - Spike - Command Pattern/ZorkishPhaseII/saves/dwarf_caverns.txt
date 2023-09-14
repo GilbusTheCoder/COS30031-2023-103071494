@@ -1,0 +1,8 @@
+Entrance : Entrance_Desc : Rubbish Pile : north , Greathall;
+Greathall : Greathall_Desc : Rubbish Pile, Rubbish Pile : north Throng Room,  south, Entrance;
+Throng Room : Throng_Room_Desc : Full Coin Purse, Rubbish Pile, Dwarvern Ale, Empty Coin Purse : north , Throng Room North Hall, east, Great Forge, south, Greathall, west, Crypt;
+Throng Room North Hall: Throng_Room_North_Hall_Desc : Rubbish Pile, Empty Coin Purse : north, Beer Room, south, Throng Room;
+Throng Room West Hall : Throng_Room_West_Hall_Desc : Rubbish Pile, Full Coin Purse : west , Great Forge, east, Throng Room;
+Crypt : Crypt_Desc : Rubbish Pile, Empty Coin Purse, Full Coin Purse, Ancient Dwarf Greataxe : west, Throng Room;
+Beer Room : Beer_Room_Desc : Dwarven Ale, Dwarven Wine, Full Coin Purse, Empty Coin Purse, Hammerers Helmet : south, Throng Room North Hall;
+Great Forge : Great_Forge_Desc : Rubbish Pile, Full Coin Purse, Hammerers Chestpiece : east, Throng Room West Hall;

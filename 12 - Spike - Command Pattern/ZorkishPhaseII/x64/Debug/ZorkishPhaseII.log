@@ -1,0 +1,156 @@
+﻿  Location.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(4,1): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(6,34): error C2065: 'Item': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(6,39): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(7,34): error C2065: 'Location': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(7,43): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(7,52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(8,2): error C2065: '_name': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(9,2): error C2065: '_description': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(10,2): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(11,2): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(12,1): warning C4508: 'Location': function should return a value; 'void' return type assumed
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(15,1): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(15,23): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(16,7): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(17,34): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(17,32): error C2059: syntax error: ':'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(17,42): error C2143: syntax error: missing ';' before '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(18,11): error C2065: 'item': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(18,4): error C2541: 'delete': cannot delete objects that are not pointers
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(22,7): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(23,38): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(23,36): error C2059: syntax error: ':'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(23,46): error C2143: syntax error: missing ';' before '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(24,11): error C2065: 'location': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(24,4): error C2541: 'delete': cannot delete objects that are not pointers
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(28,2): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(29,2): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(32,13): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(32,42): error C2065: '_name': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(33,13): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(33,49): error C2065: '_description': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(34,33): error C2065: 'Item': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(34,38): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(34,40): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(34,70): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(35,42): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(35,44): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(35,74): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,9): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,1): error C2365: 'Location': redefinition; previous definition was 'function'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(4,11): message : see declaration of 'Location'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,11): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,57): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,57): error C2059: syntax error: '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,57): error C2143: syntax error: missing ';' before '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(37,57): error C2447: '{': missing function header (old-style formal list?)
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,5): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,7): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,49): error C2059: syntax error: '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,49): error C2143: syntax error: missing ';' before '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(41,49): error C2447: '{': missing function header (old-style formal list?)
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(43,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(43,44): error C2065: '_name': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(44,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(46,2): error C2065: '_description': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(49,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(49,47): error C2061: syntax error: identifier 'Item'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,2): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,44): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,16): error C2144: syntax error: 'unknown-type' should be preceded by ')'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,16): error C2144: syntax error: 'unknown-type' should be preceded by ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,55): error C2143: syntax error: missing ')' before ','
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,46): error C2082: redefinition of formal parameter 'item_name'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,65): error C2059: syntax error: ')'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(50,66): error C2059: syntax error: ')'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(52,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(52,47): error C2061: syntax error: identifier 'Location'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(53,2): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(56,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(57,39): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(58,43): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(59,2): error C2065: '_name': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(60,2): error C2065: '_description': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(61,2): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(62,2): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(65,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(67,33): error C2065: '_items': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(67,31): error C2059: syntax error: ':'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(67,41): error C2143: syntax error: missing ';' before '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(68,25): error C2065: 'item': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(73,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(76,33): error C2065: '_exits': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(76,31): error C2059: syntax error: ':'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(76,41): error C2143: syntax error: missing ';' before '{'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(78,28): error C2065: 'direction': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(82,6): error C2653: 'Location': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(83,27): error C2065: '_name': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\Location.cpp(84,24): error C2065: '_description': undeclared identifier
+  InventorySlot.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(6,15): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(6,15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(6,32): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(11,12): error C2061: syntax error: identifier 'InventorySlot'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(13,15): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(13,15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(13,26): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(14,15): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(14,15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(14,26): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(16,15): error C2061: syntax error: identifier 'Item'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(17,18): error C2061: syntax error: identifier 'Item'
+  Items.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(6,6): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(6,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(6,13): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(10,16): error C2061: syntax error: identifier 'Item'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(12,6): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(12,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(12,17): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\InventorySlot.h(13,15): error C2061: syntax error: identifier 'Item'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(16,15): error C2061: syntax error: identifier 'Item'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\Inventory.h(17,18): error C2061: syntax error: identifier 'Item'
+  Main.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(58,13): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(58,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(58,48): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(74,22): error C2061: syntax error: identifier 'WorldLoader'
+  States.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(9,11): error C3646: '_main_menu': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(9,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(10,12): error C3646: '_about_menu': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(10,23): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(11,11): error C3646: '_help_menu': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(11,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(12,22): error C3646: '_adventure_select_menu': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(12,44): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(13,16): error C3646: '_gameplay': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(13,26): error C2059: syntax error: '='
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(13,57): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(14,19): error C3646: '_new_highscore_menu': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(14,38): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(15,17): error C3646: '_hall_of_fame_menu': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(15,35): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(16,12): error C3646: '_quit': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(16,17): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(19,14): error C2065: 'Location': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(19,23): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(20,9): error C3646: '_current_state': unknown override specifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(20,24): error C2059: syntax error: '='
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(20,26): error C2653: 'STATES': is not a class or namespace name
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(20,43): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(21,7): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(21,7): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\StateManager.h(21,35): error C2238: unexpected token(s) preceding ';'
+  StateManager.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(58,13): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(58,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(58,48): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\header\States.h(74,22): error C2061: syntax error: identifier 'WorldLoader'
+  WorldLoader.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\WorldLoader.cpp(80,3): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+  Generating Code...
