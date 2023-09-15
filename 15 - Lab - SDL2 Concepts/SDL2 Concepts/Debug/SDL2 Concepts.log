@@ -1,0 +1,6 @@
+﻿  Main.cpp
+Main.obj : error LNK2019: unresolved external symbol _SDL_ShowSimpleMessageBox referenced in function "int __cdecl SDL_main(void)" (?SDL_main@@YAHXZ)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+F:\Code Projects\_Libraries\SDL2-2.28.3\lib\x64\SDL2.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+F:\Code Projects\_Libraries\SDL2-2.28.3\lib\x64\SDL2main.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+F:\Uni\COS30031-2023-103071494\15 - Lab - SDL2 Concepts\SDL2 Concepts\Debug\SDL2 Concepts.exe : fatal error LNK1120: 2 unresolved externals
