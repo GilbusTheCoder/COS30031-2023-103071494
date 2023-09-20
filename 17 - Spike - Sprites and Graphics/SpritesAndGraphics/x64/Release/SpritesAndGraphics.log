@@ -1,0 +1,7 @@
+﻿  Main.cpp
+F:\Uni\COS30031-2023-103071494\17 - Spike - Sprites and Graphics\SpritesAndGraphics\src\Main.cpp(60,14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 12 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  SpritesAndGraphics.vcxproj -> F:\Uni\COS30031-2023-103071494\17 - Spike - Sprites and Graphics\SpritesAndGraphics\x64\Release\SpritesAndGraphics.exe
