@@ -1,7 +1,7 @@
 #include <iostream>
 #pragma once
 
-enum ITEM_TYPES { TEST_TYPE };
+enum class ITEM_TYPES { TEST_TYPE };
 
 class Item {
 private:
@@ -11,7 +11,7 @@ private:
 
 public:
 	Item(std::string name = "", std::string description = "", 
-		ITEM_TYPES type = TEST_TYPE);
+		ITEM_TYPES type = ITEM_TYPES::TEST_TYPE);
 
 	std::string getName();
 	std::string getDescription();

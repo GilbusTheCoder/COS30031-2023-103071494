@@ -1,7 +1,9 @@
 #include <iostream>
 #include "../hdr/StateManager.h"
 
-//State manager definitions
+/*****************************************************************************
+*								State Manager
+*****************************************************************************/
 StateManager::StateManager() {
 	_current_ptr->render();
 }
@@ -24,7 +26,12 @@ void StateManager::update() {
 
 void StateManager::render() { _current_ptr->render(); }
 
-//Main menu definitions
+
+/******************************************************************************
+*							   Main Menu State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES MainMenu::update() {
 	int choice = 0;
 	std::cin >> choice;
@@ -73,7 +80,11 @@ void MainMenu::render() {
 }
 
 
-//About menu definitions
+/******************************************************************************
+*							   About Menu State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES AboutMenu::update() {
 	return STATES::MAIN_MENU;
 }
@@ -94,8 +105,9 @@ void HelpMenu::render() {
 }
 
 
-//Select Adventure definitions
 /******************************************************************************
+							Select Adventure State
+*******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
 void AdventureSelectMenu::constructLocations(int num_locations) {
@@ -108,7 +120,7 @@ AdventureSelectMenu::AdventureSelectMenu(int num_locations) {
 	constructLocations(num_locations); }
 
 /******************************************************************************
-*							    Update / Render
+*							    Rendate Stuff
 ******************************************************************************/
 STATES AdventureSelectMenu::update() {
 	int choice;
@@ -149,7 +161,11 @@ void AdventureSelectMenu::render() {
 }
 
 
-//Gameplay state definitions
+/******************************************************************************
+*							   Gameplay State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES GameplayState::update() {
 	std::string command;
 	std::cin >> command;
@@ -167,7 +183,11 @@ void GameplayState::render() {
 }
 
 
-//New Highscore state definitions
+/******************************************************************************
+*							   Highscore State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES NewHighScoreMenu::update() {
 	std::string name;
 	std::cin >> name;
@@ -189,7 +209,11 @@ void NewHighScoreMenu::render() {
 }
 
 
-//Hall of fame definitions
+/******************************************************************************
+*							 Hall of Fame State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES HallOfFameMenu::update() { return STATES::MAIN_MENU; }
 void HallOfFameMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
@@ -211,6 +235,10 @@ void HallOfFameMenu::render() {
 }
 
 
-//Quit state definitions
+/******************************************************************************
+*								 Quit State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES QuitState::update() { return STATES::QUIT; }
 void QuitState::render() { std::cout << "Quitting zorkish!" << std::endl; }

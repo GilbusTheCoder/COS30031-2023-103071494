@@ -1,3 +1,11 @@
-﻿  StateManager.cpp
-F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(125): warning C4715: 'AdventureSelectMenu::update': not all control paths return a value
+﻿  Location.cpp
+  ItemSlot.cpp
+  Inventory.cpp
+  Item.cpp
+  Main.cpp
+  StateManager.cpp
+  WorldLoader.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\WorldLoader.cpp(61,4): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+  Generating Code...
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(140): warning C4715: 'AdventureSelectMenu::update': not all control paths return a value
   ZorkishPhaseII.vcxproj -> F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\x64\Debug\ZorkishPhaseII.exe
