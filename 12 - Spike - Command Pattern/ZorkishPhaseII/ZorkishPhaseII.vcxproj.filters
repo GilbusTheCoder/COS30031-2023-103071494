@@ -18,25 +18,16 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="header\pch.cpp">
+    <ClCompile Include="src\StateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Items.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InventorySlot.cpp">
+    <ClCompile Include="src\Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Inventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\States.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StateManager.cpp">
+    <ClCompile Include="src\ItemSlot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Location.cpp">
@@ -47,31 +38,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\pch.h">
+    <ClInclude Include="hdr\StateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\Items.h">
+    <ClInclude Include="hdr\Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\InventorySlot.h">
+    <ClInclude Include="hdr\Inventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\Inventory.h">
+    <ClInclude Include="hdr\ItemSlot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\States.h">
+    <ClInclude Include="hdr\Location.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header\StateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header\Location.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="header\WorldLoader.h">
+    <ClInclude Include="hdr\WorldLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

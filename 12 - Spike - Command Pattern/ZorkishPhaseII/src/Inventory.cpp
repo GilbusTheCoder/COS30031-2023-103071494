@@ -1,54 +1,103 @@
-#include "../header/pch.h"
-#include "../header/Inventory.h"
+#include "../hdr/Inventory.h"
 
-Inventory::Inventory(InventorySlot* head) {
-	_head = head;
-	_size++;
-}
+/******************************************************************************
+*							    De/Constructors
+******************************************************************************/
+Inventory::Inventory(ItemSlot* head, int max_size)
+	:_head(head), _max_size(max_size) {
+	if (_head != nullptr) { _size++; } }
 
-InventorySlot* Inventory::getHead() { return _head; }
-InventorySlot* Inventory::getTail() {
-	InventorySlot* traversal_ptr = _head;
+Inventory::~Inventory() { reset(); }
 
-	while (traversal_ptr->getNext() != nullptr) {
-		traversal_ptr = traversal_ptr->getNext();
+
+/******************************************************************************
+*								  Properties
+******************************************************************************/
+ItemSlot* Inventory::getHead() { return _head; }
+
+// Will return a nullptr only if the _head is null
+ItemSlot* Inventory::getTail() {
+	ItemSlot* traversal_ptr = _head;
+	
+	if (_head != nullptr) {
+		while (traversal_ptr->getNext() != nullptr) {
+			traversal_ptr = traversal_ptr->getNext();
+		}
 	}
+
 	return traversal_ptr;
 }
 
+int Inventory::getSize() { return _size; }
+int Inventory::getMaxSize() { return _max_size; }
 
-void Inventory::addItem(Item* item_ptr) {
-	InventorySlot* new_item = new InventorySlot(item_ptr);
-	InventorySlot* tail = getTail();
-
-	tail->setNext(new_item);
+void Inventory::setHead(ItemSlot* head) { _head = head; }
+void Inventory::resetHead(ItemSlot* head) {
+	ItemSlot* new_head = head;
+	reset();
+	_head = new_head;
 	_size++;
 }
 
+/******************************************************************************
+*								   Utility
+******************************************************************************/
 
-void Inventory::deleteItem(Item* item_ptr) {
-	InventorySlot* previous_ptr = nullptr;
-	InventorySlot* traversal_ptr = _head;
-
-	while (traversal_ptr->getItem() != item_ptr) {
-		previous_ptr = traversal_ptr;
-		traversal_ptr = traversal_ptr->getNext();
-	}
-
-	previous_ptr->setNext(traversal_ptr->getNext());
-	traversal_ptr->setNext(nullptr);
-	_size--;
+void Inventory::addItem(Item* item) {
+	ItemSlot* old_tail = getTail();
+	ItemSlot* new_tail = new ItemSlot(item);
+	
+	old_tail->setNext(new_tail);
 }
 
-void Inventory::show() {
-	std::cout << "Zork(ish) :: Your Inventory " << std::endl;
-	std::cout << "---------------------------------------------------------------" << std::endl;
-	std::cout << std::endl;
+void Inventory::deleteItem(Item* item) {
+	ItemSlot* traversal_ptr = _head;
+	ItemSlot* previous_slot_ptr = nullptr;
 
-	InventorySlot* traversal_ptr = _head;
-	while (traversal_ptr != nullptr) {
-		traversal_ptr->getItem()->printDescription();
-		std::cout << std::endl;
-		traversal_ptr = traversal_ptr->getNext();
+	while (traversal_ptr->getNext() != nullptr) {
+		if (traversal_ptr->getItem() != item) {
+			previous_slot_ptr = traversal_ptr;
+			traversal_ptr = traversal_ptr->getNext();
+		} else {
+			previous_slot_ptr->setNext(traversal_ptr->getNext());
+			delete traversal_ptr;
+		}
+	}
+
+	// Check the tail of the list as it's excluded by the loop
+	if (traversal_ptr->getItem() == item) {
+		previous_slot_ptr->setNext(nullptr);
+		delete traversal_ptr;	
+	}
+}
+
+void Inventory::reset() { 
+	ItemSlot* traversal_ptr = _head;
+	ItemSlot* prev_ptr = nullptr;
+
+	if (_head != nullptr) {
+		while (traversal_ptr->getNext() != nullptr) {
+			prev_ptr = traversal_ptr;
+			traversal_ptr = traversal_ptr->getNext();
+
+			delete prev_ptr; 
+		}	
+		_head = nullptr;
+		delete traversal_ptr;
+	}
+
+	_size = 0;
+}
+
+void Inventory::about() {
+	ItemSlot* traversal_ptr = _head;
+
+	if (traversal_ptr != nullptr) {
+		while (traversal_ptr->getNext() != nullptr) {
+			traversal_ptr->about();
+			traversal_ptr = traversal_ptr->getNext();
+		}
+
+		traversal_ptr->about();
 	}
 }
