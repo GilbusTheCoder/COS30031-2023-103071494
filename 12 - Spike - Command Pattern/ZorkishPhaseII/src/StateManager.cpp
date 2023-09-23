@@ -4,10 +4,7 @@
 /*****************************************************************************
 *								State Manager
 *****************************************************************************/
-StateManager::StateManager() {
-	_current_ptr->render();
-}
-
+StateManager::StateManager() { _current_ptr->render(); }
 bool StateManager::isRunning() { return _current_state != STATES::QUIT; }
 
 void StateManager::update() {
@@ -17,8 +14,13 @@ void StateManager::update() {
 	if (_current_state == STATES::MAIN_MENU) { _current_ptr = &_main_menu; }
 	else if (_current_state == STATES::ABOUT) { _current_ptr = &_about_menu; }
 	else if (_current_state == STATES::HELP) { _current_ptr = &_help_menu; }
-	else if (_current_state == STATES::SELECT_ADVENTURE) { _current_ptr = &_adventure_select_menu; }
-	else if (_current_state == STATES::GAMEPLAY) { _current_ptr = &_gameplay; }
+	else if (_current_state == STATES::SELECT_ADVENTURE) { 
+		_current_ptr = &_adventure_select_menu; 
+	}
+	else if (_current_state == STATES::GAMEPLAY) { 
+		_current_ptr = &_gameplay;
+		_current_ptr->setLocations(_adventure_select_menu.getLocations());
+	}
 	else if (_current_state == STATES::NEW_HS) { _current_ptr = &_new_hs_menu; }
 	else if (_current_state == STATES::VIEW_HoF) { _current_ptr = &_hall_of_fame_menu; }
 	else if (_current_state == STATES::QUIT) { _current_ptr = &_quit; }
@@ -79,6 +81,7 @@ void MainMenu::render() {
 	std::cout << std::endl << "Selected 1-5: " << std::endl;
 }
 
+void MainMenu::setLocations(std::vector<Location*> locations) {};
 
 /******************************************************************************
 *							   About Menu State
@@ -94,8 +97,14 @@ void AboutMenu::render() {
 	std::cout << std::endl;
 }
 
+void AboutMenu::setLocations(std::vector<Location*> locations) {};
 
-//Help menu definitions
+
+/******************************************************************************
+*							   Help Menu State
+*******************************************************************************
+*							    Rendate Stuff
+******************************************************************************/
 STATES HelpMenu::update() { return STATES::MAIN_MENU; }
 void HelpMenu::render() {
 	std::cout << "The following commands are supported: " << std::endl;
@@ -103,6 +112,8 @@ void HelpMenu::render() {
 	system("pause");
 	std::cout << std::endl;
 }
+
+void HelpMenu::setLocations(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -113,6 +124,13 @@ void HelpMenu::render() {
 AdventureSelectMenu::AdventureSelectMenu():_world_loader(nullptr) {}
 AdventureSelectMenu::~AdventureSelectMenu() { 
 	if (_world_loader != nullptr) {delete _world_loader; }
+}
+
+std::vector<Location*> AdventureSelectMenu::getLocations() { return _locations; }
+
+void AdventureSelectMenu::deleteLoader() { 
+	delete _world_loader; 
+	_world_loader = nullptr;
 }
 
 /******************************************************************************
@@ -155,12 +173,29 @@ void AdventureSelectMenu::render() {
 	std::cout << std::endl << ">> 1. World (The loading one)" << std::endl;
 	std::cout << ">> 2. Cool World" << std::endl;
 	std::cout << ">> 3. Even COOLER World" << std::endl;
-}
+}	
+
+void AdventureSelectMenu::setLocations(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
-*							   Gameplay State
+								Gameplay State
 *******************************************************************************
+*							    De/Constructors
+******************************************************************************/
+GameplayState::~GameplayState() {
+	for (auto& location : _locations) {
+		delete location;
+		location = nullptr;
+	}
+	_locations.clear();
+	_locations.shrink_to_fit();
+}
+
+void GameplayState::setLocations(std::vector<Location*> locations) { 
+	_locations = locations; }
+
+/******************************************************************************
 *							    Rendate Stuff
 ******************************************************************************/
 STATES GameplayState::update() {
@@ -179,7 +214,6 @@ void GameplayState::render() {
 	std::cout << ">> ";
 }
 
-
 /******************************************************************************
 *							   Highscore State
 *******************************************************************************
@@ -193,10 +227,10 @@ STATES NewHighScoreMenu::update() {
 }
 void NewHighScoreMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
-	std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
-
-	std::cout << "Holy... someone's jacked and cracked at zorkish, NEW HIGHSCORE!" << std::endl << std::endl;
-
+	std::cout << "---------------------------------------------------------------" << std::endl 
+		<< std::endl;
+	std::cout << "Holy... someone's jacked and cracked at zorkish, NEW HIGHSCORE!" << std::endl 
+		<< std::endl;
 	std::cout << "World: [World here]" << std::endl;
 	std::cout << "Score: [Score here]" << std::endl;
 	std::cout << "Moves: [Move count here]" << std::endl << std::endl;
@@ -204,6 +238,8 @@ void NewHighScoreMenu::render() {
 	std::cout << "Please type your name and press 'Enter': " << std::endl;
 	std::cout << ">> ";
 }
+
+void NewHighScoreMenu::setLocations(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -214,8 +250,8 @@ void NewHighScoreMenu::render() {
 STATES HallOfFameMenu::update() { return STATES::MAIN_MENU; }
 void HallOfFameMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
-	std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
-
+	std::cout << "---------------------------------------------------------------" << std::endl 
+		<< std::endl;
 	std::cout << "1. [Name], [World], [Score]" << std::endl;
 	std::cout << "2. [Name], [World], [Score]" << std::endl;
 	std::cout << "3. [Name], [World], [Score]" << std::endl;
@@ -231,6 +267,8 @@ void HallOfFameMenu::render() {
 	std::cout << std::endl;
 }
 
+void HallOfFameMenu::setLocations(std::vector<Location*> locations) {};
+
 
 /******************************************************************************
 *								 Quit State
@@ -239,3 +277,4 @@ void HallOfFameMenu::render() {
 ******************************************************************************/
 STATES QuitState::update() { return STATES::QUIT; }
 void QuitState::render() { std::cout << "Quitting zorkish!" << std::endl; }
+void QuitState::setLocations(std::vector<Location*> locations) {}

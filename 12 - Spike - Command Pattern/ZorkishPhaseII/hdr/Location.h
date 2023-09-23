@@ -29,7 +29,6 @@ public:
 	void setAll(std::string name, std::string description, std::vector<Item*> items, 
 		std::unordered_map<std::string, Location*> exits);
 
-	void copyItem(Item* item);
 	void addItem(Item* item);
 	void addExit(std::string direction, Location* exit);
 	void showItems();
