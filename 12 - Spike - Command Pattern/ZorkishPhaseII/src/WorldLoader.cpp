@@ -1,13 +1,21 @@
 #include <string>
+#include <algorithm>
 #include "../hdr/WorldLoader.h"
 
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
 WorldLoader::WorldLoader(std::string file_name)
-	:_file_name(file_name){
+	:_file_name(file_name) {
+
 	if (_file_name == "") { std::cout << "Err: No filename supplied." << std::endl; }
-	else { _reader.open(_file_name); }
+	else {
+		_reader.open(_file_name);
+
+		if (!_reader.is_open()) {
+			std::cout << "Err: Bad filename supplied" << std::endl;
+		}
+	}
 }
 
 // Must be using C++ 17 or newer for this map search to work.
@@ -44,18 +52,19 @@ std::vector<Location*> WorldLoader::getWorldData() { return _world_data; }
 *	whitespace. Will return a vector<string>.								   */
 std::vector<std::string> WorldLoader::readFile() {
 	std::string line;
-	std::vector<std::string> lines = {};
+	std::vector<std::string> lines;
 
 	if (!_reader.is_open() && _file_name != "") { _reader.open(_file_name); }
 	if (_reader.is_open()) {
 		while (std::getline(_reader, line)) {
+			std::vector<std::string> line_hack;
 			// Remove Whitespace
 			remove(line.begin(), line.end(), ' ');
-			line.pop_back();
+			line_hack = splitSaveLine(line, ';');
 
 			// Check if comment
-			if (!isComment(line)) {
-				lines.emplace_back(line);
+			if (!isComment(line_hack[0])) {
+				lines.emplace_back(line_hack[0]);
 			}
 		}
 	}
@@ -76,6 +85,7 @@ void WorldLoader::instanceItemPool() {
 	_item_pool.insert({ sword_of_testing->getName(), sword_of_testing });
 	_item_pool.insert({ pot_of_testing->getName(), pot_of_testing });
 	_item_pool.insert({ firebound_scroll->getName(), firebound_scroll });
+	// Cleanup is handled by the Gameplay State
 }
 
 
@@ -88,7 +98,7 @@ void WorldLoader::processSaveData() {
 
 	if (!raw_save_data.empty()) {
 		for (auto save_set : raw_save_data) {
-			_prefmt_world_data.emplace_back(splitSaveLine(save_set, ';'));
+			_prefmt_world_data.emplace_back(splitSaveLine(save_set, ':'));
 		}
 	}
 }
@@ -107,7 +117,8 @@ void WorldLoader::instanceWorldData() {
 		new_location->setDescription(location[1]);
 
 		std::vector<std::string> item_names = splitSaveLine(location[2], ',');
-		for (auto& name : item_names) {
+		for (auto name : item_names) {
+			std::replace(name.begin(), name.end(), '_', ' ');
 			if (_item_pool[name]) { new_location->addItem(_item_pool[name]); }
 		}
 
@@ -135,17 +146,18 @@ bool WorldLoader::isComment(const std::string& line) {
 std::vector<std::string> WorldLoader::splitSaveLine(std::string& line, 
 	const char delimiter) {
 	int start_idx = 0, end_idx = 0;
-	std::string line_datum;
 	std::string raw_line_data = line+=delimiter;
 	std::vector<std::string> formatted_line_data;
 
 	for (int idx = 0; idx <= raw_line_data.size(); idx++) {
 		if (char(raw_line_data[idx]) == delimiter) {
+			std::string line_datum;
 			end_idx = idx;
+			
 			line_datum.append(raw_line_data, start_idx, end_idx - start_idx);
 			formatted_line_data.emplace_back(line_datum);
 
-			start_idx = end_idx++;
+			start_idx = ++end_idx;
 		}
 	}
 
@@ -168,7 +180,6 @@ void WorldLoader::wireLocationExits() {
 	for (int loc_idx = 0; loc_idx < _world_data.size(); loc_idx++) {
 		// <"dir0", "exit0_name", "dir1", "exit1_name", .... , "dirn", exitn_name">
 		raw_dir_exit_data = splitSaveLine(_prefmt_world_data[loc_idx][3], ',');
-		raw_dir_exit_data.shrink_to_fit();
 	
 		for (int datum_idx = 0; datum_idx < raw_dir_exit_data.size(); 
 			datum_idx += 2) {
@@ -180,7 +191,7 @@ void WorldLoader::wireLocationExits() {
 
 /*****************************************************************************	
 *   Public:																	*/	
-std::vector<Location*> WorldLoader::loadWorldData() {
+void WorldLoader::loadWorldData() {
 	if (_reader.is_open()) {
 		instanceItemPool();
 		processSaveData();

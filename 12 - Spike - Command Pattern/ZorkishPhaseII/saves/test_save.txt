@@ -1,0 +1,6 @@
+#Test save, used for testing and demonstration only
+#Thomas Horsley, 103071494
+backyard : Cool_backyard,_you_see_some_twigs_on_the_ground._North_to_courtyard,_east_to_garage. : twigs : north, courtyard, east, garage;
+courtyard : Has_a_neat_water_feature_in_the_centre_of_the_driveway._East_to_house,_south_to_backyard : : east, house, south, backyard;
+house : The_sword_of_testing_lies_horizontally_across_the_rusting_coat_pegs,_you_also_see_a_firebound_scroll_on_the_side_table._East_to_courtyard,_South_to_garage. : sword_of_testing, firebound_scroll : east, courtyard, south, garage;
+garage : Pretty_empty_and_dank._There's_your_dads_Pot_of_Testing_on_the_workbench._North_to_house,_west_to_backyard : pot_of_testing : north, house, west, backyard;

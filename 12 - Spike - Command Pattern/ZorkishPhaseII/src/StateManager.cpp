@@ -110,14 +110,10 @@ void HelpMenu::render() {
 *******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-void AdventureSelectMenu::constructLocations(int num_locations) {
-	for (int idx = 0; idx < num_locations; idx++) {
-		_locations.push_back(new Location()); 
-	}
+AdventureSelectMenu::AdventureSelectMenu():_world_loader(nullptr) {}
+AdventureSelectMenu::~AdventureSelectMenu() { 
+	if (_world_loader != nullptr) {delete _world_loader; }
 }
-
-AdventureSelectMenu::AdventureSelectMenu(int num_locations) {
-	constructLocations(num_locations); }
 
 /******************************************************************************
 *							    Rendate Stuff
@@ -126,12 +122,15 @@ STATES AdventureSelectMenu::update() {
 	int choice;
 	std::cin >> choice;
 
-	if (!std::cin.fail()) {
+	if (!std::cin.fail()) {			// .fail() for typecheck
 		std::cout << std::endl;
 
 		switch (choice) {
 		case 1:
-			std::cout << "This is a pretty neat world" << std::endl;
+			_world_loader = new WorldLoader("saves/test_save.txt");
+			_world_loader->loadWorldData();
+			_locations = _world_loader->getWorldData();
+
 			return STATES::GAMEPLAY;
 		case 2:
 			std::cout << "Wow this worlds pretty cewl" << std::endl;
@@ -143,8 +142,6 @@ STATES AdventureSelectMenu::update() {
 	}
 
 	else {
-		std::cout << "Please enter a value correlating with the options" << std::endl << std::endl;
-
 		std::cin.clear();
 		std::cin.ignore();
 		return STATES::SELECT_ADVENTURE;
@@ -155,7 +152,7 @@ void AdventureSelectMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl;
 
-	std::cout << std::endl << ">> 1. World" << std::endl;
+	std::cout << std::endl << ">> 1. World (The loading one)" << std::endl;
 	std::cout << ">> 2. Cool World" << std::endl;
 	std::cout << ">> 3. Even COOLER World" << std::endl;
 }

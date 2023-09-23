@@ -1,5 +1,5 @@
 #include <vector>
-#include "Location.h"
+#include "WorldLoader.h"
 #pragma once
 
 enum STATES {
@@ -41,11 +41,13 @@ public:
 
 class AdventureSelectMenu : public State {
 private:
+	WorldLoader* _world_loader;
 	std::vector<Location*> _locations;
-	void constructLocations(int num_locations);
 
 public:
-	AdventureSelectMenu(int num_locations = 0);
+	AdventureSelectMenu();
+	~AdventureSelectMenu();
+
 	STATES update() override;
 	void render() override;
 };

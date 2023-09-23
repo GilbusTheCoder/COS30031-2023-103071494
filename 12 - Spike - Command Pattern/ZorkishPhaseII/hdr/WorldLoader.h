@@ -5,10 +5,6 @@
 *	data and create a vector of connected Location pointers to be used by the 
 *	gameplay state.														   */
 
-
-/*	I use references when passing strings longer than 15 char as these aren't 
-*	handled by C++ small string optimizations								*/
-
 #pragma once
 class WorldLoader {
 private:
@@ -35,6 +31,6 @@ public:
 	~WorldLoader();
 
 	std::vector<Location*> getWorldData();
-	std::vector<Location*> loadWorldData();
+	void loadWorldData();
 };
 

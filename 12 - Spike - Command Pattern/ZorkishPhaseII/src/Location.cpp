@@ -55,6 +55,7 @@ void Location::setAll(std::string name, std::string description, std::vector<Ite
 /******************************************************************************
 *								   Utility
 ******************************************************************************/
+void Location::copyItem(Item* item) {};
 void Location::addItem(Item* item){	_items.emplace_back(item); }
 
 void Location::addExit(std::string direction, Location* exit) {
