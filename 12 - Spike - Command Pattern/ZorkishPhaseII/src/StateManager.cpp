@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "../hdr/StateManager.h"
+#include "../hdr/Command.h"
 
 /*****************************************************************************
 *								State Manager
@@ -185,41 +186,49 @@ void AdventureSelectMenu::setStateData(std::vector<Location*> locations) {};
 *******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-GameplayState::GameplayState() 
-	:_current_location(nullptr)
-	//_command_manager(new CommandManager()) 
-	{}
+GameplayState::GameplayState() {}
 
 GameplayState::~GameplayState() {
-	for (auto& location : _locations) {
-		delete location;
-		location = nullptr;
-	}
-	_locations.clear();
-	_locations.shrink_to_fit();
+	if (_player) { delete _player; _player = nullptr; }
+	if (_game_data) { delete _game_data; _game_data = nullptr; }
+}
 
-	//delete _command_manager;
-	//_command_manager = nullptr;
-}
-void GameplayState::setCurrentLocation(Location* location) { 
-	_current_location = location; 
-}
 void GameplayState::setStateData(std::vector<Location*> locations) { 
-	_locations = locations;
-	if (!_locations.empty()) { _current_location = _locations[0]; }
+	if (!_game_data) { _game_data = new GameData(); }
+	if (!_player) { _player = new Player(); }
+	
+	if (_game_data) {
+		_game_data->locations = locations;
+		if (!_game_data->locations.empty()) { 
+			_game_data->current_location = _game_data->locations[0]; 
+		}
+
+		if (_player) {
+			_game_data->player = _player;
+		}
+	}
 }
+
+/*	Doesn't need to worry about the current location as that's handled by the
+*	set state data method.													*/
+void GameplayState::initGameData(std::vector<Location*> locations, Player* player) {
+	_game_data->locations = locations;
+	_game_data->player = player;
+}
+
+
 
 /******************************************************************************
 *							    Rendate Stuff
 ******************************************************************************/
 STATES GameplayState::update() {
 	handleInput();
-
 	return STATES::GAMEPLAY;
 }
+
 void GameplayState::render() {
 	std::cout << std::endl;
-	_current_location->about();
+	_game_data->current_location->about();
 }
 
 /******************************************************************************

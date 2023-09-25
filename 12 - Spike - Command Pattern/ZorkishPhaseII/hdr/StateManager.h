@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "WorldLoader.h"
-//#include "CommandManager.h"
+#include "GameData.h"
 
 enum STATES {
 	WELCOME,
@@ -67,16 +67,15 @@ public:
 //Create a data structure containing whatever the command needs to work.
 class GameplayState : public State {
 private:
-	std::vector<Location*> _locations;
-	Location* _current_location = nullptr;
+	Player* _player = nullptr;
+	GameData* _game_data = nullptr;
 	std::string _command_type;
 	std::vector<std::string> _command_args;
 
 public:
 	GameplayState();
 	~GameplayState();
-	
-	void setCurrentLocation(Location* location);
+	void initGameData(std::vector<Location*> locations, Player* player);
 
 	std::stringstream getInput();
 	void handleInput();
