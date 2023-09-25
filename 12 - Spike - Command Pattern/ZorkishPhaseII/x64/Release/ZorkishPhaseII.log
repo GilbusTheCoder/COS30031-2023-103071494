@@ -1,0 +1,8 @@
+﻿  Main.cpp
+  StateManager.cpp
+  Generating code
+  8 of 939 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
+    5 functions were new in current compilation
+    57 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ZorkishPhaseII.vcxproj -> F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\x64\Release\ZorkishPhaseII.exe

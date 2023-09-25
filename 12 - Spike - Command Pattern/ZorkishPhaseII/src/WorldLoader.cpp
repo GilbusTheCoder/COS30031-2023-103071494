@@ -1,6 +1,7 @@
+#include "../hdr/WorldLoader.h"
+
 #include <string>
 #include <algorithm>
-#include "../hdr/WorldLoader.h"
 
 /******************************************************************************
 *							    De/Constructors

@@ -1,5 +1,6 @@
-#include "ItemSlot.h"
 #pragma once
+#include "ItemSlot.h"
+
 class Inventory {
 private:
 	ItemSlot* _head = nullptr;

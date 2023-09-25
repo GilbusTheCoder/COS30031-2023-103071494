@@ -1,5 +1,5 @@
-#include <iostream>
 #pragma once
+#include <iostream>
 
 enum class ITEM_TYPES { TEST_TYPE };
 

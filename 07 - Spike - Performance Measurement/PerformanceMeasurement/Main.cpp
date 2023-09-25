@@ -198,7 +198,7 @@ void manyRandomValueTest(LinkedList* list, int search_reps, int max_range, bool 
 		range = (std::rand() % maximum_range);
 		value = std::rand() % range;
 
-		single_test_data = singleSearchStructureTest(linked_list, value, range, true);
+		single_test_data = singleSearchStructureTest(linked_list, value, range, false);
 		multiple_test_data.push_back(single_test_data);
 	}
 
@@ -264,7 +264,7 @@ void singleRampUpTests(LinkedList* list, int max_ramps, bool show_results) {
 				ns_map = sci_map * pow(10, 9), ns_vec = sci_vec * pow(10, 9), ns_list = sci_list * pow(10, 9);
 
 			std::cout << std::endl;
-			std::cout << "Ramp 1: Searched " << pow(10, idx) << " elements." << std::endl;
+			std::cout << "Ramp " << idx << ": Searched " << pow(10, idx) << " elements." << std::endl;
 			std::cout << ">> Unordered Map avg search time:\t" << sci_map << "\t== " << ns_map << " ns." << std::endl;
 			std::cout << ">>        Vector avg search time:\t" << sci_vec << "\t== " << ns_vec << " ns." << std::endl;
 			std::cout << ">>          List avg search time:\t" << sci_list << "\t== " << ns_list << " ns." << std::endl;

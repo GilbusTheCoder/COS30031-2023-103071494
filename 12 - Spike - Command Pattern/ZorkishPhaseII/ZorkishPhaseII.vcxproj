@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Location.cpp" />
     <ClCompile Include="src\ItemSlot.cpp" />
     <ClCompile Include="src\Inventory.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="hdr\ItemSlot.h" />
     <ClInclude Include="hdr\Location.h" />
     <ClInclude Include="hdr\WorldLoader.h" />
+    <ClInclude Include="hdr\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

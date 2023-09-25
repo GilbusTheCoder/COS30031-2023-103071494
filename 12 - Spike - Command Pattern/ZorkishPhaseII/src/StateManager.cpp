@@ -1,10 +1,12 @@
 #include <iostream>
+#include <sstream>
 #include "../hdr/StateManager.h"
 
 /*****************************************************************************
 *								State Manager
 *****************************************************************************/
 StateManager::StateManager() { _current_ptr->render(); }
+GameplayState* StateManager::getGameplayState() { return &_gameplay; }
 bool StateManager::isRunning() { return _current_state != STATES::QUIT; }
 
 void StateManager::update() {
@@ -19,7 +21,7 @@ void StateManager::update() {
 	}
 	else if (_current_state == STATES::GAMEPLAY) { 
 		_current_ptr = &_gameplay;
-		_current_ptr->setLocations(_adventure_select_menu.getLocations());
+		_current_ptr->setStateData(_adventure_select_menu.getLocations());
 	}
 	else if (_current_state == STATES::NEW_HS) { _current_ptr = &_new_hs_menu; }
 	else if (_current_state == STATES::VIEW_HoF) { _current_ptr = &_hall_of_fame_menu; }
@@ -81,7 +83,7 @@ void MainMenu::render() {
 	std::cout << std::endl << "Selected 1-5: " << std::endl;
 }
 
-void MainMenu::setLocations(std::vector<Location*> locations) {};
+void MainMenu::setStateData(std::vector<Location*> locations) {};
 
 /******************************************************************************
 *							   About Menu State
@@ -97,7 +99,7 @@ void AboutMenu::render() {
 	std::cout << std::endl;
 }
 
-void AboutMenu::setLocations(std::vector<Location*> locations) {};
+void AboutMenu::setStateData(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -113,7 +115,7 @@ void HelpMenu::render() {
 	std::cout << std::endl;
 }
 
-void HelpMenu::setLocations(std::vector<Location*> locations) {};
+void HelpMenu::setStateData(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -175,7 +177,7 @@ void AdventureSelectMenu::render() {
 	std::cout << ">> 3. Even COOLER World" << std::endl;
 }	
 
-void AdventureSelectMenu::setLocations(std::vector<Location*> locations) {};
+void AdventureSelectMenu::setStateData(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -183,6 +185,11 @@ void AdventureSelectMenu::setLocations(std::vector<Location*> locations) {};
 *******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
+GameplayState::GameplayState() 
+	:_current_location(nullptr)
+	//_command_manager(new CommandManager()) 
+	{}
+
 GameplayState::~GameplayState() {
 	for (auto& location : _locations) {
 		delete location;
@@ -190,28 +197,65 @@ GameplayState::~GameplayState() {
 	}
 	_locations.clear();
 	_locations.shrink_to_fit();
-}
 
-void GameplayState::setLocations(std::vector<Location*> locations) { 
-	_locations = locations; }
+	//delete _command_manager;
+	//_command_manager = nullptr;
+}
+void GameplayState::setCurrentLocation(Location* location) { 
+	_current_location = location; 
+}
+void GameplayState::setStateData(std::vector<Location*> locations) { 
+	_locations = locations;
+	if (!_locations.empty()) { _current_location = _locations[0]; }
+}
 
 /******************************************************************************
 *							    Rendate Stuff
 ******************************************************************************/
 STATES GameplayState::update() {
-	std::string command;
-	std::cin >> command;
+	handleInput();
 
-	if (command == "highscore") { return STATES::NEW_HS; }
-	else if (command == "quit") { return STATES::QUIT; }
-	else { return STATES::GAMEPLAY; }
+	return STATES::GAMEPLAY;
 }
 void GameplayState::render() {
 	std::cout << std::endl;
-	std::cout << "Gameplay stuff goes in here!" << std::endl;
-	std::cout << "Allowed stage 1 commands can be found in the help screen" << std::endl;
-	std::cout << "Please enter test commands" << std::endl;
-	std::cout << ">> ";
+	_current_location->about();
+}
+
+/******************************************************************************
+*							    Command Stuff
+******************************************************************************/
+/* Will update the _command_type and _command_args each update cycle		*/
+void GameplayState::handleInput() {
+	resetCommandData();
+	std::stringstream input = getInput();
+
+	// Read the input and decompose into tokens
+	while (input.good()) {
+		std::string input_token;
+		input >> input_token;
+		_command_args.emplace_back(input_token);
+	}
+
+	std::vector<std::string>::iterator command_it = _command_args.begin();;
+	_command_type = *command_it;
+	_command_args.erase(command_it);
+	_command_args.shrink_to_fit();
+}
+
+std::stringstream GameplayState::getInput() {
+	std::string input;
+	getline(std::cin, input);
+	std::stringstream input_stream(input);
+
+	return input_stream;
+}
+
+void GameplayState::resetCommandData() {
+	_command_args.clear();
+	_command_args.shrink_to_fit();
+	_command_type.clear();
+	_command_type.shrink_to_fit();
 }
 
 /******************************************************************************
@@ -239,7 +283,7 @@ void NewHighScoreMenu::render() {
 	std::cout << ">> ";
 }
 
-void NewHighScoreMenu::setLocations(std::vector<Location*> locations) {};
+void NewHighScoreMenu::setStateData(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -267,7 +311,7 @@ void HallOfFameMenu::render() {
 	std::cout << std::endl;
 }
 
-void HallOfFameMenu::setLocations(std::vector<Location*> locations) {};
+void HallOfFameMenu::setStateData(std::vector<Location*> locations) {};
 
 
 /******************************************************************************
@@ -277,4 +321,4 @@ void HallOfFameMenu::setLocations(std::vector<Location*> locations) {};
 ******************************************************************************/
 STATES QuitState::update() { return STATES::QUIT; }
 void QuitState::render() { std::cout << "Quitting zorkish!" << std::endl; }
-void QuitState::setLocations(std::vector<Location*> locations) {}
+void QuitState::setStateData(std::vector<Location*> locations) {}

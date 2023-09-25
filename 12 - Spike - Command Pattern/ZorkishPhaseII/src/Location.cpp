@@ -34,7 +34,9 @@ Item* Location::getItem(std::string item_name) {
 	}
 }
 std::vector<Item*> Location::getItems() { return _items; }
-Location* Location::getExit(std::string direction) { return _exits[direction]; }
+Location* Location::getExit(std::string direction) { 
+	if (!_exits[direction]) { return this; }
+	return _exits[direction]; }
 std::unordered_map<std::string, Location*> Location::getExits() { return _exits; };
 
 void Location::setName(std::string name) { _name = name; }

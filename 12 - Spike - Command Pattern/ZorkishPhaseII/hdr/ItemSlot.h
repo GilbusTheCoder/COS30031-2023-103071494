@@ -1,5 +1,5 @@
-#include "Item.h"
 #pragma once
+#include "Item.h"
 
 class ItemSlot {
 private:

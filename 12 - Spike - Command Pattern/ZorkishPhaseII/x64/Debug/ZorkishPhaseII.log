@@ -1,5 +1,48 @@
-﻿  Main.cpp
+﻿  CommandManager.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,40): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(72,16): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(72,16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(72,44): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(73,13): error C2065: 'Command': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(73,21): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(82,23): error C2061: syntax error: identifier 'StateManager'
+  Commands.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\CommandManager.h(11,13): error C2065: 'Command': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\CommandManager.h(11,21): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,40): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(73,13): error C2065: 'Command': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(73,21): error C2059: syntax error: '>'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(82,23): error C2061: syntax error: identifier 'StateManager'
+  Main.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\Commands.h(16,23): error C2061: syntax error: identifier 'GameplayState'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\Commands.h(22,15): error C2061: syntax error: identifier 'GameplayState'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,40): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(82,23): error C2061: syntax error: identifier 'StateManager'
   StateManager.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\Commands.h(16,23): error C2061: syntax error: identifier 'GameplayState'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\Commands.h(22,15): error C2061: syntax error: identifier 'GameplayState'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C2143: syntax error: missing ';' before '*'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(69,40): error C2238: unexpected token(s) preceding ';'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(82,23): error C2061: syntax error: identifier 'StateManager'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(28,13): error C2660: 'GameplayState::setStateManager': function does not take 1 arguments
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(82,7): message : see declaration of 'GameplayState::setStateManager'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(28,13): message : while trying to match the argument list '(StateManager *)'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(221,6): error C2065: '_state_manager': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(225,21): error C2511: 'void GameplayState::setStateManager(StateManager *)': overloaded member function not found in 'GameplayState'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\StateManager.h(67,7): message : see declaration of 'GameplayState'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(226,2): error C2065: '_state_manager': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(257,30): error C2065: '_state_manager': undeclared identifier
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(257,20): error C2660: 'Command::execute': function does not take 2 arguments
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\hdr\Commands.h(16,15): message : see declaration of 'Command::execute'
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(257,20): message : while trying to match the argument list '()'
+  WorldLoader.cpp
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\WorldLoader.cpp(62,4): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
   Generating Code...
-F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\StateManager.cpp(165): warning C4715: 'AdventureSelectMenu::update': not all control paths return a value
-  ZorkishPhaseII.vcxproj -> F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\x64\Debug\ZorkishPhaseII.exe
+F:\Uni\COS30031-2023-103071494\12 - Spike - Command Pattern\ZorkishPhaseII\src\WorldLoader.cpp(173): warning C4715: 'WorldLoader::getLocationByName': not all control paths return a value
