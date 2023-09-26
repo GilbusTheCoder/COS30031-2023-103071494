@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "WorldLoader.h"
+#include "CommandFactory.h"
 
 enum STATES {
 	WELCOME,
@@ -61,7 +62,7 @@ public:
 //Create a data structure containing whatever the command needs to work.
 class GameplayState : public State {
 private:
-	//CommandFactory* _command_factory = nullptr;
+	CommandFactory* _command_factory = nullptr;
 	std::string _command_type;
 	std::vector<std::string> _command_args;
 

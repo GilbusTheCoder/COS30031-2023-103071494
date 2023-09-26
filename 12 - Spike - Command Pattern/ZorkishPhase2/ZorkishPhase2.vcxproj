@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CommandFactory.cpp" />
     <ClCompile Include="src\Command.cpp" />
     <ClCompile Include="src\Inventory.cpp" />
     <ClCompile Include="src\Item.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="src\WorldLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="hdr\CommandFactory.h" />
     <ClInclude Include="hdr\Command.h" />
     <ClInclude Include="hdr\GameData.h" />
     <ClInclude Include="hdr\Item.h" />

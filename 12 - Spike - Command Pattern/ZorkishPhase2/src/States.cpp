@@ -1,6 +1,5 @@
 #include <sstream>
 #include "../hdr/States.h"
-#include "../hdr/Command.h"
 
 /******************************************************************************
 *							   Main Menu State
@@ -151,6 +150,8 @@ GameplayState::GameplayState() {}
 
 GameplayState::~GameplayState() {
 	if (game_data) { delete game_data; game_data = nullptr; }
+	if (_command_factory) { 
+		delete _command_factory; _command_factory = nullptr; }
 }
 
 
@@ -159,11 +160,18 @@ GameplayState::~GameplayState() {
 ******************************************************************************/
 STATES GameplayState::update() {
 	handleInput();
-
 	if (!_command_args.empty()) {
-		Command* new_move = new MoveCommand();
-		new_move->execute(game_data, _command_args);
+		std::queue<Command*> frame_commands;
+
+		 frame_commands = 
+			 _command_factory->createCommands(_command_type, _command_args);
+	
+		 while (!frame_commands.empty()) {
+			 frame_commands.front()->execute(game_data, _command_args);
+			 frame_commands.pop();
+		}
 	}
+
 	return STATES::GAMEPLAY;
 }
 
@@ -171,6 +179,7 @@ void GameplayState::render() {
 	std::cout << "rendered gameplay " << std::endl;
 	game_data->current_location->about();
 }
+
 
 /******************************************************************************
 *							    Command Stuff
@@ -187,11 +196,14 @@ void GameplayState::handleInput() {
 		_command_args.emplace_back(input_token);
 	}
 
-	// Set command type to first element and clear it leaving only args
-	std::vector<std::string>::iterator command_it = _command_args.begin();;
-	_command_type = *command_it;
-	_command_args.erase(command_it);
-	_command_args.shrink_to_fit();
+	// Check input is good containing at least 2 elements.
+	if (_command_args.size() > 1) {
+		// Set command type to first element and clear it leaving only args
+		std::vector<std::string>::iterator command_it = _command_args.begin();;
+		_command_type = *command_it;
+		_command_args.erase(command_it);
+		_command_args.shrink_to_fit();
+	} else { _command_args.clear(); _command_args.shrink_to_fit(); }
 }
 
 std::stringstream GameplayState::getInput() {
