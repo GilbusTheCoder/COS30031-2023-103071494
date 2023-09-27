@@ -18,5 +18,25 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SoundBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hdr\SoundBoard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\libmodplug-1.dll" />
+    <None Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\libogg-0.dll" />
+    <None Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\libopus-0.dll" />
+    <None Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\libopusfile-0.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\LICENSE.modplug.txt" />
+    <Text Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\LICENSE.ogg-vorbis.txt" />
+    <Text Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\LICENSE.opus.txt" />
+    <Text Include="..\..\..\..\Code Projects\_Libraries\SDL2_mixer-2.6.3\lib\x64\optional\LICENSE.opusfile.txt" />
   </ItemGroup>
 </Project>

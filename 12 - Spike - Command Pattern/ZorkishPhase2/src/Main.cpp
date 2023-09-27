@@ -9,7 +9,8 @@
 /*	1. Create a functioning inventory system which allows for adding and removing items
 *	2. Create a set of location nodes connected through edges which can be traversed
 *	3. Create save and load functionality
-*	4. Create our command pattern												*/
+*	4. Create our command pattern												
+*	5. Finished, fuck this task, im moving on.										*/
 
 int main() {
 	StateManager _game_manager;

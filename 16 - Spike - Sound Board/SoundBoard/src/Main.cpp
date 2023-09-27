@@ -1,45 +1,31 @@
 #include <iostream>
-#include <vector>
-#include <SDL.h>
-#include <SDL_mixer.h>
+#include "../hdr/SoundBoard.h"
 
-class SoundBoard {
-private:
-	int _volume;
-
-public:
-	SoundBoard() {
-
-	}
-	~SoundBoard() {
-
-	}
-
-	void setVolume(int volume) { _volume = volume; }
-	void togglePlay(){}
-
-	int loadMusic(const char* filename) {
-	
-	}
-	
-	int loadSound(const char* filename) {
-	
-	}
-
-	int playMusic(int music_pos) {
-
-	}
-
-	int playSound(int sound_pos) {
-
-	}
-};
-
-
-/*	SDL STANDARD AUDIO LIBRARY SUCKS!	*/
 int main(int argc, char* argv[]) {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 4096);
+	SoundBoard sound_board;
+
+	sound_board.loadSound("audio/BombHasBeenPlanted.wav");
+	sound_board.loadSound("audio/RecordScratchSoundEffect.wav");
+	sound_board.loadSound("audio/ThrowingFlashbangSoundEffectCSGO.wav");
+	sound_board.loadMusic("audio/RatsBirthdayMixtape.mp3");
+
+	sound_board.playMusic(0);
+
+	int choice = 0;
+	while (choice != -1) {
+		choice = 0;
+		std::cout << "\nEnter a sound to play using num input\n";
+		std::cout << "-1 to exit...\n";
+		std::cout << ">> ";
+		std::cin >> choice;
+
+		if (choice == 9) {
+			sound_board.playPause();
+		}
+
+		sound_board.playSound(choice - 1);
+		std::cin.clear();
+	}
 
 	return 0;
 }
