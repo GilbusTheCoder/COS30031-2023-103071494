@@ -32,8 +32,10 @@ public:
 		std::unordered_map<std::string, Location*> exits);
 
 	void addItem(Item* item);
+	void removeItem(Item* item);
 	void addExit(std::string direction, Location* exit);
 	void showItems();
+	void showItemNames();
 	void showExits();
 	void about();
 };

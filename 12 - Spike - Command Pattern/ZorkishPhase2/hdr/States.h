@@ -49,11 +49,11 @@ public:
 class AdventureSelectMenu : public State {
 private:
 	WorldLoader* _world_loader = nullptr;
+	void deleteLoader();
 
 public:
 	AdventureSelectMenu();
 	~AdventureSelectMenu();
-	void deleteLoader();
 
 	STATES update() override;
 	void render() override;
@@ -66,13 +66,15 @@ private:
 	std::string _command_type;
 	std::vector<std::string> _command_args;
 
-public:
-	GameplayState();
-	~GameplayState();
-
+	bool validateCommandType();
+	void validateCommandArgs();
 	std::stringstream getInput();
 	void handleInput();
 	void resetCommandData();
+
+public:
+	GameplayState();
+	~GameplayState();
 
 	STATES update() override;
 	void render() override;

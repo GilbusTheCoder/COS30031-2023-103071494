@@ -19,3 +19,17 @@ void Player::takeItem(Item* item) {
 void Player::deleteItem(Item* item) {
 	_inventory->deleteItem(item);
 }
+
+bool Player::hasItem(std::string item_name) {
+	return _inventory->hasItem(item_name);
+}
+
+Item* Player::findItem(std::string item_name) {
+	return _inventory->searchItem(item_name);
+}
+
+void Player::showInventory() {
+	_inventory->about();
+}
+
+

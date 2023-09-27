@@ -11,7 +11,7 @@ void Item::setDescription(std::string description) { _description = description;
 void Item::setType(ITEM_TYPES type) { _type = type; }
 
 void Item::about() {
-	std::cout << "Name: " << _name << std::endl;
-	std::cout << "Desc: " << _description << std::endl;
-	std::cout << "Type: TestType" << std::endl;
+	std::cout << " --> " << _name << std::endl;
+	std::cout << "      - " << _description << std::endl;
+	std::cout << "      - TestType" << std::endl;
 }

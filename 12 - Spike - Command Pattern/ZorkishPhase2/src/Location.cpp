@@ -24,17 +24,19 @@ Location::~Location() {
 *								  Properties
 ******************************************************************************/
 std::string Location::getName() { return _name; }
-std::string Location::getDescription() { return _description; }
+std::string Location::getDescription() { return _description;}
 Item* Location::getItem(std::string item_name) {
 	for (auto& item : _items) {
 		if (item->getName() == item_name) {
 			return item;
 		}
 	}
+
+	return nullptr;
 }
 std::vector<Item*> Location::getItems() { return _items; }
 Location* Location::getExit(std::string direction) {
-	if (!_exits[direction]) { return this; }
+	if (_exits.find(direction) == _exits.end()) { return nullptr; }
 	return _exits[direction];
 }
 std::unordered_map<std::string, Location*> Location::getExits() { return _exits; };
@@ -58,13 +60,28 @@ void Location::setAll(std::string name, std::string description, std::vector<Ite
 *								   Utility
 ******************************************************************************/
 void Location::addItem(Item* item) { _items.emplace_back(item); }
+void Location::removeItem(Item* item) {
+	for (int idx = 0; idx < _items.size(); idx++) {
+		if (_items[idx] == item) {
+			std::vector<Item*>::iterator iter = _items.begin() + idx;
+			_items.erase(iter);
+			_items.shrink_to_fit();
+		}
+	}
+}
+
 void Location::addExit(std::string direction, Location* exit) {
 	_exits.insert({ direction, exit });
 }
 
 void Location::showItems() {
-	std::cout << "Items: " << std::endl;
-	for (auto& item : _items) { item->about(); }
+	for (auto& item : _items) { item->about(); std::cout << std::endl; }
+}
+
+void Location::showItemNames() {
+	for (auto& item : _items) { 
+		std::cout << " --> " << item->getName() << std::endl; 
+	}
 }
 
 //	FYI if you're running anything earlier than C++ 17 this function will break.

@@ -4,15 +4,12 @@
 #include "Location.h"
 #include "Player.h"
 
-
 struct GameData {
-	//std::queue<Command*> commands;
+	bool quit = false;
 	std::vector<Location*> locations;
 	Location* current_location;
 	Player* player;
 
 	~GameData();
-	//void resetCommands();
 	void resetLocations();
 };
-

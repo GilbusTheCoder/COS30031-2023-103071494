@@ -75,10 +75,22 @@ void AboutMenu::render() {
 ******************************************************************************/
 STATES HelpMenu::update() { return STATES::MAIN_MENU; }
 void HelpMenu::render() {
-	std::cout << "The following commands are supported: " << std::endl;
-	std::cout << ">> quit" << std::endl << ">> highscore (for testing)" << std::endl;
-	system("pause");
 	std::cout << std::endl;
+	std::cout << "--- VALID COMMANDS ---" << std::endl << std::endl;
+	std::cout << " --> move / go / head" << std::endl;
+	std::cout << "      - use to change location: 'go [direction]'." << std::endl;
+	std::cout << " --> take / grab" << std::endl;
+	std::cout << "      - add item to inventory: 'take [item name]'." << std::endl;
+	std::cout << " --> drop / discard" << std::endl;
+	std::cout << "      - remove item from inventory: 'drop [item name]'." << std::endl;
+	std::cout << " --> look / look at" << std::endl;
+	std::cout << "      - examine item in location: 'look {at} [item_name]'." << std::endl;
+	std::cout << "      - E.g. look at twigs / l pot of testing / look around" << std::endl;
+	std::cout << " --> show" << std::endl;
+	std::cout << "      - gives player access to menus: 'show [menu]'." << std::endl;
+	std::cout << "      - E.g. show inventory / sh help" << std::endl;
+	std::cout << " --> quit" << std::endl;
+	std::cout << "      - sends the game into the QuitState." << std::endl;
 }
 
 
@@ -159,25 +171,30 @@ GameplayState::~GameplayState() {
 *							    Rendate Stuff
 ******************************************************************************/
 STATES GameplayState::update() {
+	if (game_data->quit) { return STATES::QUIT; }
+	
 	handleInput();
-	if (!_command_args.empty()) {
-		std::queue<Command*> frame_commands;
+	std::cout << std::endl;
 
-		 frame_commands = 
-			 _command_factory->createCommands(_command_type, _command_args);
+	if (!_command_args.empty() || _command_type != "quit") {
+		std::queue<Command*> frame_commands = 
+			_command_factory->createCommands(_command_type, _command_args);
 	
 		 while (!frame_commands.empty()) {
 			 frame_commands.front()->execute(game_data, _command_args);
 			 frame_commands.pop();
 		}
+		return STATES::GAMEPLAY;
 	}
-
-	return STATES::GAMEPLAY;
+	if (_command_type == "quit") {
+		return STATES::QUIT;
+	}
 }
 
 void GameplayState::render() {
-	std::cout << "rendered gameplay " << std::endl;
-	game_data->current_location->about();
+	std::cout << std::endl;
+	std::cout << game_data->current_location->getDescription() << std::endl;
+	std::cout << ">> ";
 }
 
 
@@ -196,13 +213,25 @@ void GameplayState::handleInput() {
 		_command_args.emplace_back(input_token);
 	}
 
+	// Check for 1 word commands.
+	if (_command_args.size() == 1) {
+		_command_type = _command_args[0];
+
+		if (validateCommandType()) {
+			_command_args.clear();
+			_command_args.shrink_to_fit();
+		}
+	}	
 	// Check input is good containing at least 2 elements.
-	if (_command_args.size() > 1) {
+	else if (_command_args.size() > 1) {
 		// Set command type to first element and clear it leaving only args
 		std::vector<std::string>::iterator command_it = _command_args.begin();;
 		_command_type = *command_it;
-		_command_args.erase(command_it);
-		_command_args.shrink_to_fit();
+		if (validateCommandType()) {
+			_command_args.erase(command_it);
+			_command_args.shrink_to_fit();
+			validateCommandArgs();
+		}
 	} else { _command_args.clear(); _command_args.shrink_to_fit(); }
 }
 
@@ -212,6 +241,38 @@ std::stringstream GameplayState::getInput() {
 	std::stringstream input_stream(input);
 
 	return input_stream;
+}
+
+// Honestly should probably be the job of the command factory but hey, it's here now
+bool GameplayState::validateCommandType() {
+	if (!_command_type.empty()) {
+		std::transform(_command_type.begin(), _command_type.end(), _command_type.begin(), std::tolower);
+	
+		//	Instantiating aliases is just refactoring this piece of code here to read from a map
+		//	containing a valid command and a string of aliases which can be added to, just got to
+		//	check for command collisions when adding.
+		if (_command_type == "move" || _command_type == "head" || _command_type == "go" ||
+			_command_type == "m" || _command_type == "g") {	_command_type = "move"; }
+		else if (_command_type == "take" || _command_type == "grab" || 
+			_command_type == "t") {	_command_type = "take";	}
+		else if (_command_type == "drop" || _command_type == "discard" || _command_type == "d") {
+			_command_type = "drop";	}
+		else if (_command_type == "look" || _command_type == "l") { _command_type = "look"; }
+		else if (_command_type == "show" || _command_type == "sh" || _command_type == "s") {
+			_command_type = "show";	}
+		else if (_command_type == "help" || _command_type == "h") { _command_type = "help"; }
+		else if (_command_type == "quit" || _command_type == "q") { _command_type = "quit"; }
+		else { _command_type = ""; }
+
+		if (_command_type != "") { return true; }
+		return false;
+	}
+}
+
+void GameplayState::validateCommandArgs() {
+	for (std::string& argument : _command_args) {
+		std::transform(argument.begin(), argument.end(), argument.begin(), std::tolower);
+	}
 }
 
 void GameplayState::resetCommandData() {

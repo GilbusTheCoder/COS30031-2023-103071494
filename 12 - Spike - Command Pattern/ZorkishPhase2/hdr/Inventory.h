@@ -20,6 +20,8 @@ public:
 
 	void addItem(Item* item);
 	void deleteItem(Item* item);
+	bool hasItem(std::string item_name);
+	Item* searchItem(std::string item_name);
 	void reset();
 	void about();
 };
