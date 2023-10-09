@@ -1,0 +1,37 @@
+#include <algorithm>
+#include "../hdr/C_Render.h"
+
+/******************************************************************************
+*							    De/Constructors
+******************************************************************************/
+C_Render::C_Render(int owning_entity_id, std::string name, std::string description)
+	:_entity_id(owning_entity_id) { 
+	setName(name);
+	setDescription(description);
+}
+
+/******************************************************************************
+*								  Properties
+******************************************************************************/
+ComponentFlag C_Render::getFlag() { return _flag; }
+std::string C_Render::getName() { return _name; }
+std::string C_Render::getDescription() { return _description; }
+
+
+void C_Render::flagForRender(bool yes_or_no) { _render_this = yes_or_no; }
+void C_Render::setName(std::string name) { 
+	std::replace(name.begin(), name.end(), '_', ' ');
+	_name = name; }
+void C_Render::setDescription(std::string description) {
+	std::replace(description.begin(), description.end(), '_', ' ');
+	_description = description; }
+
+
+/******************************************************************************
+*								  Methods
+******************************************************************************/
+void C_Render::update() {}
+void C_Render::render() {
+	std::cout << "Name -> " << _name << "\n";
+	std::cout << "Description -> " << _description << "\n";
+}
