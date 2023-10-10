@@ -1,3 +1,4 @@
+#include "WorldLoader.h"
 #pragma once
 
 enum STATES {
@@ -25,7 +26,6 @@ public:
 	void render() override;
 };
 
-/*	Load and instantiate our entity objects based off a file. */
 class AboutMenu : public State {
 public:
 	STATES update() override;
@@ -38,8 +38,15 @@ public:
 	void render() override;
 };
 
+/*	Load and instantiate our entity objects based off a file. */
 class AdventureSelectMenu : public State {
+private:
+	WorldLoader* _world_loader = nullptr;
+	
 public:
+	AdventureSelectMenu();
+	~AdventureSelectMenu();
+
 	STATES update() override;
 	void render() override;
 };

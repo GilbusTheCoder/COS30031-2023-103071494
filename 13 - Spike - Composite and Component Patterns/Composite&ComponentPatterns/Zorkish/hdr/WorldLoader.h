@@ -22,9 +22,10 @@ private:
 	bool isComment(const std::string& line);
 
 public:
-	WorldLoader(std::string file_name = "");
+	WorldLoader(const std::string& file_name = "");
 	~WorldLoader();
 
-	void loadGameData();
+	void setSaveFile(const std::string& file_name);
+	GameData* loadGameData();
 };
 

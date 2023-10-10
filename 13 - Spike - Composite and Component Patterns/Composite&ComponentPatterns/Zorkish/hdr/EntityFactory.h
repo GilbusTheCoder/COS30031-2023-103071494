@@ -14,6 +14,7 @@
 *																			  */
 class EntityFactory {
 private:
+	int entity_id = 0;
 	std::vector<std::vector<std::string>> _raw_entity_dataset;
 	GameData* _game_data = nullptr;
 	ComponentFactory* _component_factory = nullptr;
@@ -23,8 +24,8 @@ private:
 	std::vector<std::string> splitSaveLine(std::string& line, const char delimiter);
 
 public:
-	EntityFactory(std::vector<std::vector<std::string>> entity_data = {}, 
-		GameData* game_data = nullptr);
+	EntityFactory(GameData* game_data = nullptr, 
+		std::vector<std::vector<std::string>> entity_data = {});
 	~EntityFactory();
 
 	void setEntityData(std::vector<std::vector<std::string>> entity_data);

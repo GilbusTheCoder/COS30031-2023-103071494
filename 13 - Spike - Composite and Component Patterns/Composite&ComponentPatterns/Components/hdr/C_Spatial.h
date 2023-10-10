@@ -13,7 +13,8 @@ private:
 	bool _has_legs = true;
 
 public:
-	C_Spatial(int owning_entity_id);
+	C_Spatial(int owning_entity_id, bool has_eyes=true, bool has_arms=true, 
+		bool has_legs=true);
 	ComponentFlag getFlag() override;
 
 	bool hasEyes();

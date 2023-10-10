@@ -5,6 +5,9 @@
 #include "../../Components/hdr/C_Spatial.h"
 #include "../../Components/hdr/C_Inventory.h"
 
+
+/*	This is the dataset which gets instantiated in the AdventureSelectMenu
+*	before being passed to the GameplayState for play-time manipulation		 */
 #pragma once
 struct GameData	{
 	bool is_running = true;

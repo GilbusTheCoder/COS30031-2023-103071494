@@ -11,7 +11,7 @@
 *	the components needed for the entities such that they can be assembled
 *
 *	it takes a lowercase string in the form:
-*		"ComponentFlag0(arg0,arg1), ComponentFlag1(arg0,arg1), ..."			  */
+*		"ComponentFlag0(arg0,arg1)|ComponentFlag1(arg0,arg1)|  ..."			  */
 class ComponentFactory {
 private:
 	GameData* _game_data = nullptr;
@@ -19,13 +19,15 @@ private:
 	std::vector<std::vector<std::string>> _fmt_component_dataset;
 
 	std::vector<std::string> splitSaveLine(std::string& line, const char delimiter);
-	std::vector<std::vector<std::string>> formatComponentData();
+	void formatComponentData();
 	ComponentFlag determineFlag(const std::string flag);
-	std::vector<std::string> formatArgs(std::vector<std::string>& component_data);
-	void createComponent(int entity_id, std::vector<std::string>& component_data);
+	std::vector<std::string> formatArgs(std::vector<std::string>& c_data);
+	void createComponent(int entity_id, ComponentFlag c_flag, 
+		std::vector<std::string>& c_args);
 
 public:
 	ComponentFactory(GameData* game_data);
+	~ComponentFactory();
 
 	void setComponentData(std::vector<std::string> component_data);
 	void constructComponents(int entity_id);

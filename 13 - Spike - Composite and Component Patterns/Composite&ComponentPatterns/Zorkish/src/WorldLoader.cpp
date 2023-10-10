@@ -1,20 +1,37 @@
+#include <algorithm>
+#include <string>
 #include "../hdr/WorldLoader.h"
-
 
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-WorldLoader::WorldLoader(std::string file_name) : _file_name(file_name) {
-	_reader.open(_file_name);
-	if (!_reader.is_open()) { 
-		std::cout << "Err: reader couldn't open file.\n"; 
-	} else { _entity_factory = new EntityFactory();	}
+WorldLoader::WorldLoader(const std::string& file_name) : _file_name(file_name) {
+	if (_file_name != "") {
+		_reader.open(_file_name);
+		if (!_reader.is_open()) { 
+			std::cout << "Err: reader couldn't open file.\n"; }
+	}
 
 	if (_game_data == nullptr) { _game_data = new GameData(); }
+
+	if (_entity_factory == nullptr) {
+		_entity_factory = new EntityFactory(_game_data);
+	} else {
+		delete _entity_factory;
+		_entity_factory = nullptr;
+		_entity_factory = new EntityFactory(_game_data);
+	}
 }
 
+
 // Don't you dare delete that fucking gamedata >:(
-WorldLoader::~WorldLoader() { if (_reader.is_open()) { _reader.close(); } }
+WorldLoader::~WorldLoader() { 
+	if (_reader.is_open()) { _reader.close(); } 
+	if (_entity_factory != nullptr) {
+		delete _entity_factory;
+		_entity_factory = nullptr;
+	}
+}
 
 
 /******************************************************************************
@@ -31,11 +48,10 @@ std::vector<std::string> WorldLoader::readFile(){
 		return {};
 	} else {
 		while (std::getline(_reader, line)) {
-			std::vector<std::string> line_hack;
 			std::remove(line.begin(), line.end(), ' ');
 
 			if (!isComment(line)) {
-				line_hack = splitSaveLine(line, ';');
+				std::vector<std::string> line_hack = splitSaveLine(line, ';');
 				save_lines.emplace_back(line_hack[0]);
 			}
 		}
@@ -73,7 +89,22 @@ bool WorldLoader::isComment(const std::string& line) { return line[0] == '#'; }
 /******************************************************************************
 *							     Public Methods
 ******************************************************************************/
-void WorldLoader::loadGameData() {
+void WorldLoader::setSaveFile(const std::string& file_name) { 
+	if (!_reader.is_open()) {
+		_reader.open(file_name);
+		if (!_reader.is_open()) { std::cout << "Err: Bad filepath.\n"; }
+	} else {
+		_reader.close();
+
+		_reader.open(file_name);
+		if (!_reader.is_open()) { std::cout << "Err: Bad filepath.\n"; }
+	}
+}
+/*	Reads file, constructs entities and components based of file data and
+*	appends them to the relevant GameData maps.
+*
+*	Needs to have the filename already set in the constructor				*/	
+GameData* WorldLoader::loadGameData() {
 	std::vector<std::string> raw_save_lines = readFile();
 
 	if (!raw_save_lines.empty() && _entity_factory != nullptr) {
@@ -90,6 +121,5 @@ void WorldLoader::loadGameData() {
 		_entity_factory->setEntityData(prefmt_entity_dataset);
 		_entity_factory->constructEntities(); //Applies changes directly to GameData
 	}
-
-	std::cout << "Err: couldn't load world data.\n";
+	return _game_data;
 }

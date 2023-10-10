@@ -1,10 +1,6 @@
 #include "../hdr/C_Inventory.h"
 
 /******************************************************************************
-*								INVENTORY CLASS 
-*								  DEFINITIONS
-* 
-/******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
 C_Inventory::C_Inventory(int owning_entity_id, std::vector<InventorySlot*> slots, int max_size)

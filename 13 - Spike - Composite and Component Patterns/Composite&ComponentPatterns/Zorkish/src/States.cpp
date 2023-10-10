@@ -71,7 +71,27 @@ void HelpMenu::render() {
 }
 
 
-//Select Adventure definitions
+/******************************************************************************
+*								INVENTORY CLASS
+*								  DEFINITIONS
+*
+/******************************************************************************
+*							    De/Constructors
+******************************************************************************/
+AdventureSelectMenu::AdventureSelectMenu() {
+	if (_world_loader == nullptr) {	_world_loader = new WorldLoader(); }
+}
+
+AdventureSelectMenu::~AdventureSelectMenu() {
+	if (_world_loader != nullptr) {
+		delete _world_loader;
+		_world_loader = nullptr;
+	}
+}
+
+/******************************************************************************
+*							    Update / Render
+******************************************************************************/
 STATES AdventureSelectMenu::update() {
 	int choice;
 	std::cin >> choice;
@@ -81,7 +101,8 @@ STATES AdventureSelectMenu::update() {
 
 		switch (choice) {
 		case 1:
-			std::cout << "This is a pretty neat world" << std::endl;
+			_world_loader->setSaveFile("Zorkish/saves/test_save.txt");
+			_world_loader->loadGameData();
 			return STATES::GAMEPLAY;
 		case 2:
 			std::cout << "Wow this worlds pretty cewl" << std::endl;
@@ -105,7 +126,7 @@ void AdventureSelectMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl;
 
-	std::cout << std::endl << ">> 1. World" << std::endl;
+	std::cout << std::endl << ">> 1. World (The loading one)" << std::endl;
 	std::cout << ">> 2. Cool World" << std::endl;
 	std::cout << ">> 3. Even COOLER World" << std::endl;
 }

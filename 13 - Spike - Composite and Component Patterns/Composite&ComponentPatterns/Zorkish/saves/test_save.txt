@@ -19,4 +19,4 @@ item : render(lighter, Spark_Spark);
 item : render(twigs, If_I_had_more_motivation_I'd_make_these_flammable...);
 item : render(garden_gnome, Evil_things_Gnomes_are.);
 current_location : render(backyard, Nice_and_peaceful) | inventory(twigs);
-player : render(you, Lad_in_the_Zork(ish)_world) | spatial() | inventory(sword_of_testing, lighter); 
+player : render(you, Lad_in_the_Zork(ish)_world) | spatial() | inventory(sword_of_testing, lighter);
