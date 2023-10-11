@@ -1,4 +1,6 @@
- #pragma once
+#include <string>
+
+#pragma once
 enum class ComponentFlag {
 	INVALID,
 	RENDER,

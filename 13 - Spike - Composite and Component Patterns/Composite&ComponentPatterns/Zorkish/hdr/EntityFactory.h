@@ -14,14 +14,14 @@
 *																			  */
 class EntityFactory {
 private:
-	int entity_id = 0;
 	std::vector<std::vector<std::string>> _raw_entity_dataset;
 	GameData* _game_data = nullptr;
 	ComponentFactory* _component_factory = nullptr;
 
 	EntityTag determineTag(std::string tag );
-	Entity* createEntity(std::vector<std::string> entity_data);
 	std::vector<std::string> splitSaveLine(std::string& line, const char delimiter);
+	std::string generateUEID(int entity_num);
+	Entity* createEntity(int entity_num, std::vector<std::string> entity_data);
 
 public:
 	EntityFactory(GameData* game_data = nullptr, 

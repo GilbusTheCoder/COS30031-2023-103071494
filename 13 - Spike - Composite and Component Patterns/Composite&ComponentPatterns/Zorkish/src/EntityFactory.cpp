@@ -1,4 +1,7 @@
+#include <iostream>
+#include <string>
 #include <algorithm>
+
 #include "../hdr/EntityFactory.h"
 
 /******************************************************************************
@@ -34,7 +37,8 @@ EntityFactory::~EntityFactory() {
 ******************************************************************************/
 EntityTag EntityFactory::determineTag(std::string tag) {
 	if (tag.find_first_of('_') != tag.size()) {
-		std::replace(tag.begin(), tag.end(), '_', ' ');	}
+		std::replace(tag.begin(), tag.end(), '_', ' ');
+	}
 
 	if (tag == "player") { return EntityTag::PLAYER; }
 	if (tag == "location") { return EntityTag::LOCATION; }
@@ -43,29 +47,8 @@ EntityTag EntityFactory::determineTag(std::string tag) {
 	return EntityTag::INVALID;
 }
 
-Entity* EntityFactory::createEntity(std::vector<std::string> entity_data) {
-	EntityTag entity_tag = determineTag(entity_data[0]);
-	entity_data.erase(entity_data.begin());
-	entity_data.shrink_to_fit();			// Only element left contains components
-
-	/*	Pass the component_factory component args in the form:
-	*		<ComponentFlag0(arg0,arg1)|ComponentFlag1(arg0,arg1), ...>			  */
-	std::vector<std::string> component_data;
-	if (entity_data[0].find("|") != std::string::npos) {
-		component_data = splitSaveLine(entity_data[0], '|');
-	} else { component_data = entity_data;}
-
-	_component_factory->setComponentData(component_data);
-	_component_factory->constructComponents(entity_id);
-
-
-	Entity* entity = new Entity(entity_id, entity_tag);
-	entity_id++;
-	return entity;
-}
-
-std::vector<std::string> EntityFactory::splitSaveLine(std::string& line, 
-	const char delimiter) { 
+std::vector<std::string> EntityFactory::splitSaveLine(std::string& line,
+	const char delimiter) {
 	int start_idx = 0, end_idx = 0;
 	std::string raw_line_data = line += delimiter;
 	std::vector<std::string> formatted_line_data;
@@ -86,23 +69,79 @@ std::vector<std::string> EntityFactory::splitSaveLine(std::string& line,
 }
 
 
+std::string EntityFactory::generateUEID(int entity_num) {
+	if (entity_num < 26) { 
+		entity_num += 97;
+		std::string entity_id(1, entity_num);
+		return entity_id; } 
+	
+	if (entity_num < 676) {		// 26^2
+		char first_char = int(floor(entity_num / 26));
+		char second_char = entity_num % 26;
+
+		std::string first_id(1, first_char + 97);
+		std::string second_id(1, second_char + 97);
+		
+		return first_id.append(second_id);
+	} 
+	
+	return "Jesus christ that's an error and a half.";
+}
+
+
+// Modify to work
+Entity* EntityFactory::createEntity(int entity_num, 
+	std::vector<std::string> entity_data) {
+	EntityTag entity_tag = determineTag(entity_data[0]);
+	entity_data.erase(entity_data.begin());
+	entity_data.shrink_to_fit();			// Only element left contains components
+
+	/*	Pass the component_factory component args in the form:
+	*		<ComponentFlag0(arg0,arg1)|ComponentFlag1(arg0,arg1), ...>			  */
+	std::vector<std::string> component_data;
+	if (entity_data[0].find("|") != std::string::npos) {
+		component_data = splitSaveLine(entity_data[0], '|');
+	} else { component_data = entity_data; }
+
+
+	std::string entity_id = generateUEID(entity_num);
+	_component_factory->setComponentData(component_data);
+	_component_factory->constructComponents(entity_id);
+	Entity* entity = new Entity(entity_id, entity_tag);
+
+
+	if (entity_tag == EntityTag::CURRENT_LOCATION) { 
+		_game_data->current_location = entity; 
+	} else if (entity_tag == EntityTag::PLAYER) { 
+		_game_data->player = entity; }
+
+	return entity;
+}
+
+
 /******************************************************************************
 *							     Public Methods
 ******************************************************************************/
 void EntityFactory::setEntityData(std::vector<std::vector<std::string>> entity_data)
 	{ _raw_entity_dataset = entity_data; }
 
-/*	Inventory doesn't instantiate with items right now							*/
-
 /*	Will construct entities directly inside of the GameData. This is so that items
 *	insantiated first can be reference by other entities who's inventories contain
 *	them during component construction.											*/
 void EntityFactory::constructEntities() {
 	if (!_raw_entity_dataset.empty()) {
+		int entity_id = 0;
+
 		for (std::vector<std::string> entity_save : _raw_entity_dataset) {
-			Entity* new_entity = createEntity(entity_save);
-			_game_data->entities.insert(_game_data->entities.end(), 
-				{ new_entity->getID(), new_entity});
+			if (entity_save.size() > 1) {
+				Entity* new_entity = createEntity(entity_id, entity_save);
+				
+				_game_data->entities.insert(
+					_game_data->entities.end(), 
+					{ new_entity->getID(), new_entity });
+
+				++entity_id;
+			}
 		}
 	}
 }

@@ -51,6 +51,9 @@
     <ClInclude Include="Zorkish\hdr\WorldLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Components\hdr\C_Portal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Zorkish\src\StateManager.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Zorkish\src\WorldLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\src\C_Portal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

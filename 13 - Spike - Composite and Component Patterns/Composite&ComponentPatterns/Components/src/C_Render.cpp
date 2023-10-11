@@ -1,10 +1,11 @@
+#include <iostream>
 #include <algorithm>
 #include "../hdr/C_Render.h"
 
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-C_Render::C_Render(int owning_entity_id, std::string name, std::string description)
+C_Render::C_Render(std::string owning_entity_id, std::string name, std::string description)
 	:_entity_id(owning_entity_id) { 
 	setName(name);
 	setDescription(description);
@@ -21,9 +22,12 @@ std::string C_Render::getDescription() { return _description; }
 void C_Render::flagForRender(bool yes_or_no) { _render_this = yes_or_no; }
 void C_Render::setName(std::string name) { 
 	std::replace(name.begin(), name.end(), '_', ' ');
+	if (name.back() == ',') { name.resize(name.size() - 1); }
 	_name = name; }
 void C_Render::setDescription(std::string description) {
 	std::replace(description.begin(), description.end(), '_', ' ');
+	if (description.back() == ',') {
+		description.resize(description.size() - 1); }
 	_description = description; }
 
 

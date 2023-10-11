@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include <string>
 #include "../hdr/WorldLoader.h"
@@ -121,5 +122,6 @@ GameData* WorldLoader::loadGameData() {
 		_entity_factory->setEntityData(prefmt_entity_dataset);
 		_entity_factory->constructEntities(); //Applies changes directly to GameData
 	}
+
 	return _game_data;
 }

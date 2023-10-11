@@ -1,3 +1,4 @@
+#include "Component.h"
 #include "InventorySlot.h"
 #include <string>
 
@@ -5,7 +6,7 @@
 
 class C_Inventory : public Component {
 private:
-	int _entity_id = 999999999;
+	std::string _entity_id;
 	ComponentFlag _flag = ComponentFlag::INVENTORY;
 
 	InventorySlot* _head = nullptr;
@@ -13,7 +14,8 @@ private:
 	int _max_size;
 
 public:
-	C_Inventory(int owning_entity_id, std::vector<InventorySlot*> slots = {}, int max_size = 64);
+	C_Inventory(std::string owning_entity_id, std::vector<InventorySlot*> slots = {}, 
+		int max_size = 64);
 
 	ComponentFlag getFlag() override;
 	InventorySlot* getHead();

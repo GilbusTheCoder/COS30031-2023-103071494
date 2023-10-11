@@ -1,8 +1,6 @@
 #include <string>
 #include <vector>
 
-#include "../../Components/hdr/Component.h"
-
 #pragma once
 enum class EntityTag {
 	INVALID,
@@ -15,15 +13,14 @@ enum class EntityTag {
 
 class Entity {
 private:
-	int _id;
-	
+	std::string _id;
 	EntityTag _tag = EntityTag::INVALID;
 
 public:
-	Entity(int id, EntityTag tag);
+	Entity(std::string id, EntityTag tag);
 
 	EntityTag getTag();
-	int getID();
+	std::string getID();
 	void setTag(EntityTag tag);
 };
 

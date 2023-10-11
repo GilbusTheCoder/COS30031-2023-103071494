@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Component.h"
 
 #pragma once
@@ -6,7 +5,7 @@
 // Required for items to display a name and description to screen
 class C_Render : public Component {
 private:
-	int _entity_id = 999999999;
+	std::string _entity_id;
 	ComponentFlag _flag = ComponentFlag::RENDER;
 
 	std::string _name;
@@ -14,7 +13,7 @@ private:
 	bool _render_this = true;
 
 public:
-	C_Render(int owning_entity_id, std::string name, std::string description);
+	C_Render(std::string owning_entity_id, std::string name, std::string description);
 
 	ComponentFlag getFlag() override;
 	std::string getName();

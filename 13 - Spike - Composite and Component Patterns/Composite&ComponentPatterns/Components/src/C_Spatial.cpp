@@ -1,6 +1,6 @@
 #include "../hdr/C_Spatial.h"
 
-C_Spatial::C_Spatial(int owning_entity_id, bool has_eyes, bool has_arms, bool has_legs) 
+C_Spatial::C_Spatial(std::string owning_entity_id, bool has_eyes, bool has_arms, bool has_legs) 
 	: _entity_id(owning_entity_id), _has_eyes(has_eyes), 
 	  _has_arms(has_arms), _has_legs(has_legs)  { }
 
