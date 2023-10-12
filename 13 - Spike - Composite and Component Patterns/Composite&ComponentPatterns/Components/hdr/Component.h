@@ -5,6 +5,7 @@ enum class ComponentFlag {
 	INVALID,
 	RENDER,
 	SPATIAL,
+	PORTAL,
 	INVENTORY,
 };
 

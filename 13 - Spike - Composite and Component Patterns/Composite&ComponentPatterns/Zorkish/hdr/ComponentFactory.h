@@ -22,7 +22,6 @@ private:
 	void formatComponentData();
 	std::vector<std::string> formatArgs(std::vector<std::string>& c_data);
 	std::vector<std::string> splitSaveLine(std::string& line, const char delimiter);
-	std::string extractEUID(std::string cuid);
 
 	void instanceCSpatial(std::string ec_id);
 	void instanceCRender(std::string ec_id, 
@@ -38,6 +37,7 @@ public:
 	ComponentFactory(GameData* game_data);
 	~ComponentFactory();
 
-	void setComponentData(std::vector<std::string> component_data);
-	void constructComponents(std::string entity_id);
+	std::string extractUEID(std::string cuid);
+	void setComponentData(std::vector<std::string>& component_data);
+	void constructComponents(std::string entity_id, bool new_entity = true);
 };

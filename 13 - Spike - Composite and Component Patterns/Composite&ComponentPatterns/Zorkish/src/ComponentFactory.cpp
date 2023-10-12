@@ -81,7 +81,7 @@ std::vector<std::string> ComponentFactory::splitSaveLine(std::string& line,
 	return formatted_line_data;
 }
 
-std::string ComponentFactory::extractEUID(std::string cuid) {
+std::string ComponentFactory::extractUEID(std::string cuid) {
 	// Check each character of the cuid until we hit an upper case letter
 	// take all the characters from before the upper case and that's our EUID
 	// to return.
@@ -112,7 +112,6 @@ void ComponentFactory::instanceCRender(std::string ec_id, std::string name,
 	_game_data->c_renderers.insert({ ec_id, new_renderer });
 }
 
-// Inventory can't find items again
 void ComponentFactory::instanceCInventory(std::string ec_id,
 	std::vector<std::string> items) {
 	C_Inventory* new_inventory = nullptr;
@@ -131,7 +130,7 @@ void ComponentFactory::instanceCInventory(std::string ec_id,
 			for (traversal_it = _game_data->c_renderers.begin();
 				traversal_it != _game_data->c_renderers.end(); traversal_it++) {
 				if (traversal_it->second->getName() == item_name) {
-					std::string lookup_id = extractEUID(traversal_it->first);
+					std::string lookup_id = extractUEID(traversal_it->first);
 					InventorySlot* new_slot = new InventorySlot(_game_data->entities.find(lookup_id)->second);
 					slots.emplace_back(new_slot);
 					break;
@@ -147,6 +146,7 @@ ComponentFlag ComponentFactory::determineFlag(const std::string flag) {
 	if (flag == "render") { return ComponentFlag::RENDER; }
 	if (flag == "spatial") { return ComponentFlag::SPATIAL; }
 	if (flag == "inventory") { return ComponentFlag::INVENTORY; }
+	if (flag == "portal") { return ComponentFlag::PORTAL; }
 	return ComponentFlag::INVALID;
 }
 
@@ -156,53 +156,70 @@ void ComponentFactory::createComponent(std::string entity_id, ComponentFlag c_fl
 	std::string EC_ID = entity_id.append(C_ID);
 
 	// If args aren't required then put it at the top
-	if (c_flag == ComponentFlag::SPATIAL) { instanceCSpatial(EC_ID); } 
-	
+	if (c_flag == ComponentFlag::SPATIAL) { instanceCSpatial(EC_ID); return; }
+
 	std::vector<std::string> component_args = formatArgs(c_args);
-	if (c_flag == ComponentFlag::RENDER) { 
-		instanceCRender(EC_ID, c_args[0], c_args[1]); }
+	if (c_flag == ComponentFlag::RENDER) {
+		instanceCRender(EC_ID, c_args[0], c_args[1]);
+		return; }
 
 	if (c_flag == ComponentFlag::INVENTORY) {
-		instanceCInventory(EC_ID, c_args); 	}
+		instanceCInventory(EC_ID, c_args);
+		return; }
+
+	if (c_flag == ComponentFlag::PORTAL) {
+		return; }
 }
 
 /******************************************************************************
 *							     Public Methods
 ******************************************************************************/
-void ComponentFactory::setComponentData(std::vector<std::string> component_data) {
-	if (component_data.empty()) { _raw_component_dataset = component_data; }
-	else {
-		_raw_component_dataset.clear();
-		_raw_component_dataset.shrink_to_fit();
+void ComponentFactory::setComponentData(std::vector<std::string>& component_data) {
+	if (!component_data.empty()) { 
+		if (!_fmt_component_dataset.empty()) {
+			_fmt_component_dataset.clear();
+			_fmt_component_dataset.shrink_to_fit();
+		}
+
+		if (!_raw_component_dataset.empty()) {
+			_raw_component_dataset.clear();
+			_raw_component_dataset.shrink_to_fit();
+		}
+
 		_raw_component_dataset = component_data;
-	};
+		formatComponentData();
+	}
 }
 
-void ComponentFactory::constructComponents(std::string entity_id) {
+void ComponentFactory::constructComponents(std::string entity_id, bool new_entity) {
+	int component_id = 65;		//	Using capital letters for the ascii
 	std::vector<Component*> components;
+	
+	if (!_fmt_component_dataset.empty()) {
+		/*	Only allow for 26 instances of a single component per entity.
+		*	
+		*	if c_portal game_data map has 2 portals for one entity the UCID
+		*	should be {aA, C_Portal*0}, {aB, C_Portal*1}. very cool		*/	
+		if (component_id < 91) {
+			for (std::vector<std::string> component_data : _fmt_component_dataset) {
 
-	int component_id = 65;		// Using capital letters for the ascii
-	if (!_raw_component_dataset.empty()) {
-		formatComponentData();
-
-		// Only allow for 26 components. More should be unnecessary
-		for (std::vector<std::string> component_data : _fmt_component_dataset) {
-			if (component_id < 91) {
 				std::string str_flag = *component_data.begin();
 				component_data.erase(component_data.begin());
 				component_data.shrink_to_fit();
 
 				std::vector<std::string> component_args = splitSaveLine(component_data[0], ',');
-				
+
 				ComponentFlag flag = determineFlag(str_flag);
-				createComponent(entity_id, flag, component_id, component_args);
-		
-				component_id++;
+				if (new_entity && flag == ComponentFlag::RENDER) {
+					createComponent(entity_id, flag, component_id, component_args);
+					component_id++;
+				}
+				else if (!new_entity && flag != ComponentFlag::RENDER) {
+					createComponent(entity_id, flag, component_id, component_args);
+					component_id++;
+				}
 			}
 		}
-
-		_fmt_component_dataset.clear();
-		_fmt_component_dataset.shrink_to_fit();
 	}
 }
 

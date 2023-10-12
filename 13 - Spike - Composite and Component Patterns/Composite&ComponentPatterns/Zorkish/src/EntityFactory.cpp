@@ -92,6 +92,7 @@ std::string EntityFactory::generateUEID(int entity_num) {
 // Modify to work
 Entity* EntityFactory::createEntity(int entity_num, 
 	std::vector<std::string> entity_data) {
+	
 	EntityTag entity_tag = determineTag(entity_data[0]);
 	entity_data.erase(entity_data.begin());
 	entity_data.shrink_to_fit();			// Only element left contains components
@@ -118,6 +119,26 @@ Entity* EntityFactory::createEntity(int entity_num,
 	return entity;
 }
 
+/*	Cycles through each entity (which contains only a render) and instantiates
+*	other components using the objects renderers name as a reference		*/
+void EntityFactory::setEntityRefs(std::string entity_id, 
+	std::vector<std::string> entity_data) {
+	std::vector<std::string> component_data;
+
+	// Ignoring the tag we need to search the first element
+	if (entity_data[1].find("|") != std::string::npos) {
+		component_data = splitSaveLine(entity_data[1], '|');
+	}
+	else { component_data = entity_data; }
+
+
+	component_data.erase(component_data.begin());
+	component_data.shrink_to_fit();
+
+	_component_factory->setComponentData(component_data);
+	_component_factory->constructComponents(entity_id, false);
+}
+
 
 /******************************************************************************
 *							     Public Methods
@@ -135,12 +156,34 @@ void EntityFactory::constructEntities() {
 		for (std::vector<std::string> entity_save : _raw_entity_dataset) {
 			if (entity_save.size() > 1) {
 				Entity* new_entity = createEntity(entity_id, entity_save);
-				
+
 				_game_data->entities.insert(
-					_game_data->entities.end(), 
+					_game_data->entities.end(),
 					{ new_entity->getID(), new_entity });
 
 				++entity_id;
+			}
+		}
+
+
+		std::vector<std::string> entity_ids;
+		std::map<std::string, C_Render*>::iterator entity_renderer;
+
+		for (entity_renderer = _game_data->c_renderers.begin();
+			entity_renderer != _game_data->c_renderers.end(); ++entity_renderer) {
+			std::string entity_id = _component_factory->extractUEID(entity_renderer->first);
+
+			entity_ids.emplace_back(entity_id);
+		}
+
+		if (!entity_ids.empty()) {
+			std::vector<std::string>::iterator e_id = entity_ids.begin();
+
+			for (std::vector<std::string> entity_save : _raw_entity_dataset) {
+				if (entity_save.size() > 1 && e_id != entity_ids.end()) {
+					setEntityRefs(*e_id, entity_save);
+					e_id++;
+				}
 			}
 		}
 	}

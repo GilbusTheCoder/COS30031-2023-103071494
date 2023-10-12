@@ -22,6 +22,7 @@ private:
 	std::vector<std::string> splitSaveLine(std::string& line, const char delimiter);
 	std::string generateUEID(int entity_num);
 	Entity* createEntity(int entity_num, std::vector<std::string> entity_data);
+	void setEntityRefs(std::string entity_id, std::vector<std::string> entity_data);
 
 public:
 	EntityFactory(GameData* game_data = nullptr, 
