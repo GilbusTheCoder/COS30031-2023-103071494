@@ -5,13 +5,23 @@
 class C_Portal : public Component {
 private:
 	std::string _entity_id;
+	ComponentFlag _flag = ComponentFlag::PORTAL;
+	
+	std::string _dir;
 	Entity* _exit = nullptr;
-	// bool _is_locked = false;		Example of future functionality addons
+	// bool _is_locked = false;		Example of future functionality
 
 public:
-	C_Portal(std::string owning_entity_id, Entity* exit = nullptr);
+	C_Portal(std::string owning_entity_id, std::string direction, 
+		Entity* exit = nullptr);
+
+	ComponentFlag getFlag() override;
+	Entity* getExit();
+	std::string getDirection();
 
 	void setExit(Entity* exit);
-	Entity* getExit();
+
+	void update() override;
+	void render() override;
 };
 

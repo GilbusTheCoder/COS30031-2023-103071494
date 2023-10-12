@@ -25,9 +25,9 @@ private:
 
 	void instanceCSpatial(std::string ec_id);
 	void instanceCRender(std::string ec_id, 
-		std::string name, std::string description);
+		std::string& name, std::string& description);
 	void instanceCInventory(std::string ec_id, std::vector<std::string> items);
-	//void instanceCPortal(std::string ec_id);
+	void instanceCPortal(std::string ec_id, std::vector<std::string> args);
 
 	ComponentFlag determineFlag(const std::string flag);
 	void createComponent(std::string entity_id, ComponentFlag c_flag,

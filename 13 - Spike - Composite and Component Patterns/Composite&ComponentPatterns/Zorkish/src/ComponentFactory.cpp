@@ -106,8 +106,8 @@ void ComponentFactory::instanceCSpatial(std::string ec_id) {
 	_game_data->c_spatials.insert({ ec_id, new_spatial });
 }
 
-void ComponentFactory::instanceCRender(std::string ec_id, std::string name, 
-	std::string description) {
+void ComponentFactory::instanceCRender(std::string ec_id, std::string& name, 
+	std::string& description) {
 	C_Render* new_renderer = new C_Render(ec_id, name, description);
 	_game_data->c_renderers.insert({ ec_id, new_renderer });
 }
@@ -131,13 +131,42 @@ void ComponentFactory::instanceCInventory(std::string ec_id,
 				traversal_it != _game_data->c_renderers.end(); traversal_it++) {
 				if (traversal_it->second->getName() == item_name) {
 					std::string lookup_id = extractUEID(traversal_it->first);
-					InventorySlot* new_slot = new InventorySlot(_game_data->entities.find(lookup_id)->second);
+					InventorySlot* new_slot = 
+						new InventorySlot(_game_data->entities.find(lookup_id)->second);
+					
 					slots.emplace_back(new_slot);
 					break;
 				}
 			}
 		} new_inventory = new C_Inventory(ec_id, slots);
 	} _game_data->c_inventories.insert({ ec_id, new_inventory });
+}
+
+void ComponentFactory::instanceCPortal(std::string ec_id, std::vector<std::string> c_args) {
+	//	Take our exit name and find the render associated. Grab the entity ID 
+	//	then instantiate our portal with the entity at that UEID.
+	if (c_args.size() >= 2) {
+		std::string dir = c_args[0];
+		std::string location_name = c_args[1];
+		std::map<std::string, C_Render*>::iterator traversal_it;
+		
+		if (dir.back() == ',') { dir.resize(dir.size() - 1); }
+
+		if (location_name.find_first_of('_') != std::string::npos) {
+			std::replace(location_name.begin(), location_name.end(), '_', ' ');
+		} if (location_name.back() == ',') {
+			location_name.resize(location_name.size() - 1); }
+
+		for (traversal_it = _game_data->c_renderers.begin();
+			traversal_it != _game_data->c_renderers.end(); ++traversal_it) {
+			if (traversal_it->second->getName() == location_name) {
+				std::string location_id = extractUEID(traversal_it->first);
+				C_Portal* new_portal = new C_Portal(ec_id, dir, _game_data->entities.find(location_id)->second);
+				_game_data->c_portals.insert({ ec_id, new_portal });
+				break;
+			}
+		}
+	}
 }
 
 
@@ -168,6 +197,7 @@ void ComponentFactory::createComponent(std::string entity_id, ComponentFlag c_fl
 		return; }
 
 	if (c_flag == ComponentFlag::PORTAL) {
+		instanceCPortal(EC_ID, c_args);
 		return; }
 }
 
@@ -192,14 +222,14 @@ void ComponentFactory::setComponentData(std::vector<std::string>& component_data
 }
 
 void ComponentFactory::constructComponents(std::string entity_id, bool new_entity) {
-	int component_id = 65;		//	Using capital letters for the ascii
-	std::vector<Component*> components;
-	
 	if (!_fmt_component_dataset.empty()) {
 		/*	Only allow for 26 instances of a single component per entity.
 		*	
 		*	if c_portal game_data map has 2 portals for one entity the UCID
 		*	should be {aA, C_Portal*0}, {aB, C_Portal*1}. very cool		*/	
+		int component_id = 65;		//	Using capital letters for the ascii
+		ComponentFlag prev_component_type = ComponentFlag::INVALID;
+		
 		if (component_id < 91) {
 			for (std::vector<std::string> component_data : _fmt_component_dataset) {
 
@@ -210,16 +240,23 @@ void ComponentFactory::constructComponents(std::string entity_id, bool new_entit
 				std::vector<std::string> component_args = splitSaveLine(component_data[0], ',');
 
 				ComponentFlag flag = determineFlag(str_flag);
-				if (new_entity && flag == ComponentFlag::RENDER) {
-					createComponent(entity_id, flag, component_id, component_args);
-					component_id++;
-				}
-				else if (!new_entity && flag != ComponentFlag::RENDER) {
-					createComponent(entity_id, flag, component_id, component_args);
-					component_id++;
+				if (flag == ComponentFlag::RENDER) {
+					if (new_entity) {	// Setup references
+						createComponent(entity_id, flag, component_id, component_args); 
+					}
+				} else {	// Setup components requiring references
+					if (!new_entity && flag != ComponentFlag::INVALID) {
+						if (prev_component_type == flag) {
+							++component_id;
+							createComponent(entity_id, flag, component_id, component_args); }
+						else {
+							createComponent(entity_id, flag, component_id, component_args); }
+						prev_component_type = flag;	
+					}
 				}
 			}
 		}
+
 	}
 }
 

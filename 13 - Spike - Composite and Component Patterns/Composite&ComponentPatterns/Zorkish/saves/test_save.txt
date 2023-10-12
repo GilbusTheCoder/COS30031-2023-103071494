@@ -19,7 +19,8 @@ item : render(potion_of_testing, Better_for_testing_Zorkish_than_the_simple_Swor
 item : render(lighter, Spark_Spark);
 item : render(twigs, If_I_had_more_motivation_I'd_make_these_flammable...);
 item : render(garden_gnome, Evil_things_Gnomes_are.);
-location : render(loungeroom, Has_a_neat_sofa_in_the_middle_looks_comfy.) | inventory(potion_of_testing);
-current_location : render(backyard, Nice_and_peaceful) | inventory(twigs, garden_gnome);
+location : render(loungeroom, Has_a_neat_sofa_in_the_middle_looks_comfy.) | inventory(potion_of_testing) | portal(south, hallway);
+location : render(hallway, Looooooooooong._Scary_pictures_stare_at_you.) | inventory() | portal(north, loungeroom) | portal(south, backyard);
+current_location : render(backyard, Nice_and_peaceful) | inventory(twigs, garden_gnome) | portal(north, hallway);
 player : render(you, Lad_in_the_Zork(ish)_world) | spatial() | inventory(sword_of_testing, lighter);
 

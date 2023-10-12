@@ -4,6 +4,7 @@
 #include "../../Components/hdr/C_Render.h"
 #include "../../Components/hdr/C_Spatial.h"
 #include "../../Components/hdr/C_Inventory.h"
+#include "../../Components/hdr/C_Portal.h"
 
 
 /*	This is the dataset which gets instantiated in the AdventureSelectMenu
@@ -18,6 +19,7 @@ struct GameData	{
 	std::map<std::string, C_Render*> c_renderers;
 	std::map<std::string, C_Inventory*> c_inventories;
 	std::map<std::string, C_Spatial*> c_spatials;
+	std::map<std::string, C_Portal*> c_portals;
 
 	Entity* player;
 	Entity* current_location;
