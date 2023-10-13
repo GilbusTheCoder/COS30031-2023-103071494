@@ -36,8 +36,56 @@ void C_Inventory::setHead(InventorySlot* head) { _head = head; }
 /******************************************************************************
 *								   Utility
 ******************************************************************************/
+/*	Searches through itself for the item in question, will return the position
+*	of the item relative to the head (0 if item isn't found					*/
+int C_Inventory::hasItem(Entity* item, std::string UEID) {
+	if (_head != nullptr) {
+		int slot_offset = 1;
+		InventorySlot* traversal_ptr = _head;
+
+		if (item != nullptr) {
+			while (traversal_ptr != nullptr) {
+				if (traversal_ptr->getItem()->getID() == item->getID()) {
+					return slot_offset;
+				}
+
+				if (traversal_ptr->getNext() == nullptr) { return 0; }
+				else { 
+					traversal_ptr = traversal_ptr->getNext(); 
+					slot_offset++;
+				}
+			}
+		}
+		else if (UEID != "") {
+			while (traversal_ptr != nullptr) {
+				if (traversal_ptr->getItem()->getID() == UEID) {
+					return slot_offset;
+				}
+
+				if (traversal_ptr->getNext() == nullptr) { return 0; }
+				else { 
+					traversal_ptr = traversal_ptr->getNext(); 
+					slot_offset++;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+//Only call after calling has item to ensure the item exists within the inventory
+Entity* C_Inventory::getItem(int offset) {
+	InventorySlot* traversal_ptr = _head;
+
+	for (int idx = 1; idx < offset; idx++) {
+		traversal_ptr = traversal_ptr->getNext(); }
+
+	return traversal_ptr->getItem();
+}
+
 void C_Inventory::addItem(Entity* item) {
-	InventorySlot* new_tail = new InventorySlot(item);
+	InventorySlot* new_tail = new InventorySlot(item->getID(), item);
+	held_item_EUIDs.emplace_back(item->getID());
 
 	if (_head == nullptr) { _head = new_tail; }
 	else {
@@ -47,97 +95,53 @@ void C_Inventory::addItem(Entity* item) {
 }
 
 void C_Inventory::addItem(InventorySlot* slot) {
-	if (_head == nullptr) { _head = slot; }
+	if (_head == nullptr) {
+		_head = slot;
+
+		if (_head->getItem() != nullptr) {
+			held_item_EUIDs.emplace_back(_head->getItem()->getID()); }
+	}
 	else {
 		InventorySlot* old_tail = getTail();
 		old_tail->setNext(slot);
+
+		if (slot->getItem() != nullptr) {
+			held_item_EUIDs.emplace_back(slot->getItem()->getID()); }
 	}
 }
 
-//void C_Inventory::deleteItem(Entity* item) {
-//	if (_head != nullptr) {
-//		if (hasItem(item->getName())) {
-//
-//			// Head is the only element
-//			if (_head == getTail() && _head->getItem() == item) {
-//				delete _head;
-//				_head = nullptr;
-//			}
-//			// Bulk of the list... iterate and search
-//			else {
-//				// if head contains item and there's multiple elements
-//				if (_head->getItem() == item) {
-//					ItemSlot* old_head = _head;
-//					_head = old_head->getNext();
-//
-//					delete old_head;
-//					old_head = nullptr;
-//				}
-//
-//				ItemSlot* traversal_ptr = _head;
-//				ItemSlot* prev_slot = nullptr;
-//
-//				while (traversal_ptr->getNext() != nullptr) {
-//					if (traversal_ptr->getItem() == item) {
-//						prev_slot->setNext(traversal_ptr->getNext());
-//						delete traversal_ptr;
-//						return;
-//					}
-//					else { // Increment
-//						prev_slot = traversal_ptr;
-//						traversal_ptr = traversal_ptr->getNext();
-//					}
-//				}
-//
-//				// Tail of the list
-//				if (traversal_ptr->getItem() == item) {
-//					prev_slot->setNext(traversal_ptr->getNext());
-//					delete traversal_ptr;
-//				}
-//			}
-//		}
-//	}
-//}
+void C_Inventory::deleteItem(Entity* item) {
+	int offset = hasItem(item);
+	
+	if (offset) {
+		InventorySlot* prev_ptr = nullptr;
+		InventorySlot* traversal_ptr = _head;
 
-//bool C_Inventory::hasItem(std::string item_name) {
-//	if (_head != nullptr) {
-//		ItemSlot* traversal_ptr = _head;
-//
-//		while (traversal_ptr->getNext() != nullptr) {
-//			if (traversal_ptr->getItem()->getName() == item_name) {
-//				return true;
-//			}
-//
-//			traversal_ptr = traversal_ptr->getNext();
-//		}
-//		if (traversal_ptr->getItem()->getName() == item_name) {
-//			return true;
-//		}
-//	}
-//
-//	return false;
-//}
+		for (int slot_idx = 1; slot_idx < offset; ++slot_idx) {
+			prev_ptr = traversal_ptr;
+			traversal_ptr = traversal_ptr->getNext(); }
 
-//Entity* C_Inventory::searchItem(std::string item_name) {
-//	if (_head != nullptr) {
-//		ItemSlot* traversal_ptr = _head;
-//
-//		while (traversal_ptr->getNext() != nullptr) {
-//			if (traversal_ptr->getItem()->getName() == item_name) {
-//				return traversal_ptr->getItem();
-//			}
-//
-//			traversal_ptr = traversal_ptr->getNext();
-//		}
-//
-//		if (traversal_ptr->getItem()->getName() == item_name) {
-//			return traversal_ptr->getItem();
-//		}
-//	}
-//
-//	return nullptr;
-//}
+		if (traversal_ptr == _head) {
+			if (_head->getNext() != nullptr) {
+				_head = _head->getNext(); }
+		} else if (traversal_ptr->getNext() != nullptr) { 
+			prev_ptr->setNext(traversal_ptr->getNext()); }
+
+		
+		std::string deleted_ID = traversal_ptr->getItem()->getID();
+		for (auto id_it = held_item_EUIDs.begin(); 
+			id_it != held_item_EUIDs.end(); ++id_it) { 
+			if (*id_it == deleted_ID) {
+				held_item_EUIDs.erase(id_it);
+				held_item_EUIDs.shrink_to_fit();
+				break;
+			}
+		}
+
+		delete traversal_ptr;
+		traversal_ptr = nullptr;
+	}
+}
 
 void C_Inventory::update() { }
 void C_Inventory::render() { }
-void C_Inventory::about() { }

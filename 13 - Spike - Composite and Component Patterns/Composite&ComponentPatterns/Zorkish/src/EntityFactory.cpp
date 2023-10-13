@@ -40,11 +40,11 @@ EntityTag EntityFactory::determineTag(std::string tag) {
 		std::replace(tag.begin(), tag.end(), '_', ' ');
 	}
 
-	if (tag == "player") { return EntityTag::PLAYER; }
-	if (tag == "location") { return EntityTag::LOCATION; }
-	if (tag == "item") { return EntityTag::ITEM; }
-	if (tag == "current location") { return EntityTag::CURRENT_LOCATION; }
-	return EntityTag::INVALID;
+	if (tag == "player") { return EntityTag::E_PLAYER; }
+	if (tag == "location") { return EntityTag::E_LOCATION; }
+	if (tag == "item") { return EntityTag::E_ITEM; }
+	if (tag == "current location") { return EntityTag::E_CURRENT_LOCATION; }
+	return EntityTag::E_INVALID;
 }
 
 std::vector<std::string> EntityFactory::splitSaveLine(std::string& line,
@@ -111,10 +111,15 @@ Entity* EntityFactory::createEntity(int entity_num,
 	Entity* entity = new Entity(entity_id, entity_tag);
 
 
-	if (entity_tag == EntityTag::CURRENT_LOCATION) { 
-		_game_data->current_location = entity; 
-	} else if (entity_tag == EntityTag::PLAYER) { 
-		_game_data->player = entity; }
+	if (entity_tag == EntityTag::E_CURRENT_LOCATION) { 
+		_game_data->current_location = entity_id;
+		
+		std::string location_renderer = entity_id;
+		location_renderer.append("A");
+		_game_data->c_renderers.find(location_renderer)->second->flagForRender(true);
+	} 
+	else if (entity_tag == EntityTag::E_PLAYER) { 
+		_game_data->player = entity_id; }
 
 	return entity;
 }

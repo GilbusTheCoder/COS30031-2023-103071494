@@ -1,6 +1,7 @@
 #include "WorldLoader.h"
-#pragma once
+#include "CommandFactory.h"
 
+#pragma once
 enum STATES {
 	WELCOME,
 	MAIN_MENU,
@@ -15,6 +16,11 @@ enum STATES {
 
 class State {
 public:
+	GameData* _game_data = nullptr;
+
+	virtual void setStateData(GameData* game_data = nullptr, 
+		std::vector<std::string> args = {}) = 0;
+	
 	virtual STATES update() = 0;
 	virtual void render() = 0;
 };
@@ -22,23 +28,32 @@ public:
 
 class MainMenu : public State {
 public:
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
+
 	STATES update() override;
 	void render() override;
 };
 
 class AboutMenu : public State {
 public:
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };
 
 class HelpMenu : public State {
 public:
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };
 
-/*	Load and instantiate our entity objects based off a file. */
 class AdventureSelectMenu : public State {
 private:
 	WorldLoader* _world_loader = nullptr;
@@ -47,30 +62,58 @@ public:
 	AdventureSelectMenu();
 	~AdventureSelectMenu();
 
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };
 
 class GameplayState : public State {
+private:
+	GameData* _game_data = nullptr;
+	CommandFactory* _command_factory = nullptr;
+	std::vector<std::string> altered_renderers;
+
+	std::stringstream getInput();
+	std::vector<std::string> handleInput();
+	CommandType validateCommandType(std::string c_type);
+	std::queue<Command*> createCommands(std::vector<std::string> command_data);
+
 public:
+	GameplayState();
+	~GameplayState();
+
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };
 
 class NewHighScoreMenu : public State {
 public:
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };
 
 class HallOfFameMenu : public State {
 public:
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };
 
 class QuitState : public State {
 public:
+	void setStateData(GameData* game_data = nullptr,
+		std::vector<std::string> args = {}) override;
+
 	STATES update() override;
 	void render() override;
 };

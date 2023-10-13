@@ -3,15 +3,15 @@
 
 class InventorySlot {
 private:
+	std::string _item_EUID;
 	Entity* _item = nullptr;
 	InventorySlot* _next = nullptr;
 
 public:
-	InventorySlot(Entity* item = nullptr);
-	~InventorySlot();
+	InventorySlot(std::string item_EUID, Entity* item = nullptr);
 
 	Entity* getItem();
 	InventorySlot* getNext();
-	void setItem(Entity* item);
+	void setItem(std::string item_EUID, Entity* item);
 	void setNext(InventorySlot* next);
 };

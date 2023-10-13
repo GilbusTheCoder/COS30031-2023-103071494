@@ -21,7 +21,7 @@ struct GameData	{
 	std::map<std::string, C_Spatial*> c_spatials;
 	std::map<std::string, C_Portal*> c_portals;
 
-	Entity* player;
-	Entity* current_location;
+	std::string player;
+	std::string current_location;
 }; 
 

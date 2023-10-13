@@ -16,8 +16,8 @@ public:
 		Entity* exit = nullptr);
 
 	ComponentFlag getFlag() override;
-	Entity* getExit();
 	std::string getDirection();
+	Entity* getExit();
 
 	void setExit(Entity* exit);
 

@@ -13,11 +13,10 @@ C_Portal::C_Portal(std::string owning_entity_id, std::string direction,
 *								  Properties
 ******************************************************************************/
 ComponentFlag C_Portal::getFlag() {return _flag; }
-Entity* C_Portal::getExit() { return _exit; }
 std::string C_Portal::getDirection() { return _dir; }
+Entity* C_Portal::getExit() { return _exit; }
 
 void C_Portal::setExit(Entity* exit) { if(exit != nullptr) _exit = exit; }
-
 
 /******************************************************************************
 *								     Loop

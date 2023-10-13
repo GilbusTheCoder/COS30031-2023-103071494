@@ -3,18 +3,18 @@
 
 #pragma once
 enum class EntityTag {
-	INVALID,
-	TEST_ENTITY,
-	PLAYER,
-	LOCATION,
-	CURRENT_LOCATION,
-	ITEM,				// Technically doesn't need to exist but i don't like players putting
+	E_INVALID,
+	E_TEST_ENTITY,
+	E_PLAYER,
+	E_LOCATION,
+	E_CURRENT_LOCATION,
+	E_ITEM,				// Technically doesn't need to exist but i don't like players putting
 };						// kiddy pools in their backpacks.
 
 class Entity {
 private:
 	std::string _id;
-	EntityTag _tag = EntityTag::INVALID;
+	EntityTag _tag = EntityTag::E_INVALID;
 
 public:
 	Entity(std::string id, EntityTag tag);

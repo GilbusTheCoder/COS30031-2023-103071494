@@ -10,14 +10,17 @@ private:
 
 	std::string _name;
 	std::string _description;
-	bool _render_this = true;
+	bool _render_this = false;
 
 public:
-	C_Render(std::string owning_entity_id, std::string name, std::string description);
+	C_Render(std::string owning_entity_id, std::string name, 
+		std::string description, bool render_this = false);
 
 	ComponentFlag getFlag() override;
 	std::string getName();
 	std::string getDescription();
+	bool renderThis();
+
 	void flagForRender(bool yes_or_no);
 	void setName(std::string name);
 	void setDescription(std::string description);

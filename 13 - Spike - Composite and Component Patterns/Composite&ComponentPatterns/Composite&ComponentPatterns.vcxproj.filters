@@ -54,6 +54,12 @@
     <ClInclude Include="Components\hdr\C_Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Zorkish\hdr\CommandFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Zorkish\hdr\Command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Zorkish\src\StateManager.cpp">
@@ -90,6 +96,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\src\C_Portal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Zorkish\src\CommandFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Zorkish\src\Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

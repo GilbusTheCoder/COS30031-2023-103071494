@@ -4,7 +4,6 @@
 *								State Manager
 *****************************************************************************/
 StateManager::StateManager() { _current_ptr->render(); }
-GameplayState* StateManager::getGameplayState() { return &_gameplay; }
 bool StateManager::isRunning() { return _current_state != STATES::QUIT; }
 
 void StateManager::update() {

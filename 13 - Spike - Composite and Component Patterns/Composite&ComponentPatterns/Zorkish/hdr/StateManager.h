@@ -19,6 +19,7 @@ private:
 
 public:
 	StateManager();
+
 	bool isRunning();
 	void update();
 	void render();

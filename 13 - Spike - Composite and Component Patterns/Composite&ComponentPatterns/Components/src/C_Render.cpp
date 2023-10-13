@@ -5,8 +5,9 @@
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-C_Render::C_Render(std::string owning_entity_id, std::string name, std::string description)
-	:_entity_id(owning_entity_id) { 
+C_Render::C_Render(std::string owning_entity_id, std::string name, 
+	std::string description, bool render_this)
+	:_entity_id(owning_entity_id), _render_this(render_this) { 
 	setName(name);
 	setDescription(description);
 }
@@ -17,6 +18,7 @@ C_Render::C_Render(std::string owning_entity_id, std::string name, std::string d
 ComponentFlag C_Render::getFlag() { return _flag; }
 std::string C_Render::getName() { return _name; }
 std::string C_Render::getDescription() { return _description; }
+bool C_Render::renderThis() { return _render_this; }
 
 
 void C_Render::flagForRender(bool yes_or_no) { _render_this = yes_or_no; }

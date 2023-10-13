@@ -14,6 +14,8 @@ private:
 	int _max_size;
 
 public:
+	std::vector<std::string> held_item_EUIDs;
+	
 	C_Inventory(std::string owning_entity_id, std::vector<InventorySlot*> slots = {}, 
 		int max_size = 64);
 
@@ -24,13 +26,12 @@ public:
 	int getMaxSize();
 	void setHead(InventorySlot* head);
 
+	int hasItem(Entity* item = nullptr, std::string UEID = "");
+	Entity* getItem(int offset);
 	void addItem(Entity* item);
 	void addItem(InventorySlot* slot);
-	//void deleteItem(Entity* item);
-	//bool hasItem(std::string item_name);
-	//Entity* searchItem(std::string item_name);
+	void deleteItem(Entity* item);
 
 	void update() override;
 	void render() override;
-	void about();
 };

@@ -131,8 +131,9 @@ void ComponentFactory::instanceCInventory(std::string ec_id,
 				traversal_it != _game_data->c_renderers.end(); traversal_it++) {
 				if (traversal_it->second->getName() == item_name) {
 					std::string lookup_id = extractUEID(traversal_it->first);
+					Entity* item = _game_data->entities.find(lookup_id)->second;
 					InventorySlot* new_slot = 
-						new InventorySlot(_game_data->entities.find(lookup_id)->second);
+						new InventorySlot(item->getID(), item);
 					
 					slots.emplace_back(new_slot);
 					break;

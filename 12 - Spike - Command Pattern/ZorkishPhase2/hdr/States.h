@@ -25,8 +25,8 @@ public:
     GameData* game_data = nullptr;
 	virtual STATES update() = 0;
 	virtual void render() = 0;
-};
 
+};
 
 class MainMenu : public State {
 public:

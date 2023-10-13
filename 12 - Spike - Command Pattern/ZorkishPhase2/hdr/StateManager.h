@@ -20,7 +20,6 @@ private:
 
 public:
 	StateManager();
-	GameplayState* getGameplayState();
 
 	bool isRunning();
 	void update();
