@@ -3,9 +3,9 @@
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-C_Inventory::C_Inventory(std::string owning_entity_id, 
+C_Inventory::C_Inventory(std::string ucid, 
 	std::vector<InventorySlot*> slots, int max_size)
-	: _entity_id(owning_entity_id), _max_size(max_size) {
+	: _ucid(ucid), _max_size(max_size) {
 	if (!slots.empty()) { for (auto slot : slots) { addItem(slot); }}
 }
 

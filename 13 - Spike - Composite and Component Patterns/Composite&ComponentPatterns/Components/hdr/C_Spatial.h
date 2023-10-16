@@ -5,15 +5,15 @@
 *	only right now												*/
 class C_Spatial : public Component {
 private:
-	std::string _entity_id;
-	ComponentFlag _flag = ComponentFlag::SPATIAL;
+	std::string _ucid;
+	ComponentFlag _flag = ComponentFlag::C_SPATIAL;
 
 	bool _has_eyes = true;
 	bool _has_arms = true;
 	bool _has_legs = true;
 
 public:
-	C_Spatial(std::string owning_entity_id, bool has_eyes=true, bool has_arms=true, 
+	C_Spatial(std::string ucid, bool has_eyes=true, bool has_arms=true, 
 		bool has_legs=true);
 	ComponentFlag getFlag() override;
 

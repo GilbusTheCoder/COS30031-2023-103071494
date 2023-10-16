@@ -4,15 +4,15 @@
 #pragma once
 class C_Portal : public Component {
 private:
-	std::string _entity_id;
-	ComponentFlag _flag = ComponentFlag::PORTAL;
+	std::string _ucid;
+	ComponentFlag _flag = ComponentFlag::C_PORTAL;
 	
 	std::string _dir;
 	Entity* _exit = nullptr;
 	// bool _is_locked = false;		Example of future functionality
 
 public:
-	C_Portal(std::string owning_entity_id, std::string direction, 
+	C_Portal(std::string ucid, std::string direction, 
 		Entity* exit = nullptr);
 
 	ComponentFlag getFlag() override;

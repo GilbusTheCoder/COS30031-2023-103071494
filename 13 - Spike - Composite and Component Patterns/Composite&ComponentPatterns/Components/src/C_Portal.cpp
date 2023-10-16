@@ -3,8 +3,8 @@
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-C_Portal::C_Portal(std::string owning_entity_id, std::string direction,
-	Entity* exit) : _entity_id(owning_entity_id), _dir(direction), _exit(exit) { 
+C_Portal::C_Portal(std::string ucid, std::string direction,
+	Entity* exit) : _ucid(ucid), _dir(direction), _exit(exit) { 
 
 }
 

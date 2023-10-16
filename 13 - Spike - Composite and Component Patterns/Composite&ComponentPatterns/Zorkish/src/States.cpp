@@ -23,17 +23,17 @@ STATES MainMenu::update() {
 
 		switch (choice) {
 		case 1:
-			return STATES::SELECT_ADVENTURE;
+			return STATES::S_SELECT_ADVENTURE;
 		case 2:
-			return STATES::VIEW_HoF;
+			return STATES::S_VIEW_HoF;
 		case 3:
-			return STATES::HELP;
+			return STATES::S_HELP;
 		case 4:
-			return STATES::ABOUT;
+			return STATES::S_ABOUT;
 		case 5:
-			return STATES::QUIT;
+			return STATES::S_QUIT;
 		default:
-			return STATES::MAIN_MENU;
+			return STATES::S_MAIN_MENU;
 		}
 	}
 	else {
@@ -41,7 +41,7 @@ STATES MainMenu::update() {
 
 		std::cin.clear();
 		std::cin.ignore();
-		return STATES::MAIN_MENU;
+		return STATES::S_MAIN_MENU;
 	}
 
 }
@@ -74,7 +74,7 @@ void AboutMenu::setStateData(GameData* game_data,
 	std::vector<std::string> args) { }
 
 STATES AboutMenu::update() {
-	return STATES::MAIN_MENU;
+	return STATES::S_MAIN_MENU;
 }
 void AboutMenu::render() {
 	std::cout << "Written by: Thomas Horsley (103071494)" << std::endl;
@@ -94,7 +94,7 @@ void AboutMenu::render() {
 void HelpMenu::setStateData(GameData* game_data, 
 	std::vector<std::string> args) { }
 
-STATES HelpMenu::update() { return STATES::MAIN_MENU; }
+STATES HelpMenu::update() { return STATES::S_MAIN_MENU; }
 void HelpMenu::render() {
 	std::cout << "The following commands are supported: " << std::endl;
 	std::cout << ">> quit" << std::endl << ">> highscore (for testing)" << std::endl;
@@ -140,15 +140,15 @@ STATES AdventureSelectMenu::update() {
 		case 1:
 			_world_loader->setSaveFile("Zorkish/saves/test_save.txt");
 			_game_data = _world_loader->loadGameData();
-			return STATES::GAMEPLAY;
+			return STATES::S_GAMEPLAY;
 		case 2:
 			std::cout << "Wow this worlds pretty cewl. Too bad it doesnt load" 
 				<< std::endl;
-			return STATES::SELECT_ADVENTURE;
+			return STATES::S_SELECT_ADVENTURE;
 		case 3:
 			std::cout << "This is the coolest non-functional world i've ever seen!" 
 				<< std::endl;
-			return STATES::SELECT_ADVENTURE;
+			return STATES::S_SELECT_ADVENTURE;
 		}
 	}
 
@@ -158,7 +158,7 @@ STATES AdventureSelectMenu::update() {
 		std::cin.clear();
 		std::cin.ignore();
 	};
-	return STATES::SELECT_ADVENTURE;
+	return STATES::S_SELECT_ADVENTURE;
 }
 
 void AdventureSelectMenu::render() {
@@ -239,28 +239,28 @@ CommandType GameplayState::validateCommandType(std::string c_type) {
 	//	check for command collisions when adding.
 	if (c_type == "move" || c_type == "head" || c_type == "go" ||
 		c_type == "m" || c_type == "g") { 
-		return CommandType::C_MOVE;
+		return CommandType::MOVE;
 	
 	} else if (c_type == "take" || c_type == "grab" || c_type == "t") { 
-		return CommandType::C_TAKE;
+		return CommandType::TAKE;
 	
 	} else if (c_type == "drop" || c_type == "discard" || c_type == "d") { 
-		return CommandType::C_DROP;
+		return CommandType::DROP;
 
 	} else if (c_type == "look" || c_type == "l") { 
-		return CommandType::C_LOOK;
+		return CommandType::LOOK;
 
 	} else if (c_type == "show" || c_type == "sh" || c_type == "s") { 
-		return CommandType::C_SHOW;
+		return CommandType::SHOW;
 	
 	} else if (c_type == "help" || c_type == "h") { 
-		return CommandType::C_HELP;
+		return CommandType::HELP;
 	
 	} else if (c_type == "quit" || c_type == "q") { 
-		return CommandType::C_QUIT;
+		return CommandType::QUIT;
 	
 	} else { 
-		return CommandType::C_INVALID;
+		return CommandType::INVALID;
 	}
 }
 
@@ -279,7 +279,7 @@ std::queue<Command*> GameplayState::createCommands(std::vector<std::string> comm
 	if (command_data.size() > 1) {
 		CommandType c_type = validateCommandType(command_data[0]);
 
-		if (!CommandType::C_INVALID) {
+		if (!CommandType::INVALID) {
 			command_data.erase(command_data.begin());
 			command_data.shrink_to_fit();
 
@@ -306,7 +306,7 @@ void GameplayState::setStateData(GameData* game_data, std::vector<std::string> a
 	if (game_data != nullptr) { _game_data = game_data; } }
 
 STATES GameplayState::update() {
-	if (!_game_data->is_running) { return STATES::QUIT; }
+	if (!_game_data->is_running) { return STATES::S_QUIT; }
 	std::vector<std::string> command_data = handleInput();
 	std::queue<Command*> frame_commands = createCommands(command_data);
 	
@@ -315,7 +315,7 @@ STATES GameplayState::update() {
 		frame_commands.pop();
 	}
 
-	return STATES::GAMEPLAY;
+	return STATES::S_GAMEPLAY;
 }
 
 /*	If i wasn't so mentally done with this assignment i'd structure the map in such
@@ -331,14 +331,14 @@ void GameplayState::render() {
 		std::cout << "\n--------------------------------------------------\n";
 		for (auto renderer : _game_data->c_renderers) {
 			if (renderer.second->renderThis() && renderer.first != current_loc_renderer) {
-				altered_renderers.emplace_back(renderer.first);
+				_altered_renderers.emplace_back(renderer.first);
 				renderer.second->render(); } 
 		}
 
 		std::cout << ">>";
 
 		// Reset this frames altered renderer data after use
-		for (std::string render_id : altered_renderers) {
+		for (std::string render_id : _altered_renderers) {
 			_game_data->c_renderers.find(render_id)->second->flagForRender(false);
 		}
 	}
@@ -360,7 +360,7 @@ STATES NewHighScoreMenu::update() {
 	std::string name;
 	std::cin >> name;
 
-	return STATES::MAIN_MENU;
+	return STATES::S_MAIN_MENU;
 }
 void NewHighScoreMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
@@ -388,7 +388,7 @@ void NewHighScoreMenu::render() {
 void HallOfFameMenu::setStateData(GameData* game_data, 
 	std::vector<std::string> args) { }
 
-STATES HallOfFameMenu::update() { return STATES::MAIN_MENU; }
+STATES HallOfFameMenu::update() { return STATES::S_MAIN_MENU; }
 void HallOfFameMenu::render() {
 	std::cout << std::endl << "Zork(ish) :: Select Adventure " << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl << std::endl;
@@ -419,5 +419,5 @@ void HallOfFameMenu::render() {
 ******************************************************************************/
 void QuitState::setStateData(GameData* game_data, 
 	std::vector<std::string> args) { }
-STATES QuitState::update() { return STATES::QUIT; }
+STATES QuitState::update() { return STATES::S_QUIT; }
 void QuitState::render() { std::cout << "Quitting zorkish!" << std::endl; }

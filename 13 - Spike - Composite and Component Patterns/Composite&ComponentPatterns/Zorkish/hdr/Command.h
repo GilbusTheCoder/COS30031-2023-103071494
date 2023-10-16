@@ -2,14 +2,14 @@
 
 #pragma once
 enum CommandType {
-	C_INVALID,
-	C_MOVE,	// go somewhere
-	C_TAKE,	// take item
-	C_DROP,	// drop item or component if removable
-	C_LOOK,	// display surrounding renderer info
-	C_SHOW,	// display attached component info
-	C_HELP,	// render the help entity
-	C_QUIT,	// change game_data is_running to false
+	INVALID,
+	MOVE,	// go somewhere
+	TAKE,	// take item
+	DROP,	// drop item or component if removable
+	LOOK,	// display surrounding renderer info
+	SHOW,	// display attached component info
+	HELP,	// render the help entity
+	QUIT,	// change game_data is_running to false
 };
 
 class Command {
@@ -17,10 +17,11 @@ protected:
 	GameData* __game_data = nullptr;
 	std::vector<std::string> __args;
 
-public:
-	virtual void execute() = 0;
 	std::string UEIDFromRenderName(std::string entity_rendered_name);
 	std::string extractUEID(std::string UCID);
+
+public:
+	virtual void execute() = 0;
 };
 
 class MoveCommand : virtual public Command {

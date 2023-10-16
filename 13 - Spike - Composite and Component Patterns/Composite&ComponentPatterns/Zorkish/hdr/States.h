@@ -3,15 +3,15 @@
 
 #pragma once
 enum STATES {
-	WELCOME,
-	MAIN_MENU,
-	ABOUT,
-	HELP,
-	SELECT_ADVENTURE,
-	GAMEPLAY,
-	NEW_HS,		//New Highscore
-	VIEW_HoF,	//View Hall of Fame
-	QUIT,
+	S_WELCOME,
+	S_MAIN_MENU,
+	S_ABOUT,
+	S_HELP,
+	S_SELECT_ADVENTURE,
+	S_GAMEPLAY,
+	S_NEW_HS,		//New Highscore
+	S_VIEW_HoF,	//View Hall of Fame
+	S_QUIT,
 };
 
 class State {
@@ -71,9 +71,8 @@ public:
 
 class GameplayState : public State {
 private:
-	GameData* _game_data = nullptr;
 	CommandFactory* _command_factory = nullptr;
-	std::vector<std::string> altered_renderers;
+	std::vector<std::string> _altered_renderers;
 
 	std::stringstream getInput();
 	std::vector<std::string> handleInput();

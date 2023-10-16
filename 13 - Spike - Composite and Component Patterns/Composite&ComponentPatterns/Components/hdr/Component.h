@@ -2,11 +2,11 @@
 
 #pragma once
 enum class ComponentFlag {
-	INVALID,
-	RENDER,
-	SPATIAL,
-	PORTAL,
-	INVENTORY,
+	C_INVALID,
+	C_RENDER,
+	C_SPATIAL,
+	C_INVENTORY,
+	C_PORTAL,
 };
 
 /*	Future optimizations could include allowing the components to know which

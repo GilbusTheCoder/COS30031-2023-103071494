@@ -14,8 +14,7 @@ private:
 	QuitState _quit;
 
 	State* _current_ptr = &_main_menu;
-	STATES _current_state = STATES::MAIN_MENU;
-
+	STATES _current_state = STATES::S_MAIN_MENU;
 
 public:
 	StateManager();

@@ -5,9 +5,9 @@
 /******************************************************************************
 *							    De/Constructors
 ******************************************************************************/
-C_Render::C_Render(std::string owning_entity_id, std::string name, 
+C_Render::C_Render(std::string ucid, std::string name, 
 	std::string description, bool render_this)
-	:_entity_id(owning_entity_id), _render_this(render_this) { 
+	:_ucid(ucid), _render_this(render_this) { 
 	setName(name);
 	setDescription(description);
 }

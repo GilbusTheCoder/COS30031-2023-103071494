@@ -173,11 +173,11 @@ void ComponentFactory::instanceCPortal(std::string ec_id, std::vector<std::strin
 
 
 ComponentFlag ComponentFactory::determineFlag(const std::string flag) {
-	if (flag == "render") { return ComponentFlag::RENDER; }
-	if (flag == "spatial") { return ComponentFlag::SPATIAL; }
-	if (flag == "inventory") { return ComponentFlag::INVENTORY; }
-	if (flag == "portal") { return ComponentFlag::PORTAL; }
-	return ComponentFlag::INVALID;
+	if (flag == "render") { return ComponentFlag::C_RENDER; }
+	if (flag == "spatial") { return ComponentFlag::C_SPATIAL; }
+	if (flag == "inventory") { return ComponentFlag::C_INVENTORY; }
+	if (flag == "portal") { return ComponentFlag::C_PORTAL; }
+	return ComponentFlag::C_INVALID;
 }
 
 void ComponentFactory::createComponent(std::string entity_id, ComponentFlag c_flag,
@@ -186,18 +186,18 @@ void ComponentFactory::createComponent(std::string entity_id, ComponentFlag c_fl
 	std::string EC_ID = entity_id.append(C_ID);
 
 	// If args aren't required then put it at the top
-	if (c_flag == ComponentFlag::SPATIAL) { instanceCSpatial(EC_ID); return; }
+	if (c_flag == ComponentFlag::C_SPATIAL) { instanceCSpatial(EC_ID); return; }
 
 	std::vector<std::string> component_args = formatArgs(c_args);
-	if (c_flag == ComponentFlag::RENDER) {
+	if (c_flag == ComponentFlag::C_RENDER) {
 		instanceCRender(EC_ID, c_args[0], c_args[1]);
 		return; }
 
-	if (c_flag == ComponentFlag::INVENTORY) {
+	if (c_flag == ComponentFlag::C_INVENTORY) {
 		instanceCInventory(EC_ID, c_args);
 		return; }
 
-	if (c_flag == ComponentFlag::PORTAL) {
+	if (c_flag == ComponentFlag::C_PORTAL) {
 		instanceCPortal(EC_ID, c_args);
 		return; }
 }
@@ -229,7 +229,7 @@ void ComponentFactory::constructComponents(std::string entity_id, bool new_entit
 		*	if c_portal game_data map has 2 portals for one entity the UCID
 		*	should be {aA, C_Portal*0}, {aB, C_Portal*1}. very cool		*/	
 		int component_id = 65;		//	Using capital letters for the ascii
-		ComponentFlag prev_component_type = ComponentFlag::INVALID;
+		ComponentFlag prev_component_type = ComponentFlag::C_INVALID;
 		
 		if (component_id < 91) {
 			for (std::vector<std::string> component_data : _fmt_component_dataset) {
@@ -241,12 +241,12 @@ void ComponentFactory::constructComponents(std::string entity_id, bool new_entit
 				std::vector<std::string> component_args = splitSaveLine(component_data[0], ',');
 
 				ComponentFlag flag = determineFlag(str_flag);
-				if (flag == ComponentFlag::RENDER) {
+				if (flag == ComponentFlag::C_RENDER) {
 					if (new_entity) {	// Setup references
 						createComponent(entity_id, flag, component_id, component_args); 
 					}
 				} else {	// Setup components requiring references
-					if (!new_entity && flag != ComponentFlag::INVALID) {
+					if (!new_entity && flag != ComponentFlag::C_INVALID) {
 						if (prev_component_type == flag) {
 							++component_id;
 							createComponent(entity_id, flag, component_id, component_args); }

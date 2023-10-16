@@ -6,8 +6,8 @@
 
 class C_Inventory : public Component {
 private:
-	std::string _entity_id;
-	ComponentFlag _flag = ComponentFlag::INVENTORY;
+	std::string _ucid;
+	ComponentFlag _flag = ComponentFlag::C_INVENTORY;
 
 	InventorySlot* _head = nullptr;
 	int _size = 0;
@@ -16,7 +16,7 @@ private:
 public:
 	std::vector<std::string> held_item_EUIDs;
 	
-	C_Inventory(std::string owning_entity_id, std::vector<InventorySlot*> slots = {}, 
+	C_Inventory(std::string ucid, std::vector<InventorySlot*> slots = {}, 
 		int max_size = 64);
 
 	ComponentFlag getFlag() override;
