@@ -1,0 +1,12 @@
+﻿  Command.cpp
+  CommandFactory.cpp
+  ComponentFactory.cpp
+  EntityFactory.cpp
+  WorldLoader.cpp
+F:\Uni\COS30031-2023-103071494\19 - Spike - Messaging_ Annoucements and Blackboards\MessagingAnnouncements&Blackboards\zorkish\src\WorldLoader.cpp(55,15): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+  States.cpp
+  StateManager.cpp
+  Main.cpp
+  Generating Code...
+F:\Uni\COS30031-2023-103071494\19 - Spike - Messaging_ Annoucements and Blackboards\MessagingAnnouncements&Blackboards\zorkish\src\Command.cpp(25): warning C4715: 'Command::UEIDFromRenderName': not all control paths return a value
+  MessagingAnnouncements&Blackboards.vcxproj -> F:\Uni\COS30031-2023-103071494\19 - Spike - Messaging_ Annoucements and Blackboards\MessagingAnnouncements&Blackboards\x64\Debug\MessagingAnnouncements&Blackboards.exe

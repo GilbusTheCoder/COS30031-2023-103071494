@@ -1,0 +1,26 @@
+#	Author: Thomas Horsley 103071494
+#
+#	The Entity loading system works based on a set of tags in the format below.
+#	Note that the args are specific to the flag (Inventory component will have different args to spatial component)
+#	and are to be written in lowercase
+#
+#	Additionally, items should be instantiated first so they can be reference later as shown below.
+#
+#	This system could be updated such that only a tag and args for the components are required with the components 
+#	required for each entity flag being known at compile time. However, this method was chosen for the sake of clarity.
+#
+#	Example:
+#	EntityTag_0 : ComponentFlag_00(arg00, arg01), ComponentFlag_01(arg10, arg11), ..., ComponentFlag0n(argn0, argn1);
+#
+#	-- TEST DATA --
+#location : render(backyard, Nice_and_peaceful) | inventory(twigs, garden_gnome) | portal(loungeroom, north);
+item : render(sword_of_testing, Good_for_testing_Zorkish!);
+item : render(potion_of_testing, Better_for_testing_Zorkish_than_the_simple_Sword);
+item : render(lighter, Spark_Spark);
+item : render(twigs, If_I_had_more_motivation_I'd_make_these_flammable...);
+item : render(garden_gnome, Evil_things_Gnomes_are.);
+location : render(loungeroom, Has_a_neat_sofa_in_the_middle_looks_comfy.) | inventory(potion_of_testing) | portal(south, hallway);
+location : render(hallway, Looooooooooong._Scary_pictures_stare_at_you.) | inventory() | portal(north, loungeroom) | portal(south, backyard);
+current_location : render(backyard, Nice_and_peaceful) | inventory(twigs, garden_gnome) | portal(north, hallway);
+player : render(you, Lad_in_the_Zork(ish)_world) | inventory(sword_of_testing, lighter);
+
