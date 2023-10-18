@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 #pragma once
 enum class ComponentFlag {
@@ -15,8 +16,8 @@ enum class ComponentFlag {
 class Component {
 public:
 	virtual ComponentFlag getFlag() = 0;
+	virtual std::vector<std::string> getInfo() = 0; 
 
-	virtual void update() = 0;
-	virtual void render() = 0;
+	virtual void onEvent() = 0;
 };
 

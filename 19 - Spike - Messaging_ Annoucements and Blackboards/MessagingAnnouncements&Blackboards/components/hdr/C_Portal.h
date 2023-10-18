@@ -21,7 +21,7 @@ public:
 
 	void setExit(Entity* exit);
 
-	void update() override;
-	void render() override;
+	void onEvent() override;
+	std::vector<std::string> getInfo() override;
 };
 

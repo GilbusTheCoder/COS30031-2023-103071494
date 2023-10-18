@@ -13,6 +13,7 @@
 #pragma once
 struct GameData {
 	bool is_running = true;
+	bool reinstance_local_entity_cache = true;
 
 	std::map<std::string, Entity*> entities;
 	std::map<std::string, C_Render*> c_renderers;

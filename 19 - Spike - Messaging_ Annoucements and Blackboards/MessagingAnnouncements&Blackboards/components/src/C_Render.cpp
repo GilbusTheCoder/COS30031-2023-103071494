@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
 #include "../hdr/C_Render.h"
 
@@ -39,8 +40,13 @@ void C_Render::setDescription(std::string description) {
 /******************************************************************************
 *								  Methods
 ******************************************************************************/
-void C_Render::update() {}
-void C_Render::render() {
+void C_Render::onEvent() {
 	std::cout << "Name -> " << _name << "\n";
 	std::cout << "Description -> " << _description << "\n";
+}
+
+std::vector<std::string> C_Render::getInfo() {
+	std::vector<std::string> info;
+	info.emplace_back(_name);
+	return info;
 }

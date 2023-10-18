@@ -1,5 +1,6 @@
 #include "WorldLoader.h"
-#include "CommandFactory.h"
+#include "EventDispatcher.h"
+#include "InputHandler.h"
 
 #pragma once
 enum STATES {
@@ -71,13 +72,11 @@ public:
 
 class GameplayState : public State {
 private:
-	CommandFactory* _command_factory = nullptr;
-	std::vector<std::string> _altered_renderers;
+	InputData* _input_data = new InputData();
+	InputHandler* _input_handler = nullptr;
+	EventDispatcher* _event_dispatcher = nullptr;
 
 	std::stringstream getInput();
-	std::vector<std::string> handleInput();
-	CommandType validateCommandType(std::string c_type);
-	std::queue<Command*> createCommands(std::vector<std::string> command_data);
 
 public:
 	GameplayState();

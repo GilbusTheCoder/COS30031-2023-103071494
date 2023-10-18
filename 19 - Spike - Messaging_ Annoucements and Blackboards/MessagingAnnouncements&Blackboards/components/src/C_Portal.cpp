@@ -21,6 +21,12 @@ void C_Portal::setExit(Entity* exit) { if (exit != nullptr) _exit = exit; }
 /******************************************************************************
 *								     Loop
 ******************************************************************************/
-void C_Portal::update() { }
+void C_Portal::onEvent() { }
 
-void C_Portal::render() { }
+std::vector<std::string> C_Portal::getInfo() {
+	std::vector<std::string> info;
+	info.emplace_back(_dir);
+	info.emplace_back(_exit->getID()); 
+
+	return info;
+}

@@ -181,24 +181,30 @@ void AdventureSelectMenu::render() {
 *							    De/Constructors
 ******************************************************************************/
 GameplayState::GameplayState() {
-	if (_command_factory != nullptr) {
-		delete _command_factory;
-		_command_factory = nullptr;
-	}
+	if (_input_handler != nullptr) {
+		delete _input_handler;
+		_input_handler = nullptr; }
+	
+	if (_event_dispatcher != nullptr) {
+		delete _event_dispatcher;
+		_event_dispatcher = nullptr; }
 
-	_command_factory = new CommandFactory();
+	_input_handler = new InputHandler();
+	_event_dispatcher = new EventDispatcher();
 }
 
 GameplayState::~GameplayState() {
 	if (_game_data != nullptr) {
 		delete _game_data;
-		_game_data = nullptr;
-	}
+		_game_data = nullptr; }
 
-	if (_command_factory != nullptr) {
-		delete _command_factory;
-		_command_factory = nullptr;
-	}
+	if (_input_handler != nullptr) {
+		delete _input_handler;
+		_input_handler = nullptr; }
+	
+	if (_event_dispatcher != nullptr) {
+		delete _event_dispatcher;
+		_event_dispatcher = nullptr; }
 }
 
 
@@ -214,96 +220,6 @@ std::stringstream GameplayState::getInput() {
 	return input_stream;
 }
 
-std::vector<std::string> GameplayState::handleInput() {
-	std::vector<std::string> command_args;
-	std::stringstream input = getInput();
-
-	while (input.good()) {
-		std::string command_arg;
-		input >> command_arg;
-		command_args.emplace_back(command_arg);
-	}
-
-	for (std::string& arg : command_args) {
-		std::transform(arg.begin(), arg.end(), arg.begin(), std::tolower);
-	}
-
-	return command_args;
-}
-
-CommandType GameplayState::validateCommandType(std::string c_type) {
-	if (!c_type.empty()) {
-		std::transform(c_type.begin(), c_type.end(), c_type.begin(), std::tolower);
-	}
-	//	Instantiating aliases is just refactoring this piece of code here to read from a map
-	//	containing a valid command and a string of aliases which can be added to, just got to
-	//	check for command collisions when adding.
-	if (c_type == "move" || c_type == "head" || c_type == "go" ||
-		c_type == "m" || c_type == "g") {
-		return CommandType::MOVE;
-
-	}
-	else if (c_type == "take" || c_type == "grab" || c_type == "t") {
-		return CommandType::TAKE;
-
-	}
-	else if (c_type == "drop" || c_type == "discard" || c_type == "d") {
-		return CommandType::DROP;
-
-	}
-	else if (c_type == "look" || c_type == "l") {
-		return CommandType::LOOK;
-
-	}
-	else if (c_type == "show" || c_type == "sh" || c_type == "s") {
-		return CommandType::SHOW;
-
-	}
-	else if (c_type == "help" || c_type == "h") {
-		return CommandType::HELP;
-
-	}
-	else if (c_type == "quit" || c_type == "q") {
-		return CommandType::QUIT;
-
-	}
-	else {
-		return CommandType::INVALID;
-	}
-}
-
-std::queue<Command*> GameplayState::createCommands(std::vector<std::string> command_data) {
-	std::queue<Command*> commands;
-
-	//	Simple commands (Think "Help" and "Quit")
-	if (command_data.size() == 1) {
-		CommandType c_type = validateCommandType(command_data[0]);
-
-		commands =
-			_command_factory->createCommands(_game_data, c_type);
-	}
-
-	//	Command instantiation requiring args
-	if (command_data.size() > 1) {
-		CommandType c_type = validateCommandType(command_data[0]);
-
-		if (!CommandType::INVALID) {
-			command_data.erase(command_data.begin());
-			command_data.shrink_to_fit();
-
-			for (std::string arg : command_data) {
-				std::transform(arg.begin(), arg.end(), arg.begin(), std::tolower);
-			}
-
-			/*	Command data is just a split set of everything entered except the
-			*	first word	*/
-			commands =
-				_command_factory->createCommands(_game_data, c_type, command_data);
-		}
-	}
-
-	return commands;
-}
 
 
 
@@ -316,41 +232,28 @@ void GameplayState::setStateData(GameData* game_data, std::vector<std::string> a
 
 STATES GameplayState::update() {
 	if (!_game_data->is_running) { return STATES::S_QUIT; }
-	std::vector<std::string> command_data = handleInput();
-	std::queue<Command*> frame_commands = createCommands(command_data);
 
-	while (!frame_commands.empty()) {
-		frame_commands.front()->execute();
-		frame_commands.pop();
-	}
+	if (_game_data->reinstance_local_entity_cache) { 
+		_event_dispatcher->filterLocalComponents(_game_data); }
+	
+	// The post office
+	std::queue<Command*> events = _event_dispatcher->processEvents
+		(_game_data, _input_handler->handleInput(getInput()));
+	
+	// Consider this the mailing system
+	while (!events.empty()) {
+		events.front()->triggerEvent();	
+		events.pop(); }
 
 	return STATES::S_GAMEPLAY;
 }
 
-/*	If i wasn't so mentally done with this assignment i'd structure the map in such
-*	a way that the current locations renderers is always the first but idrc at this
-*	point																		*/
 void GameplayState::render() {
-	if (_game_data->is_running) {
-		std::cout << "\n--------------------------------------------------\n";
-		std::string current_loc_renderer = _game_data->current_location;
-		current_loc_renderer.append("A");
-		_game_data->c_renderers.find(current_loc_renderer)->second->render();
+	std::map<std::string, C_Render*>::iterator traversal_it;
 
-		std::cout << "\n--------------------------------------------------\n";
-		for (auto renderer : _game_data->c_renderers) {
-			if (renderer.second->renderThis() && renderer.first != current_loc_renderer) {
-				_altered_renderers.emplace_back(renderer.first);
-				renderer.second->render();
-			}
-		}
+	for (traversal_it = _game_data->c_renderers.begin();
+		traversal_it != _game_data->c_renderers.end(); ++traversal_it) {
 
-		std::cout << ">>";
-
-		// Reset this frames altered renderer data after use
-		for (std::string render_id : _altered_renderers) {
-			_game_data->c_renderers.find(render_id)->second->flagForRender(false);
-		}
 	}
 }
 

@@ -48,10 +48,13 @@
     <ClCompile Include="zorkish\src\ComponentFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="zorkish\src\CommandFactory.cpp">
+    <ClCompile Include="commands\src\Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="zorkish\src\Command.cpp">
+    <ClCompile Include="zorkish\src\EventDispatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zorkish\src\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,10 +98,13 @@
     <ClInclude Include="zorkish\hdr\ComponentFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="zorkish\hdr\CommandFactory.h">
+    <ClInclude Include="commands\hdr\Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="zorkish\hdr\Command.h">
+    <ClInclude Include="zorkish\hdr\InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zorkish\hdr\InputData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

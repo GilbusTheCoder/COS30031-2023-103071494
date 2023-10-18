@@ -86,7 +86,7 @@ Entity* C_Inventory::getItem(int offset) {
 
 void C_Inventory::addItem(Entity* item) {
 	InventorySlot* new_tail = new InventorySlot(item->getID(), item);
-	held_item_EUIDs.emplace_back(item->getID());
+	held_item_UEIDs.emplace_back(item->getID());
 
 	if (_head == nullptr) { _head = new_tail; }
 	else {
@@ -100,7 +100,7 @@ void C_Inventory::addItem(InventorySlot* slot) {
 		_head = slot;
 
 		if (_head->getItem() != nullptr) {
-			held_item_EUIDs.emplace_back(_head->getItem()->getID());
+			held_item_UEIDs.emplace_back(_head->getItem()->getID());
 		}
 	}
 	else {
@@ -108,7 +108,7 @@ void C_Inventory::addItem(InventorySlot* slot) {
 		old_tail->setNext(slot);
 
 		if (slot->getItem() != nullptr) {
-			held_item_EUIDs.emplace_back(slot->getItem()->getID());
+			held_item_UEIDs.emplace_back(slot->getItem()->getID());
 		}
 	}
 }
@@ -136,11 +136,11 @@ void C_Inventory::deleteItem(Entity* item) {
 
 
 		std::string deleted_ID = traversal_ptr->getItem()->getID();
-		for (auto id_it = held_item_EUIDs.begin();
-			id_it != held_item_EUIDs.end(); ++id_it) {
+		for (auto id_it = held_item_UEIDs.begin();
+			id_it != held_item_UEIDs.end(); ++id_it) {
 			if (*id_it == deleted_ID) {
-				held_item_EUIDs.erase(id_it);
-				held_item_EUIDs.shrink_to_fit();
+				held_item_UEIDs.erase(id_it);
+				held_item_UEIDs.shrink_to_fit();
 				break;
 			}
 		}
@@ -150,5 +150,7 @@ void C_Inventory::deleteItem(Entity* item) {
 	}
 }
 
-void C_Inventory::update() { }
-void C_Inventory::render() { }
+void C_Inventory::onEvent() { }
+std::vector<std::string> C_Inventory::getInfo() {
+	return held_item_UEIDs;
+}

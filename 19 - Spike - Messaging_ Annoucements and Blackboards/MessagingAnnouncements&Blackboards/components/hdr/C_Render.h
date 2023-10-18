@@ -25,6 +25,6 @@ public:
 	void setDescription(std::string description);
 	void flagForRender(bool yes_or_no);
 
-	void update() override;
-	void render() override;
+	void onEvent() override;
+	std::vector<std::string> getInfo() override;
 };

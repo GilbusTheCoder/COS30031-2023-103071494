@@ -127,14 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="zorkish\src\Command.cpp" />
-    <ClCompile Include="zorkish\src\CommandFactory.cpp" />
+    <ClCompile Include="zorkish\src\InputHandler.cpp" />
+    <ClCompile Include="commands\src\Command.cpp" />
     <ClCompile Include="zorkish\src\ComponentFactory.cpp" />
     <ClCompile Include="components\src\C_Render.cpp" />
     <ClCompile Include="components\src\C_Portal.cpp" />
     <ClCompile Include="components\src\C_Inventory.cpp" />
     <ClCompile Include="components\src\InventorySlot.cpp" />
     <ClCompile Include="zorkish\src\EntityFactory.cpp" />
+    <ClCompile Include="zorkish\src\EventDispatcher.cpp" />
     <ClCompile Include="zorkish\src\WorldLoader.cpp" />
     <ClCompile Include="zorkish\src\Entity.cpp" />
     <ClCompile Include="zorkish\src\States.cpp" />
@@ -142,8 +143,8 @@
     <ClCompile Include="zorkish\src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="zorkish\hdr\Command.h" />
-    <ClInclude Include="zorkish\hdr\CommandFactory.h" />
+    <ClInclude Include="zorkish\hdr\InputHandler.h" />
+    <ClInclude Include="commands\hdr\Command.h" />
     <ClInclude Include="zorkish\hdr\ComponentFactory.h" />
     <ClInclude Include="components\hdr\Component.h" />
     <ClInclude Include="components\hdr\C_Render.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="components\hdr\C_Inventory.h" />
     <ClInclude Include="components\hdr\InventorySlot.h" />
     <ClInclude Include="zorkish\hdr\EntityFactory.h" />
+    <ClInclude Include="zorkish\hdr\InputData.h" />
     <ClInclude Include="zorkish\hdr\WorldLoader.h" />
     <ClInclude Include="zorkish\hdr\Entity.h" />
     <ClInclude Include="zorkish\hdr\GameData.h" />
