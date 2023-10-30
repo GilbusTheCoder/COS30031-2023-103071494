@@ -19,6 +19,7 @@ public:
 	C_Inventory(std::string ucid, std::vector<InventorySlot*> slots = {},
 		int max_size = 64);
 
+	std::string getUCID();
 	ComponentFlag getFlag() override;
 	InventorySlot* getHead();
 	InventorySlot* getTail();

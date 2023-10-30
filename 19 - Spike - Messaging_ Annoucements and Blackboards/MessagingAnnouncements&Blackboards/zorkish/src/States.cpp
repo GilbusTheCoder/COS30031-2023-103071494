@@ -22,28 +22,20 @@ STATES MainMenu::update() {
 		std::cout << std::endl;
 
 		switch (choice) {
-		case 1:
-			return STATES::S_SELECT_ADVENTURE;
-		case 2:
-			return STATES::S_VIEW_HoF;
-		case 3:
-			return STATES::S_HELP;
-		case 4:
-			return STATES::S_ABOUT;
-		case 5:
-			return STATES::S_QUIT;
-		default:
-			return STATES::S_MAIN_MENU;
+		case 1:	return STATES::S_SELECT_ADVENTURE;
+		case 2:	return STATES::S_VIEW_HoF;
+		case 3:	return STATES::S_HELP;
+		case 4:	return STATES::S_ABOUT;
+		case 5:	return STATES::S_QUIT;
+		default: return STATES::S_MAIN_MENU;
 		}
-	}
-	else {
+	} else {
 		std::cout << "Enter a value which correlates with a menu option." << std::endl << std::endl;
 
 		std::cin.clear();
 		std::cin.ignore();
 		return STATES::S_MAIN_MENU;
 	}
-
 }
 
 void MainMenu::render() {
@@ -209,52 +201,96 @@ GameplayState::~GameplayState() {
 
 
 
-/******************************************************************************
-*									 Input
-******************************************************************************/
-std::stringstream GameplayState::getInput() {
-	std::string input;
-	getline(std::cin, input);
-	std::stringstream input_stream(input);
 
-	return input_stream;
+/******************************************************************************
+*								   Private
+******************************************************************************/
+void GameplayState::resetRender() {
+	std::map<std::string, C_Render*>::iterator it;
+
+	for (it = _game_data->c_renderers.begin();
+		it != _game_data->c_renderers.end(); ++it) {
+		it->second->flagForRender(false);
+		it->second->doShallowRender(true);
+
+		std::string UEID = extractUEID(it->second->getUCID());
+		if (UEID.front() == _game_data->current_location.front()) {
+			it->second->flagForRender(true);
+			it->second->doShallowRender(_game_data->discovered_area);
+		}
+	}
 }
 
+std::string GameplayState::extractUEID(std::string ucid) {
+	// Check each character of the cuid until we hit an upper case letter
+	// take all the characters from before the upper case and that's our EUID
+	// to return.
+	std::string::iterator cuid_it;
+	std::string UEID;
 
+	for (cuid_it = ucid.begin(); cuid_it != ucid.end(); cuid_it++) {
+		if (char(*cuid_it) > 96 && char(*cuid_it) < 123) {
+			std::string EUID_element(1, char(*cuid_it));
+			UEID.append(EUID_element);
+		}
+		else { return UEID; }
+	}
 
+	return UEID;
+}
 
 /******************************************************************************
 *							   Base Class Overrides
 ******************************************************************************/
 void GameplayState::setStateData(GameData* game_data, std::vector<std::string> args) {
 	if (game_data != nullptr) { _game_data = game_data; }
+	if (_game_data != nullptr) { 
+		_event_dispatcher->setGameData(_game_data); 
+		_event_dispatcher->filterLocalComponents();
+	}
 }
 
 STATES GameplayState::update() {
 	if (!_game_data->is_running) { return STATES::S_QUIT; }
-
-	if (_game_data->reinstance_local_entity_cache) { 
-		_event_dispatcher->filterLocalComponents(_game_data); }
 	
+	std::string frame_start_location = _game_data->current_location;
+	std::string input;
+	
+	getline(std::cin, input);
+	std::stringstream input_stream(input);
+
 	// The post office
 	std::queue<Command*> events = _event_dispatcher->processEvents
-		(_game_data, _input_handler->handleInput(getInput()));
+		(_input_handler->handleInput(input_stream, _game_data));
 	
 	// Consider this the mailing system
 	while (!events.empty()) {
 		events.front()->triggerEvent();	
 		events.pop(); }
 
+	if (frame_start_location.front() != _game_data->current_location.front()) {
+		_event_dispatcher->filterLocalComponents();	}
+	
 	return STATES::S_GAMEPLAY;
 }
 
 void GameplayState::render() {
-	std::map<std::string, C_Render*>::iterator traversal_it;
+	std::vector<C_Render*>::iterator traversal_it;
 
-	for (traversal_it = _game_data->c_renderers.begin();
-		traversal_it != _game_data->c_renderers.end(); ++traversal_it) {
+	if (first_pass) {
+		for (C_Render* renderer : _game_data->_local_renderers) {
+			renderer->flagForRender(false); }
 
+		first_pass = !first_pass;
 	}
+
+	for (traversal_it = _game_data->_local_renderers.begin();
+		traversal_it != _game_data->_local_renderers.end(); ++traversal_it) {
+		if ((*traversal_it)->renderThis()) {
+			(*traversal_it)->onEvent(); }
+	}
+
+	resetRender();
 }
 
 

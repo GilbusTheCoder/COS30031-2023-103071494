@@ -72,11 +72,11 @@ public:
 
 class GameplayState : public State {
 private:
+	bool first_pass = true;
+
 	InputData* _input_data = new InputData();
 	InputHandler* _input_handler = nullptr;
 	EventDispatcher* _event_dispatcher = nullptr;
-
-	std::stringstream getInput();
 
 public:
 	GameplayState();
@@ -87,6 +87,10 @@ public:
 
 	STATES update() override;
 	void render() override;
+
+private:
+	std::string extractUEID(std::string ucid);
+	void resetRender();
 };
 
 class NewHighScoreMenu : public State {

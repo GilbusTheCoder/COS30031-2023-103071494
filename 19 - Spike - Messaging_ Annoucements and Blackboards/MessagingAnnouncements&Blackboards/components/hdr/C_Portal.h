@@ -15,6 +15,7 @@ public:
 	C_Portal(std::string ucid, std::string direction,
 		Entity* exit = nullptr);
 
+	std::string getUCID();
 	ComponentFlag getFlag() override;
 	std::string getDirection();
 	Entity* getExit();

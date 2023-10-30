@@ -14,13 +14,19 @@
 struct GameData {
 	bool is_running = true;
 	bool reinstance_local_entity_cache = true;
-
-	std::map<std::string, Entity*> entities;
-	std::map<std::string, C_Render*> c_renderers;
-	std::map<std::string, C_Inventory*> c_inventories;
-	std::map<std::string, C_Portal*> c_portals;
+	bool discovered_area = false;
 
 	std::string player;
 	std::string current_location;
+	std::map<std::string, Entity*> entities;
+	
+	std::map<std::string, C_Render*> c_renderers;
+	std::vector<C_Render*> _local_renderers;
+
+	std::map<std::string, C_Inventory*> c_inventories;
+	std::vector<C_Inventory*> _local_inventories;
+	
+	std::map<std::string, C_Portal*> c_portals;
+	std::vector<C_Portal*> _local_portals;
 };
 

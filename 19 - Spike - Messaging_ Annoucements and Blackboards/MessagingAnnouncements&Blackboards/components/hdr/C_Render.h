@@ -10,20 +10,25 @@ private:
 
 	std::string _name;
 	std::string _description;
+
+	bool _shallow_render = true;		// Will only render the name
 	bool _render_this = false;
 
 public:
 	C_Render(std::string ucid, std::string name,
 		std::string description, bool render_this = false);
 
+	std::string getUCID();
 	ComponentFlag getFlag() override;
 	std::string getName();
 	std::string getDescription();
-	bool renderThis();
 
+	bool renderThis();
 	void setName(std::string name);
 	void setDescription(std::string description);
+
 	void flagForRender(bool yes_or_no);
+	void doShallowRender(bool yes_or_no);
 
 	void onEvent() override;
 	std::vector<std::string> getInfo() override;

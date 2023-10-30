@@ -127,8 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="commands\src\MoveCommand.cpp" />
+    <ClCompile Include="commands\src\TakeCommand.cpp" />
+    <ClCompile Include="commands\src\LookCommand.cpp" />
+    <ClCompile Include="commands\src\ShowCommand.cpp" />
+    <ClCompile Include="commands\src\QuitCommand.cpp" />
     <ClCompile Include="zorkish\src\InputHandler.cpp" />
-    <ClCompile Include="commands\src\Command.cpp" />
     <ClCompile Include="zorkish\src\ComponentFactory.cpp" />
     <ClCompile Include="components\src\C_Render.cpp" />
     <ClCompile Include="components\src\C_Portal.cpp" />
@@ -143,6 +147,11 @@
     <ClCompile Include="zorkish\src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commands\hdr\MoveCommand.h" />
+    <ClInclude Include="commands\hdr\TakeCommand.h" />
+    <ClInclude Include="commands\hdr\LookCommand.h" />
+    <ClInclude Include="commands\hdr\ShowCommand.h" />
+    <ClInclude Include="commands\hdr\QuitCommand.h" />
     <ClInclude Include="zorkish\hdr\InputHandler.h" />
     <ClInclude Include="commands\hdr\Command.h" />
     <ClInclude Include="zorkish\hdr\ComponentFactory.h" />

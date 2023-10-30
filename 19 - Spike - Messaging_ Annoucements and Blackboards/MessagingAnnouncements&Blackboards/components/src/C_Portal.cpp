@@ -12,6 +12,7 @@ C_Portal::C_Portal(std::string ucid, std::string direction,
 /******************************************************************************
 *								  Properties
 ******************************************************************************/
+std::string C_Portal::getUCID() { return _ucid; }
 ComponentFlag C_Portal::getFlag() { return _flag; }
 std::string C_Portal::getDirection() { return _dir; }
 Entity* C_Portal::getExit() { return _exit; }

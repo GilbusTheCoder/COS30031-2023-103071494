@@ -12,6 +12,7 @@ C_Inventory::C_Inventory(std::string ucid,
 /******************************************************************************
 *								  Properties
 ******************************************************************************/
+std::string C_Inventory::getUCID() { return _ucid; }
 ComponentFlag C_Inventory::getFlag() { return _flag; }
 InventorySlot* C_Inventory::getHead() { return _head; }
 
@@ -45,31 +46,27 @@ int C_Inventory::hasItem(Entity* item, std::string UEID) {
 
 		if (item != nullptr) {
 			while (traversal_ptr != nullptr) {
-				if (traversal_ptr->getItem()->getID() == item->getID()) {
-					return slot_offset;
-				}
+				if (traversal_ptr->getItem() == item) {
+					return slot_offset; }
 
-				if (traversal_ptr->getNext() == nullptr) { return 0; }
-				else {
-					traversal_ptr = traversal_ptr->getNext();
-					slot_offset++;
-				}
+				traversal_ptr = traversal_ptr->getNext();
+				++slot_offset;
 			}
 		}
+
+
 		else if (UEID != "") {
 			while (traversal_ptr != nullptr) {
 				if (traversal_ptr->getItem()->getID() == UEID) {
 					return slot_offset;
 				}
 
-				if (traversal_ptr->getNext() == nullptr) { return 0; }
-				else {
-					traversal_ptr = traversal_ptr->getNext();
-					slot_offset++;
-				}
+				traversal_ptr = traversal_ptr->getNext();
+				++slot_offset;
 			}
 		}
 	}
+
 	return 0;
 }
 
@@ -116,7 +113,7 @@ void C_Inventory::addItem(InventorySlot* slot) {
 void C_Inventory::deleteItem(Entity* item) {
 	int offset = hasItem(item);
 
-	if (offset) {
+	if (offset > 0) {
 		InventorySlot* prev_ptr = nullptr;
 		InventorySlot* traversal_ptr = _head;
 
