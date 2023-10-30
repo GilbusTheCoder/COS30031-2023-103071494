@@ -18,7 +18,7 @@ public:
 	inline bool isRunning() const { return _is_running; };
 	inline SDL_Renderer* getRenderer() const { return _renderer; }
 
-	void pollEvents(SDL_Event* event);
+	void update(SDL_Event* event);
 	void clear() const;
 
 private:

@@ -151,13 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameWorld.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Rect.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="hdr\GameWorld.h" />
     <ClInclude Include="hdr\Window.h" />
     <ClInclude Include="hdr\Rect.h" />
+    <ClInclude Include="hdr\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

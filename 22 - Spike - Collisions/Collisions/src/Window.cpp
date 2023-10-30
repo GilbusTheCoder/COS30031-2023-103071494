@@ -12,7 +12,7 @@ Window::~Window() {
 
 
 
-void Window::pollEvents(SDL_Event* event) {
+void Window::update(SDL_Event* event) {
 	if (event->type == SDL_QUIT) { _is_running = false; }
 	else if (event->type == SDL_KEYDOWN) {
 		if (event->key.keysym.sym == SDLK_ESCAPE) { _is_running = false; }
