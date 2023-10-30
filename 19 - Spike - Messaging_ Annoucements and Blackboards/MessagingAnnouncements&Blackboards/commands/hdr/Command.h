@@ -14,9 +14,3 @@ class Command {
 public:
 	virtual void triggerEvent() = 0;
 };
-
-
-
-
-
-
