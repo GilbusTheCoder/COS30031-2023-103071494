@@ -1,37 +1,27 @@
 #pragma once
 #include "Window.h"
+#include "Shape.h"
 
 /*	For now im reluctant to call this rectangle class a 2d renderer or
 *	collider mesh or anything as given the trivial nature of the software
 *	it's ok for the rect to do both. Therefore, in this case it does both
-*	render and handle collisions										*/
+*	paint to renderer and handle collisions								*/
 
-namespace Rect {
-	struct Colour {
-		int r, g, b, a; };
-
-	class Rect {
+namespace Shape {
+	class Rect : public Shape {
 	private:		
-		SDL_Renderer* _renderer = nullptr;
-		SDL_Rect* _rect = nullptr;
-
 		int _w, _h;
-		int _x, _y;
-		Colour _colour;
 	
 	public:
 		//	Could just move that data into structs if i wanted
-		Rect(Window* window, int w, int h, int x, int y, Colour colour);
+		Rect(Window* window, int w, int h, int x, int y, ShapeType type, ColourRGBA colour);
 
-		std::pair<int, int> getXY();
-		std::pair<int, int> getDimensions();
-		Colour getColour();
+		inline void resize(int new_w, int new_h) { _w=new_w; _h=new_h; }
+		void render() override;
 
-		void setXY(std::pair<int, int> x_y);
-		void setColor(Colour colour);
-
-		void update(int sign, int dx, int dy);
-		void render() const;	
+	private:
+		inline void setDimensions(int w, int h, int x, int y) { _w=w; _h=h; _x=x; _y = y; }
+		SDL_Rect findBounds() override;
 	};
 }
 
