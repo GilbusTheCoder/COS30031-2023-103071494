@@ -5,7 +5,7 @@ void update(Window* window, GameWorld* world) {
 	SDL_Event* event = new SDL_Event();
 
 	if (SDL_PollEvent(event)) {
-		//world->update(event);
+		world->update(event);
 		window->update(event); }
 
 	delete event;

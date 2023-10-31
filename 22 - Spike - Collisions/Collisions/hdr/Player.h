@@ -1,42 +1,30 @@
-//#pragma once
-//#include "Rect.h"
+#pragma once
+#include "Rect.h"
 
-//class Player {
-//private:
-//	Rect::Rect* _rect = nullptr;
-//	Rect::Colour _colour;
-//	Rect::Colour _highlighted_colour{
-//		_highlighted_colour.r = 200,
-//		_highlighted_colour.r = 50,
-//		_highlighted_colour.r = 100,
-//		_highlighted_colour.r = 255,
-//	};
-//
-//	int _w, _h;
-//	int _x, _y;
-//
-//	int _velocity = 5;
-//	
-//public:
-//	bool displaying_highlighted = true;
-//
-//public:
-//	Player(Window* window, int w, int h, int x, int y, Rect::Colour colour);
-//	~Player();
-//
-//	Rect::Rect* getRect();
-//	Rect::Colour getColour();
-//	Rect::Colour getHighlightedColour();
-//	std::pair<int, int> getXY();
-//
-//
-//	void setXY(std::pair<int, int> x_y);
-//
-//	void update(SDL_Event* event);
-//	void render();
-//
-//private:
-//	std::pair<int, int> handleInput(SDL_Event * event);
-//};
+class Player {
+private:
+	Shape::Rect* _rect = nullptr;
+	Shape::ColourRGBA _colour_a, _colour_b;
+
+	int _x, _y;
+	int _velocity = 5;
+	
+public:
+	bool displaying_highlighted = false;
+
+public:
+	Player(Window* window, int w, int h, int x, int y, Shape::ColourRGBA colour, 
+		Shape::ColourRGBA collision_colour, Shape::Rect* rect = nullptr);
+
+	void setPos(std::pair<int, int> pos);
+
+	inline std::pair<int, int> getPos() { return {_x, _y}; }
+	inline Shape::Rect* getRect() { return _rect; }
+	inline Shape::ColourRGBA getColour() { return _colour_a; }
+	inline Shape::ColourRGBA getHighlightedColour() { return _colour_b; } 
+
+	void update(std::pair<int, int> move_data);
+	void render();
+};
 
 

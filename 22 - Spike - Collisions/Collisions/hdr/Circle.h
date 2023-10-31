@@ -21,7 +21,7 @@ namespace Shape {
 		void render() override;
 
 	private:
-		SDL_Rect findBounds() override;
+		void findBounds() override;
 	};
 }
 

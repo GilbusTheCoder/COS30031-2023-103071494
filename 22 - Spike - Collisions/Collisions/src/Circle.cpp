@@ -6,12 +6,13 @@ Shape::Circle::Circle(Window* window, SDL_Point origin, int radius,
 	ShapeType type, ColourRGBA colour) : _origin(origin), _radius(radius) {
 	_type = type;
 	_colour = colour;
+	findBounds();
 	_renderer = window->getRenderer();
-	_bounds = findBounds();
 
 	if (_renderer == nullptr) {
 		std::cerr << "Circle entity couldn't instance renderer.\n"; }	
 }
+
 
 void Shape::Circle::render() {
 	if (_renderer) {
@@ -21,10 +22,10 @@ void Shape::Circle::render() {
 
 		int x0 = _origin.x;						// x origin 
 		int y0 = _origin.y; 					// y origin
-		int x1 = _bounds.x;						// x initial
-		int x2 = _bounds.x + _bounds.w;			// x final
-		int y1 = _bounds.y; 					// y initial
-		int y2 = _bounds.y + _bounds.h;			// y final
+		int x1 = _bounds->x;						// x initial
+		int x2 = _bounds->x + _bounds->w;			// x final
+		int y1 = _bounds->y; 					// y initial
+		int y2 = _bounds->y + _bounds->h;			// y final
 		
 		x1 = std::clamp(x1, 0, renderer_width);
 		x2 = std::clamp(x2, 0, renderer_width);
@@ -40,17 +41,16 @@ void Shape::Circle::render() {
 		}
 	}
 }
-
-SDL_Rect Shape::Circle::findBounds() { 
+void Shape::Circle::findBounds() { 
 	int x1 = _origin.x - _radius;
 	int y1 = _origin.y - _radius;
 	int diameter = 2 * _radius;
 
-	SDL_Rect bounds;
-	bounds.w = diameter;
-	bounds.h = diameter;
-	bounds.x = x1;
-	bounds.y = y1;
+	if (_bounds) { delete _bounds; _bounds = nullptr; }
+	_bounds = new SDL_Rect();
 
-	return bounds;
+	_bounds->w = diameter;
+	_bounds->h = diameter;
+	_bounds->x = x1;
+	_bounds->y = y1;
 }

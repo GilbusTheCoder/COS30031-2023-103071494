@@ -19,7 +19,7 @@ namespace Shape {
 		int _x=0, _y=0;
 		ShapeType _type = ShapeType::INVALID;
 		ColourRGBA _colour;
-		SDL_Rect _bounds;
+		SDL_Rect* _bounds = nullptr;
 
 	public:
 		inline ShapeType getType() { return _type; }
@@ -28,12 +28,12 @@ namespace Shape {
 
 		inline void setType(ShapeType type) { _type = type; }
 		inline void setColour(ColourRGBA colour) { _colour = colour; }
-		inline virtual void setPos(std::pair<int, int> x_y) { auto [_x, _y] = x_y; }
+		inline virtual void setPos(std::pair<int, int> pos) { auto [_x, _y] = pos; }
 
 		virtual void render() = 0;
 
 	protected:
-		virtual SDL_Rect findBounds() = 0;
+		virtual void findBounds() = 0;
 	};
 }
 
