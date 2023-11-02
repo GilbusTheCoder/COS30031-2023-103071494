@@ -1,3 +1,4 @@
+
 #pragma once
 #include "Window.h"
 #include "Shape.h"
@@ -15,6 +16,7 @@ namespace Shape {
 		inline SDL_Point getOrigin() { return _origin; }
 		inline int getRadius() { return _radius; }
 
+		void setPos(std::pair<int, int> pos);
 		inline void setOrigin(SDL_Point new_origin) { _origin = new_origin; }
 		inline void setRadius(int new_radius) { _radius = new_radius; }
 

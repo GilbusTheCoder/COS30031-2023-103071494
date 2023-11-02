@@ -22,13 +22,13 @@ namespace Shape {
 		SDL_Rect* _bounds = nullptr;
 
 	public:
+		inline std::pair<int, int> getPos() { return { _x, _y }; }
 		inline ShapeType getType() { return _type; }
 		inline ColourRGBA getColour() { return _colour; }
-		inline std::pair<int, int> getPos() { return { _x, _y }; }
 
+		virtual void setPos(std::pair<int, int> pos) = 0;
 		inline void setType(ShapeType type) { _type = type; }
 		inline void setColour(ColourRGBA colour) { _colour = colour; }
-		inline virtual void setPos(std::pair<int, int> pos) { auto [_x, _y] = pos; }
 
 		virtual void render() = 0;
 

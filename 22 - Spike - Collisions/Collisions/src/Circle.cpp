@@ -14,6 +14,18 @@ Shape::Circle::Circle(Window* window, SDL_Point origin, int radius,
 }
 
 
+void Shape::Circle::setPos(std::pair<int, int> pos) {
+	auto [x, y] = pos;
+	float half_rad = _radius / 2;
+
+	SDL_Point new_origin;
+	new_origin.x = x + half_rad;
+	new_origin.y = y + half_rad;
+
+	setOrigin(new_origin);
+	findBounds();
+}
+
 void Shape::Circle::render() {
 	if (_renderer) {
 		int renderer_width, renderer_height;	// Clamp values
@@ -41,6 +53,7 @@ void Shape::Circle::render() {
 		}
 	}
 }
+
 void Shape::Circle::findBounds() { 
 	int x1 = _origin.x - _radius;
 	int y1 = _origin.y - _radius;

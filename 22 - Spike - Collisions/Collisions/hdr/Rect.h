@@ -17,7 +17,7 @@ namespace Shape {
 		Rect();
 		Rect(Window* window, int w, int h, int x, int y, ShapeType type, ColourRGBA colour);
 
-		void setPos(std::pair<int, int> pos);
+		void setPos(std::pair<int, int> pos) override;
 		inline std::pair<int, int> getDimensions() { return {_w, _h}; }
 		inline void resize(int new_w, int new_h) { _w=new_w; _h=new_h; }
 		

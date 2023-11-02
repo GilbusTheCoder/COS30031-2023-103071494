@@ -1,15 +1,15 @@
-#include "../hdr/Player.h"
+#include "../hdr/Player.h"	
 
 Player::Player(Window* window, int w, int h, int x, int y, 
 	Shape::ColourRGBA colour, Shape::ColourRGBA collision_colour, 
-	Shape::Rect* rect) : 
+	Shape::Shape* collider) :
 	_x(x), _y(y), _colour_a(colour), _colour_b(collision_colour) {
 	
-	if (_rect == nullptr) {
-		_rect = new Shape::Rect(window, w, h, x, y, Shape::ShapeType::RECT, colour); }	
+	if (collider == nullptr) {
+		_collider = new Shape::Rect(window, w, h, x, y, Shape::ShapeType::RECT, colour); }
 	else { 
-		_rect = rect; 
-		_colour_a = _rect->getColour(); }
+		_collider = collider;
+		_colour_a = _collider->getColour(); } 
 }
 
 void Player::setPos(std::pair<int, int> pos) {
@@ -17,8 +17,7 @@ void Player::setPos(std::pair<int, int> pos) {
 	_x = x;
 	_y = y;
 
-	_rect->setPos({_x, _y});
-}
+	_collider->setPos({_x, _y}); }
 
 
 void Player::update(std::pair<int, int> move_data) {
@@ -35,10 +34,9 @@ void Player::update(std::pair<int, int> move_data) {
 	}
 
 	if (displaying_highlighted) {
-		_rect->setColour(_colour_b); } 
-	else { _rect->setColour(_colour_a); }
+		_collider->setColour(_colour_b); } 
+	else { _collider->setColour(_colour_a); }
 }
 
 void Player::render() {
-	if (_rect) _rect->render(); }
-
+	if (_collider) _collider->render(); }

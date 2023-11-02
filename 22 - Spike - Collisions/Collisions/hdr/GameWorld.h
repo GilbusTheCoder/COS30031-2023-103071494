@@ -2,7 +2,6 @@
 #include <vector>
 #include "Window.h"
 #include "Player.h"
-//#include "Circle.h"
 
 class GameWorld {
 private:
@@ -25,9 +24,11 @@ private:
 
 	bool checkCollision(Shape::Shape* shape1, Shape::Shape* shape2);
 	bool checkRectCollision(Shape::Rect* rect1, Shape::Rect* rect2);
-	//bool checkCircleCollision(Shape::Circle* circl1, Shape::Circle* circle2);
+	bool checkCircleCollision(Shape::Circle* circle1, Shape::Circle* circle2);
+
 
 	void handleCollisions(std::pair<int, int> prev_entity_pos);
+	double distanceSquared(SDL_Point p1, SDL_Point p2);
 };
 
 
