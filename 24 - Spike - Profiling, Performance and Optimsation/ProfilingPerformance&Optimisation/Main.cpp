@@ -17,18 +17,14 @@ Note: You REALLY need to
 to see biggest difference! (Then explain why!)
 
 There are lots of ugly code features.
-Enjoy!
+Enjoy! - Oh i did :)
 
 Clinton Woodward <cwoodward@swin.edu.au>
-Updated 2017-10-26
-
-*/
+Updated 2017-10-26	*/
 
 #include <iostream>
 #include <ctime>
 #include "SDL.h"
-
-// using namespace std;
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -39,7 +35,7 @@ const int BOX_HEIGHT = 50;
 const int BOX_SPEED = 10;
 const int BOX_COUNT = 100;
 
-const int TEST_TIME = 10 * 1000; // ie, 3*1000 = 3 seconds
+const int TEST_TIME = 15 * 1000; // ie, 3*1000 = 3 seconds
 
 enum BoxState { CONTACT_NO, CONTACT_YES };
 
@@ -62,7 +58,6 @@ void init_boxes()
 {
 	// seed value - Set explicitly if you want repeatable results!!
 	srand((unsigned)time(0));
-	// set each box to a random position, size, and velocity
 	for (int i = 0; i < BOX_COUNT; i++) {
 		// position
 		boxes[i].x = rand() % SCREEN_WIDTH;
@@ -77,15 +72,13 @@ void init_boxes()
 }
 
 
-void render_box(CrashBox box, SDL_Renderer* renderer, SDL_Color& color) //TODO: try &box
-{
-	SDL_Rect r = { box.x, box.y, box.w, box.h }; //TODO: try cached rect's
+void render_box(CrashBox& box, SDL_Renderer* renderer, SDL_Color& color)  {
+	SDL_Rect r = { box.x, box.y, box.w, box.h };
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &r);
 }
 
-void render_boxes(SDL_Renderer* renderer)
-{
+void render_boxes(SDL_Renderer* renderer) {
 	SDL_Color white = { 255,255,255,255 };
 	SDL_Color red = { 255,0,0,255 };
 
@@ -136,68 +129,55 @@ bool crash_test_A(int i, int j) // via index
 	return true;
 }
 
-bool crash_test_B(CrashBox A, CrashBox B) // struct (copy)
-{
-	//The sides of the rectangles
+bool crash_test_B(CrashBox A, CrashBox B) {
 	int leftA, leftB;
 	int rightA, rightB;
 	int topA, topB;
 	int bottomA, bottomB;
 
-	//Calculate the sides of rect A
 	leftA = A.x;
 	rightA = A.x + A.w;
 	topA = A.y;
 	bottomA = A.y + A.h;
 
-	//Calculate the sides of rect B
 	leftB = B.x;
 	rightB = B.x + B.w;
 	topB = B.y;
 	bottomB = B.y + B.h;
 
-	//If any of the sides from A are outside of B
 	if (bottomA <= topB) return false;
 	if (topA >= bottomB) return false;
 	if (rightA <= leftB) return false;
 	if (leftA >= rightB) return false;
-	//If none of the sides from A are outside B
 	return true;
 }
 
 
-bool crash_test_C(CrashBox& A, CrashBox& B) // via struct (ref!)
-{
-	//The sides of the rectangles
+bool crash_test_C(CrashBox& A, CrashBox& B) { // via struct (ref!)
 	int leftA, leftB;
 	int rightA, rightB;
 	int topA, topB;
 	int bottomA, bottomB;
 
-	//Calculate the sides of rect A
 	leftA = A.x;
 	rightA = A.x + A.w;
 	topA = A.y;
 	bottomA = A.y + A.h;
 
-	//Calculate the sides of rect B
 	leftB = B.x;
 	rightB = B.x + B.w;
 	topB = B.y;
 	bottomB = B.y + B.h;
 
-	//If any of the sides from A are outside of B
 	if (bottomA <= topB) return false;
 	if (topA >= bottomB) return false;
 	if (rightA <= leftB) return false;
 	if (leftA >= rightB) return false;
 
-	//If none of the sides from A are outside B
 	return true;
 }
 
-bool crash_test_D(CrashBox& A, CrashBox& B)
-{
+bool crash_test_D(CrashBox& A, CrashBox& B) {
 	if ((A.y + A.h) <= B.y) return false;
 	if (A.y >= (B.y + B.h)) return false;
 	if ((A.x + A.w) <= B.x) return false;
@@ -205,13 +185,12 @@ bool crash_test_D(CrashBox& A, CrashBox& B)
 	return true;
 }
 
-bool crash_test_E(CrashBox& A, CrashBox& B)
-{
-	return ((A.y + A.h) <= B.y || A.y >= (B.y + B.h) || (A.x + A.w) <= B.x || A.x >= (B.x + B.w));
+bool crash_test_E(CrashBox& A, CrashBox& B) {
+	return ((A.y + A.h) <= B.y || A.y >= (B.y + B.h) 
+	|| (A.x + A.w) <= B.x || A.x >= (B.x + B.w));
 }
 
-bool crash_test_F(CrashBox& A, CrashBox& B)
-{
+bool crash_test_F(CrashBox& A, CrashBox& B) {
 	if ((A.y + A.h) <= B.y) return false;
 	else if (A.y >= (B.y + B.h)) return false;
 	else if ((A.x + A.w) <= B.x) return false;
@@ -221,14 +200,13 @@ bool crash_test_F(CrashBox& A, CrashBox& B)
 
 //-----------------------------------------------------------------------------
 
-void crash_test_all_A1()
-{
+//* Extra check for minimal gains == worst performing func thanks to cache miss
+void crash_test_all_A1() {
 	// check i against j
-	//* Extra check for minimal gains == worst performing func
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = 0; j < BOX_COUNT; j++) {
 			if (crash_test_A(i, j)) {
-				if (i != j) {	// <-- difference between A1 and A2.. god i could go for sum milk
+				if (i != j) {	// <-- difference between A1 and A2.
 					boxes[i].state = CONTACT_YES;
 					boxes[j].state = CONTACT_YES;
 				}
@@ -237,24 +215,19 @@ void crash_test_all_A1()
 	}
 }
 
-void crash_test_all_A2()
-{
-	// check i against j
-	//* Also garbage
+//* Also garbage
+void crash_test_all_A2() {
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = i + 1; j < BOX_COUNT; j++) {
 			if (crash_test_A(i, j)) {
 				boxes[i].state = CONTACT_YES;
-				boxes[j].state = CONTACT_YES;
-			}
+				boxes[j].state = CONTACT_YES; }
 		}
 	}
 }
 
 //	Yeh we pass the struct but internal copies are made causing this to be hecka slow too
-void crash_test_all_B()
-{
-	// check i against j
+void crash_test_all_B() {
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = i + 1; j < BOX_COUNT; j++) {
 			if (crash_test_B(boxes[i], boxes[j])) {
@@ -267,9 +240,7 @@ void crash_test_all_B()
 
 //	Pass via struct reference, very cool and works nice but all the internal
 //	copies and assignments cause a performance hit still
-void crash_test_all_C()
-{
-	// check i against j
+void crash_test_all_C() {
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = i + 1; j < BOX_COUNT; j++) {
 			if (crash_test_C(boxes[i], boxes[j])) {
@@ -280,10 +251,9 @@ void crash_test_all_C()
 	}
 }
 
+
 //	WOOOOOOO WE DID IT BOIS! this one is pre speed.
-void crash_test_all_D()
-{
-	// check i against j
+void crash_test_all_D() {
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = i + 1; j < BOX_COUNT; j++) {
 			if (crash_test_D(boxes[i], boxes[j])) {
@@ -294,9 +264,7 @@ void crash_test_all_D()
 	}
 }
 
-void crash_test_all_E()
-{
-	// check i against j
+void crash_test_all_E() {
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = i + 1; j < BOX_COUNT; j++) {
 			if (crash_test_E(boxes[i], boxes[j])) {
@@ -307,9 +275,7 @@ void crash_test_all_E()
 	}
 }
 
-void crash_test_all_F()
-{
-	// check i against j
+void crash_test_all_F() {
 	for (int i = 0; i < BOX_COUNT; i++) {
 		for (int j = i + 1; j < BOX_COUNT; j++) {
 			if (crash_test_F(boxes[i], boxes[j])) {
@@ -320,11 +286,10 @@ void crash_test_all_F()
 	}
 }
 
-void crash_test_all_G()
-{
+void crash_test_all_G() {
 	auto cached_boxes = boxes;
 	int count = BOX_COUNT;
-	// check i against j
+
 	for (int i = 0; i < count; i++) {
 		for (int j = i + 1; j < count; j++) {
 			if (crash_test_F(cached_boxes[i], cached_boxes[j])) {
@@ -349,11 +314,11 @@ void update_boxes()
 		if (boxes[i].x < 0) boxes[i].x += SCREEN_WIDTH;
 		if (boxes[i].y >= SCREEN_HEIGHT) boxes[i].y -= SCREEN_HEIGHT;
 		if (boxes[i].y < 0) boxes[i].y += SCREEN_HEIGHT;
-		//TODO: try else if logic
 	}
 
-	// 1. mark all boxes as not collided //TODO: put this in the move loop?
-	for (int i = 0; i < BOX_COUNT; i++)
+
+	// 1. mark all boxes as not collided 
+		for (int i = 0; i < BOX_COUNT; i++)
 		boxes[i].state = CONTACT_NO;
 	// 2. call whatever function has been set to test all i against j boxes
 	crash_test_all_ptr();
@@ -460,7 +425,7 @@ int run_test(const char* title, void (*function_ptr)()) {
 
 int main(int argc, char* args[])
 {
-	//run_test("Test A1", crash_test_all_A1); //TODO: not paying attention to return values. :(
+	//run_test("Test A1", crash_test_all_A1); 
 	//run_test("Test A2", crash_test_all_A2);
 	//run_test("Test B", crash_test_all_B);
 	//run_test("Test C", crash_test_all_C);
@@ -468,10 +433,6 @@ int main(int argc, char* args[])
 	run_test("Test E", crash_test_all_E);
 	run_test("Test F", crash_test_all_F);
 	run_test("Test G", crash_test_all_G);
-
-
-	// printf("\n<press any key>\n");
-	// getchar();
 
 	return 0;
 }
