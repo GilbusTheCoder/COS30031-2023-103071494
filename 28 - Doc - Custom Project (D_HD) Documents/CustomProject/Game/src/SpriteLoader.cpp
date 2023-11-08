@@ -1,54 +1,67 @@
-#include <SDL_image.h>
 #include "../hdr/SpriteLoader.h"
+#include <SDL_image.h>
+#include <string>
 
-std::vector<SDL_Texture*> Game::SpriteLoader::loadTextures(const std::string& filepath, SDL_Renderer* renderer) {
+std::map<Game::sprite_name, SDL_Texture*> Game::SpriteLoader::loadSprites(const std::string& filepath, SDL_Renderer* renderer)
+{
 	if (filepath.empty()) {
-		SDL_Log("No texture filepath provided\n");
-		return { }; }
+		SDL_Log("SpriteLoader >> No texture filepath provided\n");
+		return { };
+	}
 
 	if (!renderer) {
-		SDL_Log("No texture renderer provided\n");
+		SDL_Log("SpriteLoader >> No texture renderer provided\n");
 		return { };
 	}
 
 	std::ifstream reader = setSaveFile(filepath);
-	std::vector<SDL_Texture*> textures;
+	std::map<Game::sprite_name, SDL_Texture*> sprites;
 	std::string texture_path;
-	
+
 	while (std::getline(reader, texture_path)) {
-		if (!isComment(texture_path)) {
-			SDL_Texture* new_texture = loadTexture(texture_path, renderer);
-			if (new_texture) { textures.emplace_back(new_texture); }
+		if (!isComment(texture_path) && !texture_path.empty()) {
+			SDL_Texture* new_sprite = loadSprite(texture_path, renderer);
+			Game::sprite_name new_name = spriteNameFromFilepath(texture_path);
+			
+			sprites.insert({ new_name, new_sprite });
 		}
 	}
 
 	destroy(&reader);
-	return textures;
+	return sprites;
 }
 
-std::ifstream Game::SpriteLoader::setSaveFile(const std::string& filepath) {
-	std::ifstream reader;
-
-	reader.open(filepath);
-	if (!reader.is_open()) { SDL_Log("Texture filepath incorrect\n"); }
-
-	return reader;
-}
-
-SDL_Texture* Game::SpriteLoader::loadTexture(std::string& texture_path,
+SDL_Texture* Game::SpriteLoader::loadSprite(std::string& sprite_path,
 	SDL_Renderer* renderer) {
-	SDL_Surface* surface = IMG_Load(texture_path.c_str());
+	SDL_Surface* surface = IMG_Load(sprite_path.c_str());
 	
 	if (!surface) {
-		SDL_Log("Texture surface failed to instantiate\n");
+		SDL_Log("SpriteLoader >> Texture surface failed to instantiate\n");
 		return nullptr; }
 
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 	if (!texture) {
-		SDL_Log("Failed to instance surface during loadTexture\n");
+		SDL_Log("SpriteLoader >> Failed to instance surface during loadTexture\n");
 		return nullptr; }
 
 	SDL_FreeSurface(surface);
 	return texture;
+}
+
+Game::sprite_name Game::SpriteLoader::spriteNameFromFilepath(std::string& sprite_path) {
+	Game::sprite_name name;
+	int start_idx = 0, end_idx = 0;
+	static int t_idx = 0;
+
+	// Find the start of the .type
+	for (int idx = 0; idx <= sprite_path.size(); ++idx) {
+		if (sprite_path[idx] == '.') { end_idx = idx; t_idx = idx; break; } }
+
+	// Now backtrack until the first '/' is found
+	for (int idx = t_idx; idx >= 0; --idx) {
+		if (sprite_path[idx] == '/') { start_idx = idx + 1; break; } }
+
+	name.append(sprite_path, start_idx, end_idx - start_idx);
+	return name;
 }

@@ -1,17 +1,17 @@
 #include "../hdr/Renderer.h"
-#include "../hdr/SpriteLoader.h"
+#include "../../ECS/hdr/TextureLoader.h"
 
 bool Game::Renderer::init(SDL_Window* window) {
     if (!window) {
-        SDL_Log("No window context provided to renderer\n");
+        SDL_Log("Renderer >> No window context provided to renderer\n");
         return false; }
 
     _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!_renderer) { 
-        SDL_Log("Failed to instance renderer\n");
+        SDL_Log("Renderer >> Failed to instance renderer\n");
         return false; }    
     
-    _textures = Game::SpriteLoader::loadTextures("Game/data/TexturePaths.txt", _renderer);
+    _textures = ECS::TextureLoader::loadTextures(_renderer);
     return true; 
 }
 
@@ -19,9 +19,13 @@ void Game::Renderer::update() { }
 void Game::Renderer::render() {
     SDL_RenderClear(_renderer);
     // Render code in here
-    SDL_RenderCopy(_renderer, _textures[0], nullptr, nullptr);
+    for (auto texture : _textures) {
+        ECS::Texture current_texture = texture.second;
+        SDL_RenderCopy(_renderer, current_texture.texture, nullptr, &current_texture.bounds);  }
 
     SDL_RenderPresent(_renderer); }
 
 void Game::Renderer::destroy() {
-    SDL_DestroyRenderer(_renderer); }
+    SDL_DestroyRenderer(_renderer);
+    _renderer = nullptr;
+}

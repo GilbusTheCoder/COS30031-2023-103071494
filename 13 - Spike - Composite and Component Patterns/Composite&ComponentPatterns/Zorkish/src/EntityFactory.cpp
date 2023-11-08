@@ -72,6 +72,7 @@ std::vector<std::string> EntityFactory::splitSaveLine(std::string& line,
 std::string EntityFactory::generateUEID(int entity_num) {
 	if (entity_num < 26) { 
 		entity_num += 97;
+
 		std::string entity_id(1, entity_num);
 		return entity_id; } 
 	

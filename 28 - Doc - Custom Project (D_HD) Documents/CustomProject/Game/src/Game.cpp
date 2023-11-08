@@ -11,46 +11,33 @@ Game::Game::~Game() {
 		_renderer = nullptr; }
 }
 
-bool Game::Game::init(std::string title, int x, int y, int w, int h, bool fullscreen) {
-	bool is_success = false;
-
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) > 0) {
-		SDL_Log("Failed to init SDL Video or Events subsystems\n");
-		return is_success; }
-
-	int w_flags = 0;
-	fullscreen ? w_flags = SDL_WINDOW_FULLSCREEN : w_flags = 0;
-	_window = SDL_CreateWindow(title.c_str(), x, y, w, h, w_flags);
-	if (!_window) { SDL_Log("Failed to instance window\n"); return is_success; }
-
-	_renderer->init(_window);
+bool Game::Game::init(std::string title, int x, int y, int w, int h, int flags) {;
+	_window->init(title, x, y, w, h, flags);
+	_renderer->init(_window->getWindow());
 
 	_event = new SDL_Event();
-	if (_event) { is_success = true; }
+	if (!_event) { 
+		SDL_Log("Game >> Failed to instance SDL Event\n");
+		return true; }
 
-	_is_running = is_success;
-	return is_success;
+	return true;
 }
 
-void Game::Game::update() { handleEvents(); }
+void Game::Game::update() {
+	SDL_PollEvent(_event);
+	_window->update(_event);
+}
 
 void Game::Game::render() { _renderer->render(); }
 
 void Game::Game::destroy() {
 	_renderer->destroy();
-	SDL_DestroyWindow(_window);
+	_window->destroy();
 	SDL_Quit();
 
-	SDL_Log("SDL Closed.\n");
+	SDL_Log("Game >> SDL Closed.\n");
 }
 
 void Game::Game::handleEvents() {
 	SDL_PollEvent(_event);
-
-	switch (_event->type) {
-	case SDL_QUIT:
-		_is_running = false;
-		break;
-	default:
-		break; }
 }

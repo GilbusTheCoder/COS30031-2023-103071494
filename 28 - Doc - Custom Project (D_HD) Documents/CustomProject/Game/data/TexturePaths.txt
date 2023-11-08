@@ -1,6 +1,0 @@
-# File containing the relative paths to sprite PNG's. This file is used by the
-# TextureLoader class.
-
-Assets/Sprites/Hex_Grass.png
-Assets/Sprites/Hex_Water.png
-Assets/Sprites/Hex_Sand.png

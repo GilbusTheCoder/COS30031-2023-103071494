@@ -5,14 +5,14 @@
 namespace ECS {
 	typedef std::string component_id;
 
-	enum class ComponentType {
-		C_INVALID,
+	enum ComponentType {
 		C_TRANSFORM,
 		C_ORIGIN,
 		C_TEXTURE,
 		C_UILABEL,
 		C_INTERACTABLE,
-		C_MOVABLE, };
+		C_MOVABLE, 
+		C_INVALID, };
 
 	struct Component {
 		component_id id;
@@ -28,7 +28,7 @@ namespace ECS {
 	struct Texture : public Component {
 		bool render_this = false;
 		SDL_Texture* texture = nullptr;
-		SDL_Rect* bounds = nullptr;
+		SDL_Rect bounds;
 	};
 }
 

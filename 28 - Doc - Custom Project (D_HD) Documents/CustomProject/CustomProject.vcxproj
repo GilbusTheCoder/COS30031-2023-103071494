@@ -151,18 +151,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ECS\src\ECConstructor.cpp" />
+    <ClCompile Include="Game\src\FileReader.cpp" />
     <ClCompile Include="Game\src\Game.cpp" />
     <ClCompile Include="Game\src\Main.cpp" />
     <ClCompile Include="Game\src\Renderer.cpp" />
     <ClCompile Include="Game\src\SpriteLoader.cpp" />
+    <ClCompile Include="Game\src\Window.cpp" />
+    <ClCompile Include="ECS\src\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ECS\hdr\ECConstructor.h" />
     <ClInclude Include="ECS\hdr\Component.h" />
     <ClInclude Include="ECS\hdr\Entity.h" />
+    <ClInclude Include="Game\hdr\FileReader.h" />
     <ClInclude Include="Game\hdr\Game.h" />
     <ClInclude Include="Game\hdr\GameData.h" />
     <ClInclude Include="Game\hdr\Renderer.h" />
     <ClInclude Include="Game\hdr\SpriteLoader.h" />
+    <ClInclude Include="Game\hdr\Window.h" />
+    <ClInclude Include="ECS\hdr\TextureLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
