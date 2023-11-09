@@ -12,14 +12,215 @@
 #		Interactable;
 #	}
 
-Grass Tile {
-	Texture | Hex_Grass | 100, 100, 64, 64 | true ;
+# I've syntactically abused the ECConstructor to it's limit, this means you
+# can do anything i do here but if you don't see me doing it then you probably
+# can't do it.
+# You can also reference an objects transform when calculating it's bounds
+# just make sure the transform is instantiated beforehand or it's probably going
+# to shit out garbage... have fun kids.
+
+Tile1 Water {
+	Transform | 52, 73, 64, 55 ;
+	Texture | Hex_water | 52, 73, 64, 55  | true ;
+	Tag | Hex ;
 }
 
-Sand Tile {
-	Texture | Hex_Sand | 164, 100, 64, 64 | true ;
+Tile2 Water {
+	Transform | 52, 128, 64, 55 ;
+	Texture | Hex_water | Transform | true ;
+	Tag | Hex ;
 }
 
-Water Tile {
-	Texture | Hex_Water | 228, 100, 64, 64 | true ;
+Tile3 Water {
+	Transform | 52, 183, 64, 55 ;
+	Texture | Hex_water | T | true ;
+	Tag | Hex ;
+}
+
+Tile4 Water {
+	Transform | 100, 45, 64, 55 ;
+	Texture | Hex_water | T | true ;
+	Tag | hex ;
+}
+
+Tile5 this is arbetrary put anything behind this block lol {
+	Transform | 100, 100, 64, 55 ;
+	Texture | Hex_sand | t | true ;
+	Tag | Hex ;
+}
+
+Tile6 Grass {
+	Transform | 100, 155, 64, 55 ;
+	Texture | Hex_Grass | transform | true ;
+	Tag | Hex ;
+}
+
+Tile7 Water {
+	Transform | 100, 210, 64, 55 ;
+	Texture | Hex_water | T | true ;
+	Tag | Hex ;
+}
+
+Tile8 Water {
+	Transform | 148, 18, 64, 55 ;
+	Texture | hex_water | t | true ;
+	Tag | Hex ;
+}
+
+Tile9 Sand {
+	Transform | 148, 73, 64, 55 ;
+	Texture | Hex_sAnD | t | true ;
+	Tag | Hex ;
+}
+
+Tile10  Grass {
+	Transform | 148, 128, 64, 55 ;
+	Texture | Hex_Grass | t | true ;
+	Tag | Hex ;
+}
+
+Tile11 Sand {
+	Transform | 148, 183, 64, 55 ;
+	Texture | hex_sand		 | t | true ;
+	Tag | Hex ;
+}
+
+Tile12 Water {
+	Transform | 148, 238, 64, 55 ;
+	Texture | hex_water | t | true ;
+	Tag | Hex ;
+}
+
+Tile13 Water {
+	Transform | 196, 45, 64, 55 ;
+	Texture | Hex_Water | t | true ;
+	Tag | Hex ;
+}
+
+Tile14 Sand {
+	Transform | 196, 100, 64, 55 ;
+	Texture | Hex_Sand | t | true ;
+	Tag | Hex ;
+}
+
+Tile15 sand {
+	Transform | 196, 155, 64, 55 ;
+	Texture | Hex_Sand | t | true ;
+	Tag | Hex ;
+}
+
+Tile16 Water {
+	Transform | 196, 210 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile17 Water {
+	Transform | 244, 73 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile18 Water {
+	Transform | 244, 128 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
+}
+
+
+Tile19 Water {
+	Transform | 244, 183 , 64, 55 ;
+	Texture | Hex_Water | Transform | true ;
+	Tag | Hex ;
 }

@@ -7,12 +7,19 @@ namespace ECS {
 
 	enum ComponentType {
 		C_TRANSFORM,
-		C_ORIGIN,
 		C_TEXTURE,
 		C_UILABEL,
 		C_INTERACTABLE,
 		C_MOVABLE, 
+		C_TAG,
 		C_INVALID, };
+
+	enum EntityTag {
+		ET_HEX,
+		ET_ARMY,
+		ET_BUILDING,
+		ET_HEX_OVERLAY,
+		ET_INVALID,	};
 
 	struct Component {
 		component_id id = "ZZZZzzzz";
@@ -20,9 +27,7 @@ namespace ECS {
 	};
 
 	struct Transform : public Component {
-		SDL_Rect bounds; };
-
-	struct Origin : public Component { 
+		SDL_Rect bounds; 
 		SDL_Point origin; };
 	
 	struct Texture : public Component {
@@ -34,5 +39,7 @@ namespace ECS {
 	struct UILabel : public Component { };
 	struct Interactable : public Component { };
 	struct Movable : public Component { };
+
+	struct Tag : public Component {	EntityTag tag = ET_INVALID; };
 }
 

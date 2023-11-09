@@ -168,6 +168,9 @@
     <ClCompile Include="Game\src\SpriteLoader.cpp" />
     <ClCompile Include="Game\src\Window.cpp" />
     <ClCompile Include="ECS\src\TextureLoader.cpp" />
+    <ClCompile Include="ECS\src\TransformLoader.cpp" />
+    <ClCompile Include="Game\src\RenderLayer.cpp" />
+    <ClCompile Include="ECS\src\TagLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ECS\hdr\CompLoader.h" />
@@ -181,6 +184,9 @@
     <ClInclude Include="Game\hdr\SpriteLoader.h" />
     <ClInclude Include="Game\hdr\Window.h" />
     <ClInclude Include="ECS\hdr\TextureLoader.h" />
+    <ClInclude Include="ECS\hdr\TransformLoader.h" />
+    <ClInclude Include="Game\hdr\RenderLayer.h" />
+    <ClInclude Include="ECS\hdr\TagLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

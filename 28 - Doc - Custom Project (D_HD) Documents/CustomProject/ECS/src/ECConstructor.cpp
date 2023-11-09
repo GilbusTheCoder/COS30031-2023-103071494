@@ -1,5 +1,7 @@
 #include "../hdr/ECConstructor.h"
+#include "../hdr/TransformLoader.h"
 #include "../hdr/TextureLoader.h"
+#include "../hdr/TagLoader.h"
 #include "../../Game/hdr/SpriteLoader.h"
 
 void ECS::ECConstructor::initGameObjects(GameData* game_data, SDL_Renderer* renderer,
@@ -135,20 +137,24 @@ void ECS::ECConstructor::createComponent(CompData init_data) {
 	
 	
 	switch (init_data.type) {
-	case C_TRANSFORM:
-		return;
-	case C_ORIGIN:
-		return;
+	case C_TRANSFORM: {
+		ECS::Transform transform = ECS::TransformLoader::loadTransformComponent(init_data.id, init_data.args[0]);
+		init_data.game_data->transforms.insert({ transform.id, transform });
+		return; }
 	case C_TEXTURE: {
-		ECS::Texture texture = ECS::TextureLoader::loadTextureComp(init_data.id, init_data.args, init_data.sprites);
-		init_data.game_data->textures.insert({ init_data.id, texture });
-		return; } 
+		ECS::Texture texture = ECS::TextureLoader::loadTextureComp(init_data.game_data, init_data.id, init_data.args, init_data.sprites);
+		init_data.game_data->textures.insert({ texture.id, texture });
+		return; }
 	case C_UILABEL:
 		return;
 	case C_INTERACTABLE:
 		return;
 	case C_MOVABLE:
 		return;
+	case C_TAG:{
+		ECS::Tag tag = ECS::TagLoader::loadTagComponent(init_data.id, init_data.args[0]);
+		init_data.game_data->tags.insert({ tag.id, tag });
+		return;	}
 	case C_INVALID:
 		return;
 	}
@@ -157,18 +163,19 @@ void ECS::ECConstructor::createComponent(CompData init_data) {
 
 ECS::entity_id ECS::ECConstructor::generateUEID(int entity_count) {
 	entity_id e_id;
-	const int alph_len = 26;
+	const int ascii_offset = 65;
+	const int alph_len = 25;
 	int ueid_len = determineUEIDLen(entity_count);
 	if (ueid_len < 1) { return e_id; }
 	
 	switch (ueid_len) {
 	case 1: {
-		entity_id id(1, entity_count + 65);
+		entity_id id(1, entity_count + ascii_offset);
 		return id; }
 	
 	case 2: {
-		entity_id second(1, (entity_count % alph_len) + 65);
-		entity_id first(1, int(floor(entity_count / alph_len)) + 65);
+		entity_id second(1, (entity_count % alph_len) + ascii_offset - 1);
+		entity_id first(1, int(floor(entity_count / alph_len)) + ascii_offset - 1);
 		
 		e_id.append(first);
 		e_id.append(second);
@@ -178,9 +185,9 @@ ECS::entity_id ECS::ECConstructor::generateUEID(int entity_count) {
 	case 3: {
 		int second_value = int(floor(entity_count / alph_len));
 
-		entity_id third(1, (entity_count % alph_len) + 65);
-		entity_id second(1, int(floor(entity_count / alph_len)) + 65);
-		entity_id first(1, int(floor(entity_count / second_value)) + 65);
+		entity_id third(1, (entity_count % alph_len) + ascii_offset);
+		entity_id second(1, int(floor(entity_count / alph_len)) + ascii_offset);
+		entity_id first(1, int(floor(entity_count / second_value)) + ascii_offset);
 
 		e_id.append(first);
 		e_id.append(second);
@@ -192,10 +199,10 @@ ECS::entity_id ECS::ECConstructor::generateUEID(int entity_count) {
 		int third_value = int(floor(entity_count / alph_len));
 		int second_value = int(floor(entity_count / third_value));
 		
-		entity_id fourth(1, (entity_count % alph_len) + 65);
-		entity_id third(1, int(floor(entity_count / alph_len)) + 65);
-		entity_id second(1, int(floor(entity_count / third_value)) + 65);
-		entity_id first(1, int(floor(entity_count / second_value)) + 65);
+		entity_id fourth(1, (entity_count % alph_len) + ascii_offset);
+		entity_id third(1, int(floor(entity_count / alph_len)) + ascii_offset);
+		entity_id second(1, int(floor(entity_count / third_value)) + ascii_offset);
+		entity_id first(1, int(floor(entity_count / second_value)) + ascii_offset);
 
 		e_id.append(first);
 		e_id.append(second);
@@ -211,19 +218,20 @@ ECS::entity_id ECS::ECConstructor::generateUEID(int entity_count) {
 ECS::component_id ECS::ECConstructor::generateUCID(entity_id owners_id, int component_count) {
 	component_id full_c_id = owners_id;
 	component_id c_id;
-	const int alph_len = 26;
+	const int alph_len = 25;
+	const int ascii_offset = 97;
 	int ueid_len = determineUEIDLen(component_count);
 	if (ueid_len < 1) { return c_id; }
 
 	switch (ueid_len) {
 	case 1: {
-		component_id c_id(1, component_count + 97);
+		component_id c_id(1, component_count + ascii_offset);
 		full_c_id.append(c_id);
 		return full_c_id; }
 
 	case 2: {
-		component_id second(1, (component_count % alph_len) + 97);
-		component_id first(1, int(floor(component_count / alph_len)) + 97);
+		component_id second(1, (component_count % alph_len) + ascii_offset);
+		component_id first(1, int(floor(component_count / alph_len)) + ascii_offset);
 
 		c_id.append(first);
 		c_id.append(second);
@@ -234,20 +242,20 @@ ECS::component_id ECS::ECConstructor::generateUCID(entity_id owners_id, int comp
 }
 
 int ECS::ECConstructor::determineUEIDLen(int entity_count) {
-	if (entity_count <= 26) { return 1; }
-	else if (entity_count <= 676) { return 2; }
-	else if (entity_count <= 17576) { return 3; }
-	else if (entity_count <= 456976) { return 4; }
+	if (entity_count <= 25) { return 1; }
+	else if (entity_count <= 675) { return 2; }
+	else if (entity_count <= 17575) { return 3; }
+	else if (entity_count <= 456975) { return 4; }
 	else { return -1; }
 }
 
 ECS::ComponentType ECS::ECConstructor::determineCType(raw_comp_arg raw_type) {
 	if (raw_type == "transform") { return ComponentType::C_TRANSFORM; }
-	else if (raw_type == "origin") { return ComponentType::C_ORIGIN; }
 	else if (raw_type == "texture") { return ComponentType::C_TEXTURE; }
 	else if (raw_type == "uilabel") { return ComponentType::C_UILABEL; }
 	else if (raw_type == "interactable") { return ComponentType::C_INTERACTABLE; }
 	else if (raw_type == "movable") { return ComponentType::C_MOVABLE; }
+	else if (raw_type == "tag") { return ComponentType::C_TAG; }
 	else { return ComponentType::C_INVALID; }
 }
 

@@ -3,13 +3,10 @@
 
 bool Game::Renderer::init(SDL_Window* window, ECS::GameData* game_data) {
     if (!window) {
-        SDL_Log("Renderer >> No window context provided to renderer\n");
-        return false; }
+        }
 
     _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!_renderer) { 
-        SDL_Log("Renderer >> Failed to instance renderer\n");
-        return false; }    
+
    
 
     _textures = game_data->textures;

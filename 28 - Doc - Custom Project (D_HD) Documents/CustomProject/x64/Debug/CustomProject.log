@@ -1,2 +1,5 @@
-﻿  TextureLoader.cpp
+﻿  ECConstructor.cpp
+C:\Users\thomh\Documents\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\ECS\src\ECConstructor.cpp(40,15): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+C:\Users\thomh\Documents\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\ECS\src\ECConstructor.cpp(41,15): warning C4858: discarding return value: The 'remove' and 'remove_if' algorithms return the iterator past the last element that should be kept. You need to call container.erase(result, container.end()) afterwards. In C++20, 'std::erase' and 'std::erase_if' are simpler replacements for these two steps.
+C:\Users\thomh\Documents\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\ECS\src\ECConstructor.cpp(242): warning C4715: 'ECS::ECConstructor::generateUCID': not all control paths return a value
   CustomProject.vcxproj -> C:\Users\thomh\Documents\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\x64\Debug\CustomProject.exe

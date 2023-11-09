@@ -1,4 +1,5 @@
 #include "CompLoader.h"
+#include "../../Game/hdr/GameData.h"
 #include <map>
 
 #pragma once
@@ -11,11 +12,12 @@ namespace ECS {
 
 	class TextureLoader : public CompLoader {
 	public:
-		static Texture loadTextureComp(std::string comp_id,
+		static Texture loadTextureComp(GameData* game_data, std::string comp_id,
 			std::vector<std::string> component_args, sprite_map* sprites);
 		
 	private:
-		static SDL_Rect determineBounds(std::string unfmt_bounds);
+		static SDL_Rect determineBounds(GameData* game_data, component_id id, std::string unfmt_bounds);
 		static bool determineRenderState(std::string unfmt_render_state);
+		static entity_id TransUCIDFromID(component_id this_id);
 	};
 }
