@@ -1,12 +1,11 @@
+#include <SDL_Log.h>
 #include "../hdr/FileReader.h"
-#include <algorithm>
-#include <SDL_log.h>
 
 std::ifstream Game::FileReader::setSaveFile(const std::string& filepath) {
 	std::ifstream reader;
 
 	reader.open(filepath);
-	if (!reader.is_open()) { SDL_Log("FileReader >> Texture filepath incorrect\n"); }
+	if (!reader.is_open()) { SDL_Log("FileReader >> provided filepath incorrect\n"); }
 
 	return reader;
 }
@@ -23,7 +22,7 @@ std::vector<std::string> Game::FileReader::splitSaveLine(std::string& line,
 			end_idx = idx;
 
 			line_datum.append(raw_line_data, start_idx, end_idx - start_idx);
-			formatted_line_data.emplace_back(line_datum);
+			if (!line_datum.empty()) {	formatted_line_data.emplace_back(line_datum); }
 
 			start_idx = ++end_idx;
 		}

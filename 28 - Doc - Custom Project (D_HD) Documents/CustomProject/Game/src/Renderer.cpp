@@ -1,7 +1,7 @@
 #include "../hdr/Renderer.h"
 #include "../../ECS/hdr/TextureLoader.h"
 
-bool Game::Renderer::init(SDL_Window* window) {
+bool Game::Renderer::init(SDL_Window* window, ECS::GameData* game_data) {
     if (!window) {
         SDL_Log("Renderer >> No window context provided to renderer\n");
         return false; }
@@ -10,8 +10,9 @@ bool Game::Renderer::init(SDL_Window* window) {
     if (!_renderer) { 
         SDL_Log("Renderer >> Failed to instance renderer\n");
         return false; }    
-    
-    _textures = ECS::TextureLoader::loadTextures(_renderer);
+   
+
+    _textures = game_data->textures;
     return true; 
 }
 

@@ -15,8 +15,8 @@ namespace ECS {
 		C_INVALID, };
 
 	struct Component {
-		component_id id;
-		ComponentType type;
+		component_id id = "ZZZZzzzz";
+		ComponentType type = ComponentType::C_INVALID;
 	};
 
 	struct Transform : public Component {
@@ -26,9 +26,13 @@ namespace ECS {
 		SDL_Point origin; };
 	
 	struct Texture : public Component {
-		bool render_this = false;
 		SDL_Texture* texture = nullptr;
-		SDL_Rect bounds;
+		SDL_Rect bounds = {0,0,0,0};
+		bool render_this = false;
 	};
+
+	struct UILabel : public Component { };
+	struct Interactable : public Component { };
+	struct Movable : public Component { };
 }
 

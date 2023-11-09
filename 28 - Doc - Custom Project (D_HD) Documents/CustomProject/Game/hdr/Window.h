@@ -1,6 +1,5 @@
-#include <SDL.h>
 #include <string>
-#include <utility>
+#include <SDL.h>
 
 #pragma once
 namespace Game {

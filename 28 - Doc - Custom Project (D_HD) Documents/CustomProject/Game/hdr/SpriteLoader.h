@@ -1,11 +1,11 @@
 #include "FileReader.h"
-#include <SDL.h>
 #include <map>
+#include <SDL.h>
 
 #pragma once
-
 namespace Game {
 	typedef std::string sprite_name;
+	typedef std::map<std::string, SDL_Texture*> sprite_map;
 
 	// Instances all of the texture components from relative paths stored
 	// in a file

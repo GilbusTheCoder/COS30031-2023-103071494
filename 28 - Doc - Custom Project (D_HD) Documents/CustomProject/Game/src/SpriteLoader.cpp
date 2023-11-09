@@ -1,8 +1,9 @@
 #include "../hdr/SpriteLoader.h"
-#include <SDL_image.h>
+#include <map>
 #include <string>
+#include <SDL_image.h>
 
-std::map<Game::sprite_name, SDL_Texture*> Game::SpriteLoader::loadSprites(const std::string& filepath, SDL_Renderer* renderer)
+Game::sprite_map Game::SpriteLoader::loadSprites(const std::string& filepath, SDL_Renderer* renderer)
 {
 	if (filepath.empty()) {
 		SDL_Log("SpriteLoader >> No texture filepath provided\n");
@@ -15,13 +16,14 @@ std::map<Game::sprite_name, SDL_Texture*> Game::SpriteLoader::loadSprites(const 
 	}
 
 	std::ifstream reader = setSaveFile(filepath);
-	std::map<Game::sprite_name, SDL_Texture*> sprites;
+	std::map<sprite_name, SDL_Texture*> sprites;
 	std::string texture_path;
 
 	while (std::getline(reader, texture_path)) {
 		if (!isComment(texture_path) && !texture_path.empty()) {
 			SDL_Texture* new_sprite = loadSprite(texture_path, renderer);
-			Game::sprite_name new_name = spriteNameFromFilepath(texture_path);
+			sprite_name new_name = spriteNameFromFilepath(texture_path);
+			new_name = toLower(new_name);
 			
 			sprites.insert({ new_name, new_sprite });
 		}
@@ -63,5 +65,6 @@ Game::sprite_name Game::SpriteLoader::spriteNameFromFilepath(std::string& sprite
 		if (sprite_path[idx] == '/') { start_idx = idx + 1; break; } }
 
 	name.append(sprite_path, start_idx, end_idx - start_idx);
+	name = toLower(name);
 	return name;
 }

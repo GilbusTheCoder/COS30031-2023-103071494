@@ -1,8 +1,7 @@
-#include <fstream>
 #include <vector>
+#include <fstream>
 
 #pragma once
-
 /*	Gives some universal functionality to all the different loader classes we
 *	own. Also forces all loaders to be static classes.			*/
 

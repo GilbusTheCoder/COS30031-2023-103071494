@@ -1,20 +1,19 @@
 #include "../hdr/ECConstructor.h"
-#include <string>
-#include <algorithm>
+#include "../hdr/TextureLoader.h"
+#include "../../Game/hdr/SpriteLoader.h"
 
-// Constructs our game data
-ECS::GameData* ECS::ECConstructor::initGameData() {
-	GameData* game_data = new GameData();
-	int type = ECS::ComponentType::C_TRANSFORM;
+void ECS::ECConstructor::initGameObjects(GameData* game_data, SDL_Renderer* renderer,
+	const std::string& entity_data_path, const std::string& sprites_filepath) {
+	// OH YEAH WE'RE FUCKIN DOING IT
+	auto sprites = Game::SpriteLoader::loadSprites(sprites_filepath, renderer);
+	typed_ec3d fmt_entt_data = generateCTypeList(
+		splitComponentDatum(splitComponentData(getRawEntityData(entity_data_path))));
 
-	for (type; type != ECS::ComponentType::C_INVALID; ++type) {
-		std::map<ECS::component_id, ECS::Component> component_set;
-		std::map < ECS::ComponentType, std::map<ECS::component_id, ECS::Component>> component_type_set;
-
-		component_type_set.insert( { ECS::ComponentType(type), component_set } );
+	static int entity_count = 0;
+	for (typed_ec2d entity : fmt_entt_data) {
+		createEntity(game_data, renderer, &sprites, entity_count, entity);
+		++entity_count;
 	}
-
-	return game_data;
 }
 
 
@@ -27,22 +26,34 @@ std::vector<ECS::raw_entt> ECS::ECConstructor::getRawEntityData(const std::strin
 	raw_entt entity_datum;
 	std::string component_data;
 
+	if (!reader.is_open()) {
+		SDL_Log("ECConstructor >> Bad entity data filepath provided\n");
+		return entity_data;
+	}
+
 	while (std::getline(reader, component_data)) {
 		if (!isComment(component_data) && !component_data.empty()) {
+			//	Remove all whitespaces and convert to lower, note that removing whitespace
+			//	in this fashion leaves trailing garbage behind the comp_data.
+			std::remove(component_data.begin(), component_data.end(), ' ');
+			std::remove(component_data.begin(), component_data.end(), '\t');
+			component_data = toLower(component_data);
+
 			if (in_entity_block) {
 				for (int idx = 0; idx <= component_data.size(); ++idx) {
-					if (component_data[idx] = '}') {
-						in_entity_block = false;
+					if (component_data[idx] == ';') {
+						component_data = component_data.substr(0, idx + 1);
 						entity_datum.append(component_data);
+						break;
+					} else if (component_data[idx] == '}') {
+						in_entity_block = false;
+						entity_datum.append(component_data.substr(0, idx));
 						entity_data.emplace_back(entity_datum);
+						entity_datum.clear();
 						break;
 					}
 				}
-
-				entity_datum.append(component_data);
-
-			}
-			else {
+			} else {
 				for (int idx = 0; idx <= component_data.size(); ++idx) {
 					if (component_data[idx] == '{') {
 						in_entity_block = true;
@@ -56,11 +67,91 @@ std::vector<ECS::raw_entt> ECS::ECConstructor::getRawEntityData(const std::strin
 	return entity_data;
 }
 
-std::pair<ECS::entity_id, ECS::Entity> ECS::ECConstructor::initEntity(int entity_count) {
-	Entity new_entity;
-	new_entity.id = generateUEID(entity_count);
+ECS::ec2d ECS::ECConstructor::splitComponentData(ec1d raw_entities) {
+	ec2d ec_data;
+	for (auto entity_data_chunk : raw_entities) {
+		std::vector<raw_comp_data> comp_data = splitSaveLine(entity_data_chunk, ';');
+		ec_data.emplace_back(comp_data);
+	}
 
-	return { new_entity.id, new_entity };
+	return ec_data;
+}
+
+ECS::ec3d ECS::ECConstructor::splitComponentDatum(ec2d comp_data) {
+	ec3d all_entt_args;
+	for (std::vector<raw_comp_data> comp_set : comp_data) {
+		std::vector<std::vector<raw_comp_arg>> comp_arg_set;
+		for (raw_comp_data component : comp_set) {
+			std::vector<raw_comp_arg> comp_args = splitSaveLine(component, '|');
+
+			comp_arg_set.emplace_back(comp_args);
+		}
+
+		all_entt_args.emplace_back(comp_arg_set);
+	}
+
+	return all_entt_args;
+}
+
+void ECS::ECConstructor::createEntity(GameData* game_data, SDL_Renderer* renderer, 
+	std::map<std::string, SDL_Texture*>* sprites, int entt_num, typed_ec2d ec_data) {
+	Entity entt = { generateUEID(entt_num) };
+	ComponentType prev_type = C_INVALID;
+
+	int comp_count = 0;
+	for (typed_comp_data comp : ec_data) {
+		ComponentType type = std::get<0>(comp);
+		std::vector<raw_comp_arg> args = std::get<1>(comp);
+
+		if (type == prev_type) ++comp_count;
+		else comp_count = 0;
+
+		CompData comp_data = {
+			game_data,
+			renderer,
+			sprites,
+
+			generateUCID(entt.id, comp_count),
+			type,
+			args,
+		};
+
+		createComponent(comp_data);
+
+		prev_type = type;
+	}
+
+	game_data->entities.insert({ entt.id, entt });
+}
+
+void ECS::ECConstructor::createComponent(CompData init_data) {
+	/*	Food for thought... if this switch was ordered from the densest data
+	*	structure to the sparsest(?), I'd be able to infer component data
+	*	from the others.
+	* 
+	*	E.g. if texture is first, then if the transform and / origin components
+	*	are listed and have no data associated with them. This data can be
+	*	taken from the texture component which belongs to the entt.		*/
+	
+	
+	switch (init_data.type) {
+	case C_TRANSFORM:
+		return;
+	case C_ORIGIN:
+		return;
+	case C_TEXTURE: {
+		ECS::Texture texture = ECS::TextureLoader::loadTextureComp(init_data.id, init_data.args, init_data.sprites);
+		init_data.game_data->textures.insert({ init_data.id, texture });
+		return; } 
+	case C_UILABEL:
+		return;
+	case C_INTERACTABLE:
+		return;
+	case C_MOVABLE:
+		return;
+	case C_INVALID:
+		return;
+	}
 }
 
 
@@ -126,13 +217,13 @@ ECS::component_id ECS::ECConstructor::generateUCID(entity_id owners_id, int comp
 
 	switch (ueid_len) {
 	case 1: {
-		component_id c_id(1, component_count + 65);
+		component_id c_id(1, component_count + 97);
 		full_c_id.append(c_id);
 		return full_c_id; }
 
 	case 2: {
-		component_id second(1, (component_count % alph_len) + 65);
-		component_id first(1, int(floor(component_count / alph_len)) + 65);
+		component_id second(1, (component_count % alph_len) + 97);
+		component_id first(1, int(floor(component_count / alph_len)) + 97);
 
 		c_id.append(first);
 		c_id.append(second);
@@ -150,7 +241,7 @@ int ECS::ECConstructor::determineUEIDLen(int entity_count) {
 	else { return -1; }
 }
 
-ECS::ComponentType ECS::ECConstructor::determineCType(raw_comp_datum raw_type) {
+ECS::ComponentType ECS::ECConstructor::determineCType(raw_comp_arg raw_type) {
 	if (raw_type == "transform") { return ComponentType::C_TRANSFORM; }
 	else if (raw_type == "origin") { return ComponentType::C_ORIGIN; }
 	else if (raw_type == "texture") { return ComponentType::C_TEXTURE; }
@@ -158,4 +249,28 @@ ECS::ComponentType ECS::ECConstructor::determineCType(raw_comp_datum raw_type) {
 	else if (raw_type == "interactable") { return ComponentType::C_INTERACTABLE; }
 	else if (raw_type == "movable") { return ComponentType::C_MOVABLE; }
 	else { return ComponentType::C_INVALID; }
+}
+
+ECS::typed_ec3d ECS::ECConstructor::generateCTypeList(ec3d ec_data) {
+	typed_ec3d typed_ec_data;
+
+	for (auto entity : ec_data) {
+		typed_ec2d typed_c_data;
+		for (auto component : entity) {
+			std::pair<ComponentType, std::vector<raw_comp_arg>> typed_arg_data;
+			ComponentType type = determineCType(component[0]);
+			if (type == C_INVALID) {
+				SDL_Log("ECConstructor >> Couldn't instance type '%s'", component[0].c_str()); }
+
+			component.erase(component.begin());
+			component.shrink_to_fit();
+			
+			std::vector<raw_comp_arg> args = component;
+			typed_arg_data = { type, args };
+
+			typed_c_data.emplace_back(typed_arg_data); }
+		typed_ec_data.emplace_back(typed_c_data);
+	}
+	
+	return typed_ec_data;
 }
