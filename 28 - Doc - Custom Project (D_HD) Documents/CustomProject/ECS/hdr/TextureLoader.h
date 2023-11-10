@@ -18,6 +18,6 @@ namespace ECS {
 	private:
 		static SDL_Rect determineBounds(GameData* game_data, component_id id, std::string unfmt_bounds);
 		static bool determineRenderState(std::string unfmt_render_state);
-		static entity_id TransUCIDFromID(component_id this_id);
+		static entity_id transformUCIDFromID(component_id this_id);
 	};
 }

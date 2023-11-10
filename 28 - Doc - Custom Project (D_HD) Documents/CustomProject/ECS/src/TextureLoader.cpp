@@ -29,7 +29,7 @@ ECS::Texture ECS::TextureLoader::loadTextureComp(GameData* game_data, std::strin
 SDL_Rect ECS::TextureLoader::determineBounds(GameData* game_data, 
 	component_id id, std::string unfmt_bounds) {
 	if (unfmt_bounds == "transform" || unfmt_bounds == "t") {
-		SDL_Rect bounds = game_data->transforms[TransUCIDFromID(id)].bounds;
+		SDL_Rect bounds = game_data->transforms[transformUCIDFromID(id)].bounds;
 		return bounds;
 	}
 	else {
@@ -68,7 +68,7 @@ bool ECS::TextureLoader::determineRenderState(std::string unfmt_render_state) {
 	return false;
 }
 
-ECS::entity_id ECS::TextureLoader::TransUCIDFromID(component_id this_id) {
+ECS::entity_id ECS::TextureLoader::transformUCIDFromID(component_id this_id) {
 	if (this_id == "Aa") return this_id;
 
 	entity_id ueid;

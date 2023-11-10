@@ -1,13 +1,12 @@
-#include "../../ECS/hdr/ECConstructor.h"
 #include "GameData.h"
+#include "RenderLayer.h"
 
 #pragma once
 namespace Game {
 	class Renderer {
 	private:
-		SDL_Renderer* _renderer = nullptr;
-		std::map<ECS::component_id, ECS::Texture> _textures;
-	
+		std::vector<ECS::RenderLayer*> _render_layers;
+
 	public:
 		bool init(SDL_Window* window, ECS::GameData* game_data);
 		void destroy(); 
@@ -15,8 +14,9 @@ namespace Game {
 		void update();
 		void render();
 
-		inline void setTextures(std::map<ECS::component_id, ECS::Texture> textures) { _textures = textures; }
-	 	inline SDL_Renderer* getRenderer() { return _renderer; }
+		inline SDL_Renderer* getRenderer() {
+			if (!_render_layers.empty()) { return _render_layers[0]->getRenderer(); }
+		}
 	};
 }
 

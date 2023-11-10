@@ -2,13 +2,6 @@
 #include "../../ECS/hdr/TextureLoader.h"
 
 bool Game::Renderer::init(SDL_Window* window, ECS::GameData* game_data) {
-    if (!window) {
-        }
-
-    _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-   
-
     _textures = game_data->textures;
     return true; 
 }
