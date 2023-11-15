@@ -22,8 +22,5 @@ namespace Game {
 		void destroy();
 
 		inline const bool isRunning(){ return _window->isRunning(); }
-	
-	private:
-		void handleEvents();
 	};
 }

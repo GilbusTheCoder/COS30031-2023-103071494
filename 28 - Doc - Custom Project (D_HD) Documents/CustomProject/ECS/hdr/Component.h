@@ -19,6 +19,7 @@ namespace ECS {
 		ET_ARMY,
 		ET_BUILDING,
 		ET_HEX_OVERLAY,
+		ET_NEW_TAG,
 		ET_INVALID,	};
 
 	struct Component {

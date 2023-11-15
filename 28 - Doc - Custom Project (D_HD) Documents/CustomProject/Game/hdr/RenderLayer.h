@@ -14,7 +14,9 @@
 *	how im building the UI system.									*/
 
 namespace ECS {
-	typedef std::pair<int, int> comp_traversal_data;
+	typedef std::map<component_id, Texture>::iterator text_it;
+	typedef std::map<component_id, UILabel>::iterator label_it;
+	typedef std::map<component_id, Transform>::iterator trans_it;
 
 	struct RenderContext {
 		GameData* game_data = nullptr;
@@ -28,6 +30,7 @@ namespace ECS {
 	class RenderLayer {
 	private:
 		static  SDL_Renderer* _renderer;
+		GameData* _game_data_ref = nullptr;
 		bool _is_active = false;
 
 		std::vector<component_id> _layer_transforms;
@@ -36,7 +39,7 @@ namespace ECS {
 
 	public:
 		bool init(SDL_Window* window, const RenderContext& context);
-		void destroy();
+		void destroy(bool destroy_SDL_renderer=false);
 		void update();
 		void render();
 
@@ -46,16 +49,8 @@ namespace ECS {
 		void setRenderContext(const RenderContext& context);
 	
 	private:
+		void getTaggedComponentsFromUEID(entity_id ueid, ComponentType type);
 		entity_id UEIDfromUCID(component_id this_id);
-		comp_traversal_data traversalDataFromUCID(GameData* game_data, 
-			ComponentType map_filter, component_id this_id);
-
-		void getComponentsFromTag(GameData* game_data, EntityTag tag_filter,
-			ComponentType type_filter);
-
-		void getLayerTransforms(GameData* game_data, comp_traversal_data traversal_data);
-		void getLayerTextures(GameData* game_data, comp_traversal_data traversal_data);
-		void getLayerLabels(GameData* game_data, comp_traversal_data traversal_data);
+		component_id CIDfromUCID(component_id this_id);
 	};
 }
-

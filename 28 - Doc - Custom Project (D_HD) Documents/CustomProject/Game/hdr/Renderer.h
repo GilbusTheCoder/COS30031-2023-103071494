@@ -17,6 +17,8 @@ namespace Game {
 		inline SDL_Renderer* getRenderer() {
 			if (!_render_layers.empty()) { return _render_layers[0]->getRenderer(); }
 		}
+
+		void setRenderLayerContext(ECS::GameData* game_data, int layer_offset);
 	};
 }
 
