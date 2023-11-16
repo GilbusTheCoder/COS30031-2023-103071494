@@ -1,0 +1,4 @@
+# File containing the relative paths to Font TTF's. This file is used by the
+# FontLoader class.
+
+Assets/Fonts/arial.ttf

@@ -43,7 +43,11 @@ void ECS::EventHandler::dispatchEvents() {
     case SDL_MOUSEMOTION: {   
         SDL_GetMouseState(&_is_context.m_x, &_is_context.m_y);
         _is->update(_is_context);
-        break; }
+        break; 
+    case SDL_MOUSEBUTTONUP: {
+        _is_context.click_event = _event;
+        SDL_GetMouseState(&_is_context.m_x, &_is_context.m_y);
+        break; } }
     }
 }
 

@@ -4,6 +4,7 @@
 #pragma once
 namespace ECS {
 	typedef std::string component_id;
+	typedef std::string label_contents, label_font;
 
 	enum ComponentType {
 		C_TRANSFORM,
@@ -33,11 +34,18 @@ namespace ECS {
 	
 	struct Texture : public Component {
 		SDL_Texture* texture = nullptr;
-		SDL_Rect bounds = {0,0,0,0};
+		SDL_Rect bounds = { 0,0,0,0 };
 		bool render_this = false;
 	};
 
-	struct UILabel : public Component { };
+	struct UILabel : public Component {
+		SDL_Texture* label = nullptr;
+		SDL_Rect bounds = { 0,0,0,0 };
+		SDL_Color colour = { 0,0,0,0 };
+
+		label_contents text = "";
+		label_font font = "arial";
+	};
 
 	struct Interactable : public Component { 
 		bool is_interactable = false;

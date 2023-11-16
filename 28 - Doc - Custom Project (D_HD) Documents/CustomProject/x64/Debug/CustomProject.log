@@ -1,2 +1,6 @@
 ﻿  InteractionSystem.cpp
+F:\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\ECS\src\InteractionSystem.cpp(48,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  EventHandler.cpp
+  Generating Code...
+F:\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\Game\hdr\Renderer.h(22): warning C4715: 'Game::Renderer::getRenderer': not all control paths return a value
   CustomProject.vcxproj -> F:\Uni\COS30031-2023-103071494\28 - Doc - Custom Project (D_HD) Documents\CustomProject\x64\Debug\CustomProject.exe

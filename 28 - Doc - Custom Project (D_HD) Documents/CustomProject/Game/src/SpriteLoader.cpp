@@ -17,12 +17,12 @@ Game::sprite_map Game::SpriteLoader::loadSprites(const std::string& filepath, SD
 
 	std::ifstream reader = setSaveFile(filepath);
 	std::map<sprite_name, SDL_Texture*> sprites;
-	std::string texture_path;
+	std::string texturepath;
 
-	while (std::getline(reader, texture_path)) {
-		if (!isComment(texture_path) && !texture_path.empty()) {
-			SDL_Texture* new_sprite = loadSprite(texture_path, renderer);
-			sprite_name new_name = spriteNameFromFilepath(texture_path);
+	while (std::getline(reader, texturepath)) {
+		if (!isComment(texturepath) && !texturepath.empty()) {
+			SDL_Texture* new_sprite = loadSprite(texturepath, renderer);
+			sprite_name new_name = spriteNameFromFilepath(texturepath);
 			new_name = toLower(new_name);
 			
 			sprites.insert({ new_name, new_sprite });
