@@ -10,8 +10,8 @@ namespace ECS {
 		SDL_Event* _event = nullptr;
 		Game::Window* _window = nullptr;
 
-		InteractionContext _is_context;
-		InteractionSystem* _is = new InteractionSystem();
+		InteractionContext _interaction_context;
+		InteractionSystem* _interaction_system = new InteractionSystem();
 
 	public:
 		bool init(Game::Window* window_ref, GameData* game_data_ref, 

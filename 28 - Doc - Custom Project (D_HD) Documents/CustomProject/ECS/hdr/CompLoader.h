@@ -6,4 +6,3 @@ class CompLoader {
 protected:
 	static std::vector<std::string> splitSaveLine(std::string& line, const char delimiter);
 };
-

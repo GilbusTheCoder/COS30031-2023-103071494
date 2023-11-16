@@ -8,8 +8,7 @@ void ECS::ECConstructor::initGameObjects(GameData* game_data, SDL_Renderer* rend
 	const std::string& entity_data_path, const std::string& sprites_filepath) {
 	// OH YEAH WE'RE FUCKIN DOING IT
 	auto sprites = Game::SpriteLoader::loadSprites(sprites_filepath, renderer);
-	typed_ec3d fmt_entt_data = generateCTypeList(
-		splitComponentDatum(splitComponentData(getRawEntityData(entity_data_path))));
+	typed_ec3d fmt_entt_data = generateCTypeList( splitComponentDatum(splitComponentData(getRawEntityData(entity_data_path))));
 
 	static int entity_count = 0;
 	for (typed_ec2d entity : fmt_entt_data) {

@@ -17,7 +17,7 @@ bool ECS::EventHandler::init(Game::Window* window_ref, GameData* game_data_ref,
         game_data_ref,
         renderer_ref };
 
-    if (!_is->init(init_context)) {
+    if (!_interaction_system->init(init_context)) {
         SDL_Log("EventHandler >> failed to initialize Interaction System\n");
         return false; }
 
@@ -41,12 +41,12 @@ void ECS::EventHandler::dispatchEvents() {
         _window->setIsRunning(false); 
         break;
     case SDL_MOUSEMOTION: {   
-        SDL_GetMouseState(&_is_context.m_x, &_is_context.m_y);
-        _is->update(_is_context);
+        SDL_GetMouseState(&_interaction_context.m_x, &_interaction_context.m_y);
+        _interaction_system->update(_interaction_context);
         break; 
     case SDL_MOUSEBUTTONUP: {
-        _is_context.click_event = _event;
-        SDL_GetMouseState(&_is_context.m_x, &_is_context.m_y);
+        _interaction_context.click_event = _event;
+        SDL_GetMouseState(&_interaction_context.m_x, &_interaction_context.m_y);
         break; } }
     }
 }

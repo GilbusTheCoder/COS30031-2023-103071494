@@ -44,7 +44,7 @@ namespace ECS {
 		void update(InteractionContext& context);
 
 	private:
-		void initSprites(const std::string& filepath);
+		void initSpriteRef(const std::string& filepath);
 		void handleMouseClick(InteractionContext& context);
 		void handleMouseHexHover(InteractionContext& context);
 		bool transformPointCollision(SDL_Rect& transform, Sint32 mouse_x, Sint32 mouse_y); };

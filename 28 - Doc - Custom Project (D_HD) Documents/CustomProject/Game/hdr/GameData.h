@@ -12,6 +12,7 @@ namespace ECS {
 		std::map<component_id, UILabel> labels;
 		std::map<component_id, Interactable> interactables;
 		std::map<component_id, Movable> movables;
-		std::map<component_id, Tag> tags;
-	};
+		std::map<component_id, Tag> tags; };
+
+
 }

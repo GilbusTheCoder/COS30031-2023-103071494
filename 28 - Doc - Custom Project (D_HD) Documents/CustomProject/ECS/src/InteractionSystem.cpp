@@ -18,7 +18,7 @@ bool ECS::InteractionSystem::init(InteractionContext& context) {
 		return false; }
 
 	_hex_highlight_ucid = _renderer_ref->getLayerTransforms(1)[0];
-	initSprites("Game/data/Sprite_Filepaths.txt");
+	initSpriteRef("Game/data/Sprite_Filepaths.txt");
 
 	return true; }
 
@@ -29,7 +29,7 @@ void ECS::InteractionSystem::update(InteractionContext& context) {
 }
 
 
-void ECS::InteractionSystem::initSprites(const std::string& filepath) {
+void ECS::InteractionSystem::initSpriteRef(const std::string& filepath) {
 	_sprites = Game::SpriteLoader::loadSprites(filepath, _renderer_ref->getRenderer());
 
 	if (!_sprites.empty()) {

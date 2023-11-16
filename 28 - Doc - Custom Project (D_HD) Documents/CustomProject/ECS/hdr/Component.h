@@ -25,18 +25,19 @@ namespace ECS {
 
 	struct Component {
 		component_id id = "ZZZZzzzz";
-		ComponentType type = ComponentType::C_INVALID;
-	};
+		ComponentType type = ComponentType::C_INVALID; };
+
 
 	struct Transform : public Component {
 		SDL_Rect bounds; 
 		SDL_Point origin; };
+
 	
 	struct Texture : public Component {
 		SDL_Texture* texture = nullptr;
 		SDL_Rect bounds = { 0,0,0,0 };
-		bool render_this = false;
-	};
+		bool render_this = false; };
+
 
 	struct UILabel : public Component {
 		SDL_Texture* label = nullptr;
@@ -44,14 +45,18 @@ namespace ECS {
 		SDL_Color colour = { 0,0,0,0 };
 
 		label_contents text = "";
-		label_font font = "arial";
-	};
+		label_font font = "arial"; 	};
+
 
 	struct Interactable : public Component { 
-		bool is_interactable = false;
-	};
-	
-	struct Movable : public Component { };
+		bool is_interactable = false; };
+
+
+	struct Movable : public Component {
+		bool can_move = false;
+		int radius = 0;	};
+
+
 	struct Tag : public Component {	EntityTag tag = ET_INVALID; };
 }
 
