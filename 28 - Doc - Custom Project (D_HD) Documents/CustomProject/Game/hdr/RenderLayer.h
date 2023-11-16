@@ -19,6 +19,8 @@ namespace ECS {
 	typedef std::map<component_id, Transform>::iterator trans_it;
 
 	struct RenderContext {
+		bool render_this = false;
+
 		GameData* game_data = nullptr;
 		std::vector<EntityTag> render_filters;
 
@@ -40,17 +42,17 @@ namespace ECS {
 	public:
 		bool init(SDL_Window* window, const RenderContext& context);
 		void destroy(bool destroy_SDL_renderer=false);
-		void update();
 		void render();
 
-		inline SDL_Renderer* getRenderer() { return _renderer; }
 		const inline bool isActive() { return _is_active; }
+		inline SDL_Renderer* getRenderer() { return _renderer; }
+		inline std::vector<component_id> getLayerTransforms() { return _layer_transforms; }
 
+		inline void setIsActive(bool is_active) { _is_active = is_active; }
 		void setRenderContext(const RenderContext& context);
 	
 	private:
 		void getTaggedComponentsFromUEID(entity_id ueid, ComponentType type);
 		entity_id UEIDfromUCID(component_id this_id);
-		component_id CIDfromUCID(component_id this_id);
 	};
 }

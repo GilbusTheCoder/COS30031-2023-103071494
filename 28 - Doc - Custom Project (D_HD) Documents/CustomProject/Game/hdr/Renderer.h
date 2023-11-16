@@ -9,16 +9,17 @@ namespace Game {
 
 	public:
 		bool init(SDL_Window* window, ECS::GameData* game_data);
-		void destroy(); 
-	
+		void destroy();
+
 		void update();
 		void render();
 
-		inline SDL_Renderer* getRenderer() {
-			if (!_render_layers.empty()) { return _render_layers[0]->getRenderer(); }
-		}
-
-		void setRenderLayerContext(ECS::GameData* game_data, int layer_offset);
+		void setLayerActive(bool is_active, int layer_offset);
+		void setRenderLayerContext(ECS::RenderContext& context, int layer_offset);
+		std::vector<ECS::component_id> getLayerTransforms(int layer_offset);
+		
+		inline SDL_Renderer* getRenderer() { if (!_render_layers.empty()) { 
+			return _render_layers[0]->getRenderer(); } }
 	};
 }
 

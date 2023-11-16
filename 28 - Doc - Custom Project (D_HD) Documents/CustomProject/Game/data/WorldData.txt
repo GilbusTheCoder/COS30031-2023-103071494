@@ -21,7 +21,7 @@
 
 Tile1 Water {
 	Transform | 52, 73, 64, 55 ;
-	Texture | Hex_water | 52, 73, 64, 55  | true ;
+	Texture | Hex_water | 52, 73, 64, 55 | true ;
 	Tag | Hex ;
 }
 
@@ -131,4 +131,10 @@ Tile19 Water {
 	Transform | 244, 183 , 64, 55 ;
 	Texture | Hex_Water | Transform | true ;
 	Tag | Hex ;
+}
+
+Tile20 Overlay {
+	Transform | 100, 100 , 64, 55 ;
+	Texture | Hex_Overlay | Transform | true ;
+	Tag | Hex_Overlay ;
 }

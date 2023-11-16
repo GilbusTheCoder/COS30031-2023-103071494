@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="ECS\src\CompLoader.cpp" />
     <ClCompile Include="ECS\src\ECConstructor.cpp" />
+    <ClCompile Include="Game\src\EventHandler.cpp" />
     <ClCompile Include="Game\src\FileReader.cpp" />
     <ClCompile Include="Game\src\Game.cpp" />
     <ClCompile Include="Game\src\Main.cpp" />
@@ -171,12 +172,14 @@
     <ClCompile Include="ECS\src\TransformLoader.cpp" />
     <ClCompile Include="Game\src\RenderLayer.cpp" />
     <ClCompile Include="ECS\src\TagLoader.cpp" />
+    <ClCompile Include="ECS\src\InteractionSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ECS\hdr\CompLoader.h" />
     <ClInclude Include="ECS\hdr\ECConstructor.h" />
     <ClInclude Include="ECS\hdr\Component.h" />
     <ClInclude Include="ECS\hdr\Entity.h" />
+    <ClInclude Include="Game\hdr\EventHandler.h" />
     <ClInclude Include="Game\hdr\FileReader.h" />
     <ClInclude Include="Game\hdr\Game.h" />
     <ClInclude Include="Game\hdr\GameData.h" />
@@ -187,6 +190,7 @@
     <ClInclude Include="ECS\hdr\TransformLoader.h" />
     <ClInclude Include="Game\hdr\RenderLayer.h" />
     <ClInclude Include="ECS\hdr\TagLoader.h" />
+    <ClInclude Include="ECS\hdr\InteractionSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,28 +18,18 @@ bool Game::Game::init(std::string title, int x, int y, int w, int h, int flags) 
 		SDL_Log("Game >> Failed to init Window\n");
 		return false; }
 
-	if (!_renderer->init(_window->getWindow(), _game_data)) {
+	if (!initRenderer(_window->getWindow())) {
 		SDL_Log("Game >> Failed to init Renderer\n");
 		return false; }
 
-	const std::string entity_data_path = "Game/data/WorldData.txt";
-	const std::string sprites_path = "Game/data/Sprite_Filepaths.txt";
-	ECS::ECConstructor::initGameObjects(_game_data, _renderer->getRenderer(), entity_data_path, sprites_path);
-	_renderer->setRenderLayerContext(_game_data, 0);
-
-	_event = new SDL_Event();
-	if (!_event) { 
-		SDL_Log("Game >> Failed to instance SDL Event\n");
-		return true; }
+	if (!_event_handler->init(_window, _game_data, _renderer)) {
+		SDL_Log("Game >> Failed to instance EventHandler\n");
+		return false; }
 
 	return true; }
 
 
-void Game::Game::update() {
-	SDL_PollEvent(_event);
-	_window->update(_event); }
-
-
+void Game::Game::update() { _event_handler->update(); }
 void Game::Game::render() { _renderer->render(); }
 
 
@@ -49,4 +39,25 @@ void Game::Game::destroy() {
 	SDL_Quit();
 
 	SDL_Log("Game >> SDL Closed.\n"); }
+
+bool Game::Game::initRenderer(SDL_Window* window) {
+	if (!_renderer->init(_window->getWindow(), _game_data)) { return false; }
+
+	// Construct render layer context with world data
+	const std::string entity_data_path = "Game/data/WorldData.txt";
+	const std::string sprites_path = "Game/data/Sprite_Filepaths.txt";
+	ECS::ECConstructor::initGameObjects(_game_data, _renderer->getRenderer(), entity_data_path, sprites_path);
+
+	ECS::RenderContext r_context = {
+		true,
+		_game_data,
+		{ECS::EntityTag::ET_HEX} };
+
+	_renderer->setRenderLayerContext(r_context, 0);
+
+	r_context.render_this = false;
+	r_context.render_filters = { ECS::EntityTag::ET_HEX_OVERLAY };
+	_renderer->setRenderLayerContext(r_context, 1);
+
+	return true; }
 

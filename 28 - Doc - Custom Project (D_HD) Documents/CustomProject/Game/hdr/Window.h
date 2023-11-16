@@ -18,12 +18,9 @@ namespace Game {
 		inline SDL_Window* getWindow() { return _window; }
 		inline const std::pair<int, int> getDimensions() { return { _w, _h }; }
 		inline const std::pair<int, int> getPos() { return { _x, _y }; }
+
+		inline void setIsRunning(bool is_running) { _is_running = is_running; }
 		inline const bool isRunning() { return _is_running; }
-
-		void update(SDL_Event* event);
-
-	private:
-		void handleEvents(SDL_Event* event);
 	};
 }
 

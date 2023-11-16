@@ -38,9 +38,12 @@ namespace ECS {
 	};
 
 	struct UILabel : public Component { };
-	struct Interactable : public Component { };
-	struct Movable : public Component { };
 
+	struct Interactable : public Component { 
+		bool is_interactable = false;
+	};
+	
+	struct Movable : public Component { };
 	struct Tag : public Component {	EntityTag tag = ET_INVALID; };
 }
 

@@ -37,6 +37,8 @@ void ECS::RenderLayer::render() {
 
 
 void ECS::RenderLayer::setRenderContext(const RenderContext& context) {
+	_is_active = context.render_this;
+
 	if (!context.game_data) {
 		_layer_transforms = context.layer_transforms;
 		_layer_textures = context.layer_textures;
@@ -74,11 +76,8 @@ void ECS::RenderLayer::getTaggedComponentsFromUEID(entity_id ueid,
 	case C_TRANSFORM: {
 		component_id ucid = ueid;
 		ucid.append("a");
-
-		for (auto trans : _game_data_ref->transforms) {
-			if (ucid == trans.second.id) { 
-				_layer_transforms.emplace_back(trans.second.id); } 
-		} break; }
+		_layer_transforms.emplace_back(ucid);
+		break; }
 
 	case C_TEXTURE: {
 		entity_id c_ueid = ueid;

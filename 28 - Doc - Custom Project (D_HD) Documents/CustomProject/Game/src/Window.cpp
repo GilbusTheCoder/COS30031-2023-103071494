@@ -17,18 +17,9 @@ bool Game::Window::init(std::string title, int xpos, int ypos, int width, int he
 		SDL_Log("Window >> Failed to initialize Window\n"); 
 		return false; }
 
-	return _is_running = true;
-}
+	return _is_running = true; }
+
 
 void Game::Window::destroy() {
 	SDL_DestroyWindow(_window);
 	_window = nullptr; }
-
-void Game::Window::update(SDL_Event* event) {
-	handleEvents(event); }
-
-void Game::Window::handleEvents(SDL_Event* event) {
-	switch (event->type) {
-	case SDL_QUIT:
-		_is_running = false; }
-}

@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "Renderer.h"
+#include "EventHandler.h"
 #include "GameData.h"
 
 #pragma once
@@ -10,7 +11,7 @@ namespace Game {
 
 		Window* _window = new Window();
 		Renderer* _renderer = new Renderer();		// Todo layered rendering system
-		SDL_Event* _event = nullptr;
+		ECS::EventHandler* _event_handler = new ECS::EventHandler();
 	
 	public:
 		Game();
@@ -22,5 +23,8 @@ namespace Game {
 		void destroy();
 
 		inline const bool isRunning(){ return _window->isRunning(); }
+
+	private:
+		bool initRenderer(SDL_Window* window);
 	};
 }

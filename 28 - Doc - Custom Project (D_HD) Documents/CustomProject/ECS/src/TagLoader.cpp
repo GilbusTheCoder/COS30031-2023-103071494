@@ -7,6 +7,7 @@ ECS::Tag ECS::TagLoader::loadTagComponent(std::string comp_id, std::string arg) 
 	if (arg == "hex") { tag = ET_HEX; }
 	else if (arg == "army") { tag = ET_ARMY; }
 	else if (arg == "building") { tag = ET_BUILDING; }
+	else if (arg == "hex_overlay") { tag = ET_HEX_OVERLAY; }
 
 	return { comp_id, C_TAG, tag };
 }

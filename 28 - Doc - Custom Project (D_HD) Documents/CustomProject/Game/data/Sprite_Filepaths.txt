@@ -4,3 +4,4 @@
 Assets/Sprites/Hex_Grass.png
 Assets/Sprites/Hex_Water.png
 Assets/Sprites/Hex_Sand.png
+Assets/Sprites/Hex_Overlay.png
